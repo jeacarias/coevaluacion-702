@@ -419,7 +419,7 @@
 // CONFIGURACIÓN — CAMBIA ESTA URL DESPUÉS
 // =============================================
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxuh121cX0pjdzuv2iNqbnl3ZJA5Yfyt6mXRDubOcmrQBDgL2QTXGMI2HKHlBQMk8Uk/exec";
-const MODO_PRUEBA = false; // Cambia a true para probar sin enviar a Sheets
+const MODO_PRUEBA = true; // Cambia a true para probar sin enviar a Sheets
 
 // Lista de estudiantes
 const estudiantes = [
@@ -582,7 +582,7 @@ async function enviarCoevaluacion() {
   const btn = document.getElementById("btn-enviar");
 
   // Verificar si la URL está configurada
-  if (SHEETS_URL === "https://script.google.com/macros/s/AKfycbxuh121cX0pjdzuv2iNqbnl3ZJA5Yfyt6mXRDubOcmrQBDgL2QTXGMI2HKHlBQMk8Uk/exec") {
+  if (SHEETS_URL === "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT") {
     estadoEl.className = "error";
     estadoEl.textContent = "⚠️ Falta configurar la URL de Google Sheets. Sigue las instrucciones del profesor.";
     estadoEl.style.display = "block";
