@@ -418,7 +418,8 @@
 // =============================================
 // CONFIGURACIÓN — CAMBIA ESTA URL DESPUÉS
 // =============================================
-const SHEETS_URL = "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT";
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxuh121cX0pjdzuv2iNqbnl3ZJA5Yfyt6mXRDubOcmrQBDgL2QTXGMI2HKHlBQMk8Uk/exec";
+const MODO_PRUEBA = true; // Cambia a true para probar sin enviar a Sheets
 
 // Lista de estudiantes
 const estudiantes = [
@@ -592,6 +593,22 @@ async function enviarCoevaluacion() {
   estadoEl.className = "enviando";
   estadoEl.textContent = "⏳ Enviando coevaluación...";
   estadoEl.style.display = "block";
+
+  // MODO PRUEBA
+  if (MODO_PRUEBA) {
+    await new Promise(r => setTimeout(r, 1000));
+    yaEnvio = true;
+    estadoEl.className = "exito";
+    estadoEl.style.display = "block";
+    estadoEl.innerHTML = `✅ <strong>MODO PRUEBA — así llegarían los datos a Sheets:</strong><br><br>` +
+      datos.slice(0, 5).map(f =>
+        `👤 <strong>${f.evaluado.split(" ")[0]}</strong> → ①:${f.item1} ②:${f.item2} ③:${f.item3} ④:${f.item4} = <strong>${f.puntaje} pts</strong>`
+      ).join("<br>") + `<br><em style="color:#64748b">...y ${datos.length - 5} evaluados más</em>`;
+    document.getElementById("tabla-card").classList.add("bloqueado");
+    document.getElementById("sel-evaluador").disabled = true;
+    btn.textContent = "✅ Prueba completada";
+    return;
+  }
 
   try {
     await fetch(SHEETS_URL, {
