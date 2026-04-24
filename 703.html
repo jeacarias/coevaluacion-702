@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coevaluación 703 · Matemáticas I Trimestre</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Mono:wght@400;500&display=swap');
+
+  :root {
+    --azul: #1a73e8;
+    --azul-dark: #1557b0;
+    --verde: #34a853;
+    --rojo: #ea4335;
+    --amarillo: #fbbc04;
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #cbd5e1;
+    --check-bg: #e8f0fe;
+    --header-bg: #1a73e8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+    color: white;
+    padding: 28px 24px 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(26,115,232,0.3);
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header h1 { font-size: 24px; font-weight: 900; line-height: 1.2; }
+  .header p { font-size: 14px; opacity: 0.85; margin-top: 6px; }
+
+  /* CONTENEDOR */
+  .container { max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  /* SELECTOR DE EVALUADOR */
+  .card h2 { font-size: 16px; font-weight: 800; margin-bottom: 14px; color: var(--azul); }
+  .selector-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .selector-wrap label { font-weight: 700; font-size: 14px; white-space: nowrap; }
+  select {
+    flex: 1;
+    min-width: 220px;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  select:focus { outline: none; border-color: var(--azul); }
+
+  /* INSTRUCCIONES */
+  .instrucciones {
+    background: #fffbea;
+    border: 1.5px solid #fbbc04;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .instrucciones strong { color: #b45309; }
+
+  /* ÍTEMS LEGEND */
+  .items-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .item-card {
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .item-card .num {
+    display: inline-block;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 800;
+    font-size: 12px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .item-card .titulo { font-weight: 800; }
+  .item-card .desc { margin-top: 4px; color: var(--muted); font-size: 12px; }
+  .ic1 { background: #e8f0fe; } .ic1 .num { background: #1a73e8; color: white; }
+  .ic2 { background: #e6f4ea; } .ic2 .num { background: #34a853; color: white; }
+  .ic3 { background: #fce8e6; } .ic3 .num { background: #ea4335; color: white; }
+  .ic4 { background: #fff8e1; } .ic4 .num { background: #f9ab00; color: white; }
+
+  /* TABLA */
+  .tabla-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead tr {
+    background: #1a73e8;
+    color: white;
+  }
+  thead th {
+    padding: 12px 10px;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+  }
+  thead th.th-nombre { text-align: left; padding-left: 16px; min-width: 220px; }
+  thead th.th-item { min-width: 100px; }
+  .th-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  tbody tr { border-bottom: 1px solid #e2e8f0; transition: background 0.15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f8faff; }
+  tbody tr.self-row { opacity: 0.35; pointer-events: none; background: #f1f5f9; }
+
+  td { padding: 9px 10px; text-align: center; vertical-align: middle; }
+  td.td-nombre {
+    text-align: left;
+    padding-left: 16px;
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  td.td-nombre .num-est {
+    display: inline-block;
+    background: #e2e8f0;
+    color: #64748b;
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 6px;
+    font-family: 'Fira Mono', monospace;
+  }
+
+  /* CHECKBOX CUSTOM */
+  .check-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .check-label input[type="checkbox"] { display: none; }
+  .check-box {
+    width: 28px; height: 28px;
+    border: 2.5px solid var(--border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    background: white;
+    font-size: 16px;
+  }
+  .check-label input:checked + .check-box {
+    border-color: transparent;
+  }
+  .col-1 .check-label input:checked + .check-box { background: #1a73e8; }
+  .col-2 .check-label input:checked + .check-box { background: #34a853; }
+  .col-3 .check-label input:checked + .check-box { background: #ea4335; }
+  .col-4 .check-label input:checked + .check-box { background: #f9ab00; }
+
+  .check-box::after { content: ''; }
+  .check-label input:checked + .check-box::after { content: '✓'; color: white; font-weight: 900; font-size: 15px; line-height: 1; }
+
+  /* PUNTAJE EN VIVO */
+  .puntaje-col { font-family: 'Fira Mono', monospace; font-weight: 700; font-size: 14px; }
+  .pts-0 { color: #94a3b8; }
+  .pts-1 { color: #f59e0b; }
+  .pts-2 { color: #f59e0b; }
+  .pts-3 { color: #3b82f6; }
+  .pts-4 { color: #16a34a; }
+
+  /* RESUMEN */
+  .resumen-bar {
+    background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+    border: 1.5px solid #c7d7fd;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .resumen-bar .big-num {
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--azul);
+    font-family: 'Fira Mono', monospace;
+    line-height: 1;
+  }
+  .resumen-bar .big-label { font-size: 13px; color: var(--muted); font-weight: 600; }
+  .resumen-bar .checks-count { font-size: 20px; font-weight: 800; color: var(--text); }
+  .progress-wrap { flex: 1; min-width: 160px; }
+  .progress-bg { background: #dbeafe; border-radius: 20px; height: 12px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #1a73e8, #34a853); border-radius: 20px; transition: width 0.4s ease; }
+
+  /* BOTÓN */
+  .btn-enviar {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #1a73e8, #0d47a1);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(26,115,232,0.4);
+    letter-spacing: 0.3px;
+  }
+  .btn-enviar:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,115,232,0.5); }
+  .btn-enviar:active { transform: translateY(0); }
+  .btn-enviar:disabled { background: #94a3b8; box-shadow: none; cursor: not-allowed; transform: none; }
+
+  /* ESTADO */
+  #estado {
+    margin-top: 14px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+    display: none;
+  }
+  #estado.enviando { background: #dbeafe; color: #1e40af; display: block; }
+  #estado.exito { background: #dcfce7; color: #166534; display: block; }
+  #estado.error { background: #fee2e2; color: #991b1b; display: block; }
+
+  /* BLOQUEO post-envío */
+  .bloqueado { pointer-events: none; opacity: 0.5; }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  /* FILTER */
+  .filter-wrap { margin-bottom: 12px; display: flex; gap: 10px; align-items: center; }
+  .filter-wrap input {
+    flex: 1;
+    padding: 9px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .filter-wrap input:focus { outline: none; border-color: var(--azul); }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 19px; }
+    .resumen-bar .big-num { font-size: 32px; }
+    .btn-enviar { font-size: 15px; }
+  }
+
+  /* STICKY HEADER */
+  thead tr th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #1a73e8;
+  }
+
+  /* MEJORAS MÓVIL */
+  @media (max-width: 768px) {
+    thead th.th-nombre { min-width: 140px; font-size: 11px; }
+    thead th.th-item { min-width: 72px; font-size: 10px; padding: 8px 4px; }
+    td.td-nombre { font-size: 11px; padding-left: 8px; }
+    td.td-nombre .num-est { display: none; }
+    .check-box { width: 24px; height: 24px; border-radius: 6px; }
+    .th-badge { font-size: 9px; padding: 1px 5px; }
+    .tabla-wrap { -webkit-overflow-scrolling: touch; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Colegio Carlos Albán Holguín IED</div>
+  <h1>Coevaluación · Matemáticas</h1>
+  <p>Primer Trimestre · Grado 703 · 2025</p>
+</div>
+
+<div class="container">
+
+  <!-- PASO 1: QUIÉN EVALÚA -->
+  <div class="card">
+    <h2>👤 Paso 1: ¿Quién eres tú?</h2>
+    <div class="selector-wrap">
+      <label for="sel-evaluador">Mi nombre:</label>
+      <select id="sel-evaluador">
+        <option value="">— Selecciona tu nombre —</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ÍTEMS LEGEND -->
+  <div class="items-legend" id="items-legend" style="display:none">
+    <div class="item-card ic1">
+      <span class="num">1</span><span class="titulo">Explica con claridad</span>
+      <div class="desc">🎓 Académico · ¿Pudo explicar sus ideas o procedimientos para que los demás entendieran?</div>
+    </div>
+    <div class="item-card ic2">
+      <span class="num">2</span><span class="titulo">Cumplió con las actividades</span>
+      <div class="desc">🎓 Académico · ¿Entregó o presentó lo que se le pidió, completo y a tiempo?</div>
+    </div>
+    <div class="item-card ic3">
+      <span class="num">3</span><span class="titulo">Escuchó y respetó</span>
+      <div class="desc">🤝 Convivencial · ¿Escuchó sin interrumpir y trató a todos con respeto?</div>
+    </div>
+    <div class="item-card ic4">
+      <span class="num">4</span><span class="titulo">Mantuvo actitud positiva</span>
+      <div class="desc">🤝 Convivencial · ¿Animó al grupo, evitó conflictos y respondió bien ante las dificultades?</div>
+    </div>
+  </div>
+
+  <!-- INSTRUCCIONES -->
+  <div class="instrucciones hidden" id="instrucciones">
+    📌 <strong>Instrucciones:</strong> Marca ✓ en cada ítem que consideras que tu compañero/a <strong>SÍ cumplió</strong> durante este trimestre. Puedes filtrar nombres con el buscador. Cuando termines, presiona <strong>Enviar Coevaluación</strong>.
+  </div>
+
+  <!-- RESUMEN EN VIVO -->
+  <div class="resumen-bar hidden" id="resumen-bar">
+    <div>
+      <div class="big-num" id="total-checks">0</div>
+      <div class="big-label">checks marcados</div>
+    </div>
+    <div style="flex:1">
+      <div style="font-size:13px; font-weight:700; margin-bottom:6px; color:var(--muted)">Progreso de evaluación</div>
+      <div class="progress-wrap">
+        <div class="progress-bg"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div style="font-size:12px; color:var(--muted); margin-top:4px"><span id="evaluados-count">0</span> de <span id="total-pares">0</span> compañeros evaluados</div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="card hidden" id="tabla-card">
+    <h2>📋 Paso 2: Evalúa a tus compañeros</h2>
+    <div class="filter-wrap">
+      <input type="text" id="filtro" placeholder="🔍 Buscar compañero/a...">
+    </div>
+    <div class="tabla-wrap">
+      <table id="tabla-coevaluacion">
+        <thead>
+          <tr>
+            <th class="th-nombre">Estudiante</th>
+            <th class="th-item col-1">
+              <div class="th-badge">🎓 Académico</div><br>
+              <span>1. Explica con claridad</span>
+            </th>
+            <th class="th-item col-2">
+              <div class="th-badge">🎓 Académico</div><br>
+              <span>2. Cumplió actividades</span>
+            </th>
+            <th class="th-item col-3">
+              <div class="th-badge">🤝 Convivencial</div><br>
+              <span>3. Escuchó y respetó</span>
+            </th>
+            <th class="th-item col-4">
+              <div class="th-badge">🤝 Convivencial</div><br>
+              <span>4. Actitud positiva</span>
+            </th>
+            <th class="th-item">Puntaje</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ENVÍO -->
+  <div class="hidden" id="envio-section">
+    <button class="btn-enviar" id="btn-enviar" onclick="enviarCoevaluacion()">
+      🚀 Enviar Coevaluación
+    </button>
+    <div id="estado"></div>
+  </div>
+
+</div>
+
+<script>
+// =============================================
+// CONFIGURACIÓN
+// =============================================
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwDOCCrKqiIpFNUn5zolzJUDM9qca-gIWc9tLdqd7koaYRGI_a6I9fyWjUDePAwuUuw/exec"; // Reemplaza con la URL del Apps Script de 703
+const MODO_PRUEBA = false; // Pon true para hacer pruebas sin enviar a Sheets
+
+// Lista de estudiantes
+const estudiantes = [
+  "ABRIL FALLA VALENTINA",
+  "AGUILAR CUELLAR OSCAR ANDRES",
+  "BARBOSA ALQUERQUE XAIRELYS SARAY",
+  "BARRETO GIL PABLO ANDRES",
+  "CARDENAS MARTINEZ MARIA VALENTINA",
+  "CASTRO GOMEZ JESLY NICOLE",
+  "GARCIA MORALES CRISTOPHER ALEXANDER",
+  "GIL MEJIA ANA ZENETH",
+  "GOMEZ OYOLA ANGELI TATIANA",
+  "GUZMAN MEZA MATIAS",
+  "HENAO OROZCO MARIA FERNANDA",
+  "HIDALGO CALDERON JESUS DANIEL",
+  "HIDALGO CALDERON LINA PAOLA",
+  "HURTADO BUSTAMANTE DIEGO ALEJANDRO",
+  "LARA BUSTOS MAIKOL",
+  "LEMUS CUETO DILAN JARITH",
+  "LOZADA JIMENEZ DEIVI ESTEBAN",
+  "MALAVER OSORIO JOSE IGNACIO",
+  "MONTEALEGRE DANIELS LUCAS STEVE",
+  "MOSQUERA CARRILLO YERLY DAYANA",
+  "ORDOÑEZ LASSO EDIER STIVEN",
+  "PASCAGAZA DIAZ BRANDON ALEXIS",
+  "PEÑUELA SUAREZ ERIK STEVEN",
+  "PERDOMO RAYO YOJAN ANDRES",
+  "ROJAS ZAMBRANO RONNY JOSUES",
+  "SALCEDO DIAZ DEVANIS ALBERTO",
+  "SEPULVEDA FUENTES JUAN DAVID",
+  "SILVA GARCIA ANDRES DAVID",
+  "TAUTIVA ROJAS CRISTOPHER DUVAN",
+  "TORRES ORTIZ MARICELA",
+  "VELASQUEZ BERRIO JOEL FELIPE",
+  "REINA BEJARANO EDWAR ANDRES",
+  "MOSCOSO FAGUA SEBATIAN FELIPE",
+  "MACHADO VEGA DIRIANNY ISABEL"
+];
+
+const ITEMS = ["Explica con claridad","Cumplió con las actividades","Escuchó y respetó","Mantuvo actitud positiva"];
+const PTS_POR_ITEM = 12.5;
+
+let evaluador = "";
+let yaEnvio = false;
+
+// Poblar selector
+const sel = document.getElementById("sel-evaluador");
+estudiantes.forEach(e => {
+  const opt = document.createElement("option");
+  opt.value = e;
+  opt.textContent = e;
+  sel.appendChild(opt);
+});
+
+sel.addEventListener("change", () => {
+  evaluador = sel.value;
+  if (!evaluador) return;
+  construirTabla();
+  document.getElementById("items-legend").style.display = "grid";
+  document.getElementById("instrucciones").classList.remove("hidden");
+  document.getElementById("resumen-bar").classList.remove("hidden");
+  document.getElementById("tabla-card").classList.remove("hidden");
+  document.getElementById("envio-section").classList.remove("hidden");
+  document.getElementById("total-pares").textContent = estudiantes.length - 1;
+  actualizarResumen();
+});
+
+function construirTabla() {
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = "";
+
+  estudiantes.forEach((nombre, idx) => {
+    const tr = document.createElement("tr");
+    tr.dataset.nombre = nombre.toLowerCase();
+
+    if (nombre === evaluador) {
+      tr.classList.add("self-row");
+      tr.innerHTML = `
+        <td class="td-nombre"><span class="num-est">${String(idx+1).padStart(2,'0')}</span>${nombre}</td>
+        <td colspan="5" style="color:#94a3b8;font-size:12px;font-weight:600;">← Eres tú, no puedes evaluarte</td>
+      `;
+      tbody.appendChild(tr);
+      return;
+    }
+
+    let tds = `<td class="td-nombre"><span class="num-est">${String(idx+1).padStart(2,'0')}</span>${nombre}</td>`;
+    for (let i = 1; i <= 4; i++) {
+      const id = `chk_${idx}_${i}`;
+      tds += `
+        <td class="col-${i}">
+          <label class="check-label">
+            <input type="checkbox" id="${id}" data-row="${idx}" onchange="actualizarResumen()">
+            <span class="check-box"></span>
+          </label>
+        </td>`;
+    }
+    tds += `<td class="puntaje-col" id="pts_${idx}">—</td>`;
+    tr.innerHTML = tds;
+    tbody.appendChild(tr);
+  });
+}
+
+function actualizarResumen() {
+  let totalChecks = 0;
+  let evaluados = 0;
+
+  estudiantes.forEach((nombre, idx) => {
+    if (nombre === evaluador) return;
+    let pts = 0;
+    let tieneAlgo = false;
+    for (let i = 1; i <= 4; i++) {
+      const chk = document.getElementById(`chk_${idx}_${i}`);
+      if (chk && chk.checked) { pts++; tieneAlgo = true; totalChecks++; }
+    }
+    if (tieneAlgo) evaluados++;
+    const ptsEl = document.getElementById(`pts_${idx}`);
+    if (ptsEl) {
+      const puntaje = (pts * PTS_POR_ITEM).toFixed(1);
+      ptsEl.textContent = pts > 0 ? puntaje : "0";
+      ptsEl.className = `puntaje-col pts-${pts}`;
+    }
+  });
+
+  document.getElementById("total-checks").textContent = totalChecks;
+  document.getElementById("evaluados-count").textContent = evaluados;
+  const total = estudiantes.length - 1;
+  const pct = total > 0 ? (evaluados / total) * 100 : 0;
+  document.getElementById("progress-fill").style.width = pct + "%";
+}
+
+// Filtro de búsqueda
+document.getElementById("filtro").addEventListener("input", function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll("#tbody tr").forEach(tr => {
+    tr.style.display = tr.dataset.nombre && tr.dataset.nombre.includes(q) ? "" : "none";
+  });
+});
+
+async function enviarCoevaluacion() {
+  if (yaEnvio) return;
+  if (!evaluador) { alert("Selecciona tu nombre primero."); return; }
+
+  // Construir datos
+  const datos = [];
+  estudiantes.forEach((nombre, idx) => {
+    if (nombre === evaluador) return;
+    const fila = { evaluador, evaluado: nombre };
+    let suma = 0;
+    for (let i = 1; i <= 4; i++) {
+      const chk = document.getElementById(`chk_${idx}_${i}`);
+      const val = chk && chk.checked ? 1 : 0;
+      fila[`item${i}`] = val;
+      suma += val;
+    }
+    fila.puntaje = (suma * PTS_POR_ITEM).toFixed(1);
+    datos.push(fila);
+  });
+
+  const estadoEl = document.getElementById("estado");
+  const btn = document.getElementById("btn-enviar");
+
+  // Verificar si la URL está configurada
+  if (SHEETS_URL === "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT") {
+    estadoEl.className = "error";
+    estadoEl.textContent = "⚠️ Falta configurar la URL de Google Sheets. Sigue las instrucciones del profesor.";
+    estadoEl.style.display = "block";
+    return;
+  }
+
+  btn.disabled = true;
+  estadoEl.className = "enviando";
+  estadoEl.textContent = "⏳ Enviando coevaluación...";
+  estadoEl.style.display = "block";
+
+  // MODO PRUEBA
+  if (MODO_PRUEBA) {
+    await new Promise(r => setTimeout(r, 1000));
+    yaEnvio = true;
+    estadoEl.className = "exito";
+    estadoEl.style.display = "block";
+    estadoEl.innerHTML = `✅ <strong>MODO PRUEBA — así llegarían los datos a Sheets:</strong><br><br>` +
+      datos.slice(0, 5).map(f =>
+        `👤 <strong>${f.evaluado.split(" ")[0]}</strong> → ①:${f.item1} ②:${f.item2} ③:${f.item3} ④:${f.item4} = <strong>${f.puntaje} pts</strong>`
+      ).join("<br>") + `<br><em style="color:#64748b">...y ${datos.length - 5} evaluados más</em>`;
+    document.getElementById("tabla-card").classList.add("bloqueado");
+    document.getElementById("sel-evaluador").disabled = true;
+    btn.textContent = "✅ Prueba completada";
+    return;
+  }
+
+  try {
+    await fetch(SHEETS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ timestamp: new Date().toISOString(), filas: datos })
+    });
+
+    yaEnvio = true;
+    estadoEl.className = "exito";
+    estadoEl.textContent = "✅ ¡Coevaluación enviada correctamente! Gracias, " + evaluador.split(" ")[0] + ".";
+    document.getElementById("tabla-card").classList.add("bloqueado");
+    document.getElementById("sel-evaluador").disabled = true;
+    btn.textContent = "✅ Ya enviaste tu coevaluación";
+
+  } catch (e) {
+    estadoEl.className = "error";
+    estadoEl.textContent = "❌ Error al enviar. Revisa tu conexión e intenta de nuevo.";
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
