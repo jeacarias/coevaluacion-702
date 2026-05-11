@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación de Matemáticas – Grado 8°</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#0A2342;--teal:#028090;--verde:#02C39A;--acento:#F4A261;--rojo:#E63946;--gris:#8896A8;--card-bg:#ffffff;--radio:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--azul);min-height:100vh;color:#1a1a2e;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 10% 20%,rgba(2,128,144,.35) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 90% 80%,rgba(2,195,154,.20) 0%,transparent 55%);pointer-events:none;z-index:0}
+.wrapper{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:28px 16px 60px}
+header{text-align:center;margin-bottom:26px;animation:fadeDown .6s ease both}
+.badge{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:99px;margin-bottom:12px}
+header h1{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:6px}
+header p{color:rgba(255,255,255,.6);font-size:.88rem}
+.card{background:var(--card-bg);border-radius:var(--radio);padding:26px 26px 22px;margin-bottom:16px;box-shadow:0 4px 24px rgba(0,0,0,.18);animation:fadeUp .5s ease both}
+label{display:block;font-size:.82rem;font-weight:500;color:var(--azul);margin-bottom:5px;letter-spacing:.03em}
+input[type="text"],select{width:100%;padding:11px 14px;border:1.5px solid #dde3ec;border-radius:10px;font-size:.93rem;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s;background:#fff;margin-bottom:14px;appearance:none}
+input[type="text"]:focus,select:focus{border-color:var(--teal)}
+.aviso-box{background:#fff8e1;border:1.5px solid #ffe082;border-radius:10px;padding:14px 16px;margin-bottom:18px;font-size:.88rem;color:#7a5800;line-height:1.6}
+.aviso-box strong{color:#b07000}
+#barra-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--gris);margin-bottom:5px}
+#barra-track{height:6px;background:#e8edf3;border-radius:99px;overflow:hidden}
+#barra-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--verde));border-radius:99px;transition:width .4s ease}
+#timer-wrap{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;border-radius:10px;padding:10px 18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+#timer-icon{font-size:1.3rem}
+#timer-texto{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--azul);min-width:62px;text-align:center;letter-spacing:.04em}
+#timer-label{font-size:.78rem;color:var(--gris)}
+.timer-warn #timer-texto{color:var(--acento)}
+.timer-crit #timer-texto{color:var(--rojo);animation:pulso .6s infinite alternate}
+@keyframes pulso{from{transform:scale(1)}to{transform:scale(1.09)}}
+.tema-chip{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-bottom:10px}
+.tema-R{background:#e0f7f4;color:var(--teal)}
+.tema-N{background:#fff3e0;color:#e07b00}
+.tema-E{background:#ede7f6;color:#6a1b9a}
+.q-num{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:var(--gris);letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px}
+.q-text{font-size:.97rem;font-weight:500;color:var(--azul);line-height:1.6;margin-bottom:18px}
+.opciones{display:flex;flex-direction:column;gap:9px}
+.opcion{display:flex;align-items:center;gap:12px;padding:11px 15px;border:1.8px solid #dde3ec;border-radius:10px;cursor:pointer;transition:border .2s,background .2s;user-select:none}
+.opcion:hover{border-color:var(--teal);background:#f0fafb}
+.opcion.selected{border-color:var(--teal);background:#e6f7f9}
+.letra{width:28px;height:28px;border-radius:50%;border:1.8px solid #b0bec5;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--gris);flex-shrink:0;transition:all .2s}
+.opcion.selected .letra{border-color:var(--teal);background:var(--teal);color:#fff}
+.opcion-texto{font-size:.9rem;color:#2a3a4a}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border-radius:10px;font-family:'Syne',sans-serif;font-size:.93rem;font-weight:700;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s;letter-spacing:.02em}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--teal),var(--verde));color:#fff;box-shadow:0 4px 16px rgba(2,128,144,.35);width:100%;margin-top:8px}
+.btn-primary:hover{box-shadow:0 6px 22px rgba(2,128,144,.45)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.resultado-top{text-align:center;padding:36px 20px 24px;background:var(--card-bg);border-radius:var(--radio);box-shadow:0 4px 24px rgba(0,0,0,.18);margin-bottom:16px}
+.nota-grande{font-family:'Syne',sans-serif;font-size:4.5rem;font-weight:800;line-height:1;margin:14px 0 4px}
+.nota-aprobado{color:var(--verde)}.nota-regular{color:var(--acento)}.nota-reprobado{color:var(--rojo)}
+.emoji-nota{font-size:2rem;margin-bottom:8px;display:block}
+.mensaje-nota{font-size:.92rem;color:var(--gris);margin-bottom:4px}
+.nombre-resultado{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--azul)}
+.tabla-revision{border-collapse:collapse;width:100%;font-size:.83rem}
+.tabla-revision th{background:var(--azul);color:#fff;padding:9px 11px;font-family:'Syne',sans-serif;font-size:.74rem;letter-spacing:.06em;text-align:left}
+.tabla-revision td{padding:8px 11px;border-bottom:1px solid #edf0f4;color:#2a3a4a}
+.tabla-revision tr:last-child td{border-bottom:none}
+.ic-ok{color:var(--verde)}.ic-err{color:var(--rojo)}
+#estado-sheets{text-align:center;padding:11px;border-radius:10px;font-size:.82rem;margin-bottom:14px;display:none}
+.sheets-ok{background:#e6f7f0;color:#1a7a4a}.sheets-err{background:#fdecea;color:#c0392b}.sheets-wait{background:#fff8e1;color:#b07d00}
+.screen{display:none}.screen.active{display:block}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}.pop{animation:pop .3s ease}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<header>
+  <div class="badge">Colegio Carlos Albán Holguín I.E.D.</div>
+  <h1>Evaluación de Matemáticas<br>Primer Período — Grado 8°</h1>
+  <p>Números Racionales · Notación Científica · Estadística</p>
+</header>
+
+<!-- PANTALLA 1: DATOS -->
+<div id="screen-datos" class="screen active">
+  <div class="card">
+    <h2 style="font-family:'Syne',sans-serif;font-size:1.18rem;font-weight:700;color:var(--azul);margin-bottom:6px">Ingresa tus datos</h2>
+    <p style="color:var(--gris);font-size:.87rem;margin-bottom:16px">Selecciona tu nombre y escribe tu Tarjeta de Identidad.</p>
+
+    <div class="aviso-box">
+      ⏱️ <strong>¡Lee antes de empezar!</strong> Cada pregunta tiene un tiempo máximo de <strong>4 minutos</strong>. Cuando el tiempo se agote, la evaluación avanzará automáticamente a la siguiente pregunta sin registrar respuesta. Solo puedes presentar esta evaluación <strong>una sola vez</strong> — tu Tarjeta de Identidad quedará bloqueada al terminar.
+    </div>
+
+    <label for="sel-estudiante">Nombre del estudiante</label>
+    <select id="sel-estudiante">
+      <option value="" disabled selected>— Selecciona tu nombre —</option>
+      <option>BENAVIDES JULIO NICOL ALEJANDRA</option>
+      <option>BERNAL ROA JOHAN SNEIDER</option>
+      <option>CAEZ TAMARA JUAN PABLO</option>
+      <option>CAMARGO SANABRIA SARAY</option>
+      <option>CAMELO ALVAREZ SANTIAGO</option>
+      <option>DIAZ BRETO KENEDY MANUEL</option>
+      <option>GANDARA LABARCA ANGEL DAVID</option>
+      <option>GONZALEZ BUITRAGO ANTONY</option>
+      <option>GONZALEZ CLAROS SARA YUREIMY</option>
+      <option>HERNANDEZ CASTELLANOS YULIANA</option>
+      <option>JARAMILLO MELO VALERIN</option>
+      <option>JIMENEZ QUIROZ AURI SOFIA</option>
+      <option>JIMENEZ REDONDO BRIYI CELESTE</option>
+      <option>LEON PEÑA TANIA LIZETH</option>
+      <option>LIZARAZO PEREZ ANA ISABEL</option>
+      <option>MARTINEZ LOPEZ JOSE MIGUEL</option>
+      <option>MONCALEANO PARDO LEONARDO</option>
+      <option>NOVA ARIZA ALEXANDRA</option>
+      <option>ONATRA CHONA TANIA ZAMARA</option>
+      <option>PEREZ ALBA CRISTIAN</option>
+      <option>PINEDA BERNAL JUAN ESTEBAN</option>
+      <option>PORTELA RIVAS SOL ANGIE</option>
+      <option>QUIROZ MARTINEZ REIMER JESUS</option>
+      <option>RENTERIA CONTRERAS MATIAS</option>
+      <option>RINCON CANO JUAN MIGUEL</option>
+      <option>RINCON HERREÑO DANIEL ESTEBAN</option>
+      <option>RODRIGUEZ PEREZ LINA SOFIA</option>
+      <option>ROJAS BOTE DANNA SOFIA</option>
+      <option>SALAMANCA GIRALDO LAURA SOFIA</option>
+      <option>SANCHEZ CRUZ DERICK ANDREY</option>
+      <option>SANCHEZ FLORES DAVID ESTEBAN</option>
+      <option>SANDOVAL SEPULVEDA ASHLEY MARIANA</option>
+      <option>SOLIPA RIVERA ISABELA</option>
+      <option>VIQUE SUAREZ DANNA SOFIA</option>
+    </select>
+
+    <label for="inp-ti">Número de Tarjeta de Identidad</label>
+    <input type="text" id="inp-ti" placeholder="Ej: 1023456789" maxlength="12" oninput="this.value=this.value.replace(/\D/g,'')">
+
+    <label for="inp-curso">Curso</label>
+    <select id="inp-curso">
+      <option value="" disabled selected>— Selecciona tu curso —</option>
+      <option value="801">801</option>
+      <option value="802">802</option>
+      <option value="803">803</option>
+    </select>
+
+    <button class="btn btn-primary" onclick="iniciarEval()">Iniciar evaluación →</button>
+  </div>
+</div>
+
+<!-- PANTALLA 2: QUIZ -->
+<div id="screen-quiz" class="screen">
+  <div class="card" style="padding:16px 20px;margin-bottom:12px">
+    <div id="barra-label">
+      <span id="barra-texto">Pregunta 1 de 10</span>
+      <span id="barra-pct">0 %</span>
+    </div>
+    <div id="barra-track" style="margin-top:6px"><div id="barra-fill" style="width:0%"></div></div>
+  </div>
+
+  <div id="timer-wrap">
+    <span id="timer-icon">⏱️</span>
+    <span id="timer-texto">4:00</span>
+    <span id="timer-label">tiempo por pregunta</span>
+  </div>
+
+  <div class="card" id="card-pregunta">
+    <span id="tema-chip" class="tema-chip"></span>
+    <div class="q-num" id="q-num"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opciones" id="opciones"></div>
+    <button class="btn btn-primary" id="btn-sig" style="margin-top:20px" onclick="siguiente()" disabled>Siguiente →</button>
+  </div>
+</div>
+
+<!-- PANTALLA 3: RESULTADO -->
+<div id="screen-resultado" class="screen">
+  <div id="estado-sheets"></div>
+  <div class="resultado-top card">
+    <span id="emoji-res" class="emoji-nota"></span>
+    <div class="nombre-resultado" id="nombre-resultado"></div>
+    <div class="nota-grande" id="nota-grande"></div>
+    <div class="mensaje-nota" id="msg-nota"></div>
+    <div style="font-size:.8rem;color:var(--gris);margin-top:4px" id="sub-nota"></div>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="tabla-revision">
+      <thead><tr><th>#</th><th>Tema</th><th>Tu respuesta</th><th>Correcta</th><th></th></tr></thead>
+      <tbody id="tbody-revision"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PANTALLA 4: BLOQUEADO -->
+<div id="screen-bloqueado" class="screen">
+  <div class="card" style="text-align:center;padding:48px 28px">
+    <div style="font-size:3rem;margin-bottom:14px">🔒</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:1.25rem;color:var(--azul);margin-bottom:12px">Evaluación no disponible</h2>
+    <p style="color:var(--gris);font-size:.9rem;line-height:1.65;max-width:420px;margin:0 auto" id="msg-bloqueado">
+      Esta Tarjeta de Identidad ya fue registrada. Solo se permite un intento. Comunícaselo a tu docente si crees que es un error.
+    </p>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  CONFIGURACIÓN
+// ══════════════════════════════════════════════════════
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxI8OEjSbdVU6ep51KVu4iCUeYVKkfvXRvVcqGl9vU2AYcEWzlV_zMQSIdq_yuSCL1W/exec";
+const TIEMPO_SEG = 240;   // 4 minutos por pregunta
+const LS_KEY = "eval_802_ti_";
+
+// ══════════════════════════════════════════════════════
+//  BANCO DE 20 PREGUNTAS  (7 R + 7 N + 6 E)
+//  Se seleccionan: 3 R + 3 N + 4 E = 10 por sesión
+// ══════════════════════════════════════════════════════
+const BANCO = [
+  // ── RACIONALES (7) ──
+  {t:"R",tl:"Racionales e Irracionales",
+   tx:"Para hacer un pastel necesitas ¾ de taza de harina. Si quieres hacer 2,5 pasteles, ¿cuánta harina necesitas en total?",
+   op:["1½ tazas","1¾ tazas","1⅞ tazas","2¼ tazas"],ok:2},
+  {t:"R",tl:"Racionales e Irracionales",
+   tx:"Un tanque de gasolina tiene capacidad de 15 galones y tiene ocupado el 2/5 de su capacidad. ¿Cuántos galones le faltan para llenarse?",
+   op:["6 galones","9 galones","10 galones","5 galones"],ok:1},
+  {t:"R",tl:"Racionales e Irracionales",
+   tx:"¿Cuál de los siguientes valores es un número <strong>irracional</strong>?",
+   op:["El precio de 1 kg de arroz ($3.500)","La fracción 2/5","El valor de π (pi)","El número −45,50"],ok:2},
+  {t:"R",tl:"Racionales e Irracionales",
+   tx:"Resuelve la operación mixta: (0,5 + 2/3) × (1,2 − 1/4)",
+   op:["≈ 0,95","≈ 1,15","≈ 0,72","≈ 1,00"],ok:0},
+  {t:"R",tl:"Racionales e Irracionales",
+   tx:"Un grupo recorre 3½ km en la mañana y 2,75 km en la tarde. ¿Cuál es la distancia total expresada como fracción impropia?",
+   op:["12/2 km","25/4 km","13/2 km","27/4 km"],ok:1},
+  {t:"R",tl:"Racionales e Irracionales",
+   tx:"Se reparten 5¼ litros de jugo en vasos de 1/8 de litro. ¿Cuántos vasos se llenan?",
+   op:["40 vasos","42 vasos","38 vasos","44 vasos"],ok:1},
+  {t:"R",tl:"Racionales e Irracionales",
+   tx:"Encuentra el número racional exactamente a la mitad entre 1/2 y 3/4.",
+   op:["5/8","2/3","7/12","1/3"],ok:0},
+
+  // ── NOTACIÓN CIENTÍFICA (7) ──
+  {t:"N",tl:"Notación Científica",
+   tx:"Expresa 150.000.000 en notación científica (distancia aproximada de la Tierra al Sol en km):",
+   op:["1,5 × 10⁷","15 × 10⁷","1,5 × 10⁸","0,15 × 10⁹"],ok:2},
+  {t:"N",tl:"Notación Científica",
+   tx:"¿Cuál es el valor decimal de 3,05 × 10⁻⁵?",
+   op:["0,0000305","0,000305","305.000","0,00305"],ok:0},
+  {t:"N",tl:"Notación Científica",
+   tx:"Resuelve: (2 × 10⁵) × (3 × 10³)",
+   op:["6 × 10⁸","5 × 10⁸","6 × 10¹⁵","6 × 10²"],ok:0},
+  {t:"N",tl:"Notación Científica",
+   tx:"Expresa 0,0000005 en notación científica (tamaño aproximado de una bacteria en metros):",
+   op:["5 × 10⁻⁷","5 × 10⁻⁶","0,5 × 10⁻⁶","5 × 10⁷"],ok:0},
+  {t:"N",tl:"Notación Científica",
+   tx:"Resuelve: (8 × 10⁸) ÷ (2 × 10⁴)",
+   op:["4 × 10⁴","4 × 10²","4 × 10¹²","16 × 10⁴"],ok:0},
+  {t:"N",tl:"Notación Científica",
+   tx:"Un año luz equivale a 9,46 × 10¹² km. ¿Qué distancia recorre la luz en 5 años?",
+   op:["4,73 × 10¹³ km","4,73 × 10¹² km","9,46 × 10¹³ km","47,3 × 10¹² km"],ok:0},
+  {t:"N",tl:"Notación Científica",
+   tx:"El grosor de una hoja de papel es 1 × 10⁻⁴ m. ¿Qué altura tendría una pila de 1.000.000 de hojas?",
+   op:["1 × 10² m","1 × 10⁻¹⁰ m","1 × 10⁶ m","1 × 10⁻² m"],ok:0},
+
+  // ── ESTADÍSTICA (6) ──
+  {t:"E",tl:"Estadística",
+   tx:"Calificaciones: 3,5 — 4,0 — 3,5 — 5,0 — 2,8 — 3,5 — 4,2 — 4,5 — 3,0 — 4,0. ¿Cuál es la <strong>media</strong>?",
+   op:["3,7","3,8","3,9","4,0"],ok:1},
+  {t:"E",tl:"Estadística",
+   tx:"Con las mismas calificaciones anteriores, ¿cuál es la <strong>moda</strong>?",
+   op:["4,0","3,5","5,0","3,0"],ok:1},
+  {t:"E",tl:"Estadística",
+   tx:"Goles por partido: 1, 0, 2, 3, 2, 1, 0, 4, 2, 2, 1, 0, 2, 1, 3. ¿Cuál es la <strong>mediana</strong>?",
+   op:["1","2","3","0"],ok:1},
+  {t:"E",tl:"Estadística",
+   tx:"Horas en internet: 2, 4, 2, 5, 10, 3, 2. Si '10' fuera realmente '3', ¿qué medida cambiaría <strong>más</strong>?",
+   op:["La moda","La mediana","La media","Ninguna cambiaría"],ok:2},
+  {t:"E",tl:"Estadística",
+   tx:"¿Cuál es la definición correcta de <strong>mediana</strong>?",
+   op:["El valor que más se repite","El valor central del conjunto ordenado","La suma dividida entre la cantidad de datos","El dato más extremo"],ok:1},
+  {t:"E",tl:"Estadística",
+   tx:"Un conjunto de datos tiene media 4,0 y mediana 3,5. ¿Qué indica esta diferencia?",
+   op:["Los datos son completamente simétricos","Hay valores altos que elevan la media","Hay valores bajos que disminuyen la media","La moda es mayor que la media"],ok:1}
+];
+
+// ══════════════════════════════════════════════════════
+//  ESTADO GLOBAL
+// ══════════════════════════════════════════════════════
+let estudiante={}, actual=0, preguntasEval=[], respuestas=[], seleccionada=null;
+let timerInterval=null, tiempoRestante=TIEMPO_SEG;
+
+// ══════════════════════════════════════════════════════
+//  UTILIDADES
+// ══════════════════════════════════════════════════════
+function shuffle(a){
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+  return b;
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════
+//  PREPARAR: 3R + 3N + 4E aleatorias con opciones mezcladas
+// ══════════════════════════════════════════════════════
+function prepararEval(){
+  const R=shuffle(BANCO.filter(p=>p.t==='R'));
+  const N=shuffle(BANCO.filter(p=>p.t==='N'));
+  const E=shuffle(BANCO.filter(p=>p.t==='E'));
+  const sel=shuffle([...R.slice(0,3),...N.slice(0,3),...E.slice(0,4)]);
+  preguntasEval=sel.map(p=>{
+    const mi=shuffle([0,1,2,3]);
+    return{tema:p.t,temaLabel:p.tl,texto:p.tx,opciones:mi.map(i=>p.op[i]),correctaIdx:mi.indexOf(p.ok)};
+  });
+  respuestas=new Array(preguntasEval.length).fill(null);
+}
+
+// ══════════════════════════════════════════════════════
+//  INICIAR
+// ══════════════════════════════════════════════════════
+function iniciarEval(){
+  const nombre=document.getElementById('sel-estudiante').value;
+  const ti=document.getElementById('inp-ti').value.trim();
+  const curso=document.getElementById('inp-curso').value;
+  if(!nombre){alert('Por favor selecciona tu nombre.');return;}
+  if(!ti||ti.length<6){alert('Por favor ingresa tu Tarjeta de Identidad (mínimo 6 dígitos).');return;}
+  if(!curso){alert('Por favor selecciona tu curso.');return;}
+
+  if(localStorage.getItem(LS_KEY+ti)){
+    document.getElementById('msg-bloqueado').innerHTML=
+      `<strong>${nombre}</strong>, la Tarjeta de Identidad <strong>${ti}</strong> ya tiene un intento registrado. Solo se permite <strong>una vez</strong>. Si es un error, habla con tu docente.`;
+    showScreen('screen-bloqueado');
+    return;
+  }
+
+  estudiante={nombre,ti,curso};
+  actual=0;
+  prepararEval();
+  showScreen('screen-quiz');
+  renderPregunta();
+}
+
+// ══════════════════════════════════════════════════════
+//  TEMPORIZADOR
+// ══════════════════════════════════════════════════════
+function iniciarTimer(){
+  clearInterval(timerInterval);
+  tiempoRestante=TIEMPO_SEG;
+  actualizarTimerUI();
+  timerInterval=setInterval(()=>{
+    tiempoRestante--;
+    actualizarTimerUI();
+    if(tiempoRestante<=0){
+      clearInterval(timerInterval);
+      if(respuestas[actual]===null) respuestas[actual]=-1;
+      avanzar();
+    }
+  },1000);
+}
+function actualizarTimerUI(){
+  const m=Math.floor(tiempoRestante/60), s=tiempoRestante%60;
+  document.getElementById('timer-texto').textContent=`${m}:${s.toString().padStart(2,'0')}`;
+  const w=document.getElementById('timer-wrap');
+  w.classList.remove('timer-warn','timer-crit');
+  if(tiempoRestante<=30) w.classList.add('timer-crit');
+  else if(tiempoRestante<=60) w.classList.add('timer-warn');
+}
+
+// ══════════════════════════════════════════════════════
+//  RENDERIZAR PREGUNTA
+// ══════════════════════════════════════════════════════
+function renderPregunta(){
+  seleccionada=null;
+  const p=preguntasEval[actual], n=actual+1, total=preguntasEval.length;
+  const pct=Math.round((actual/total)*100);
+  document.getElementById('barra-texto').textContent=`Pregunta ${n} de ${total}`;
+  document.getElementById('barra-pct').textContent=pct+' %';
+  document.getElementById('barra-fill').style.width=pct+'%';
+  const chip=document.getElementById('tema-chip');
+  chip.textContent=p.temaLabel; chip.className='tema-chip tema-'+p.tema;
+  document.getElementById('q-num').textContent=`Pregunta ${n}`;
+  document.getElementById('q-text').innerHTML=p.texto;
+  const cont=document.getElementById('opciones');
+  cont.innerHTML='';
+  ['A','B','C','D'].forEach((l,i)=>{
+    const d=document.createElement('div');
+    d.className='opcion';
+    d.innerHTML=`<span class="letra">${l}</span><span class="opcion-texto">${p.opciones[i]}</span>`;
+    d.addEventListener('click',()=>elegir(i,d));
+    cont.appendChild(d);
+  });
+  const btn=document.getElementById('btn-sig');
+  btn.disabled=true;
+  btn.textContent=actual<total-1?'Siguiente →':'Ver resultados →';
+  const card=document.getElementById('card-pregunta');
+  card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
+  iniciarTimer();
+}
+
+function elegir(idx,divEl){
+  document.querySelectorAll('.opcion').forEach(o=>o.classList.remove('selected'));
+  divEl.classList.add('selected');
+  seleccionada=idx; respuestas[actual]=idx;
+  document.getElementById('btn-sig').disabled=false;
+}
+
+// ══════════════════════════════════════════════════════
+//  NAVEGACIÓN
+// ══════════════════════════════════════════════════════
+function siguiente(){
+  clearInterval(timerInterval);
+  if(respuestas[actual]===null) respuestas[actual]=-1;
+  avanzar();
+}
+function avanzar(){
+  if(actual<preguntasEval.length-1){actual++;renderPregunta();}
+  else mostrarResultado();
+}
+
+// ══════════════════════════════════════════════════════
+//  RESULTADO
+// ══════════════════════════════════════════════════════
+function mostrarResultado(){
+  clearInterval(timerInterval);
+  localStorage.setItem(LS_KEY+estudiante.ti,'1');
+
+  let correctas=0;
+  preguntasEval.forEach((p,i)=>{if(respuestas[i]===p.correctaIdx) correctas++;});
+
+  const nota=(1+(correctas/preguntasEval.length)*4).toFixed(1);
+  const nf=parseFloat(nota);
+  let cls,emoji,msg;
+  if(nf>=4.0){cls='nota-aprobado';emoji='🎉';msg='¡Excelente trabajo!';}
+  else if(nf>=3.0){cls='nota-regular';emoji='📚';msg='Sigue practicando, vas bien.';}
+  else{cls='nota-reprobado';emoji='💪';msg='No te rindas, puedes mejorar.';}
+
+  document.getElementById('emoji-res').textContent=emoji;
+  document.getElementById('nombre-resultado').textContent=
+    `${estudiante.nombre} | TI: ${estudiante.ti} | Curso ${estudiante.curso}`;
+  const ng=document.getElementById('nota-grande');
+  ng.textContent=nota; ng.className='nota-grande '+cls;
+  document.getElementById('msg-nota').textContent=msg;
+  document.getElementById('sub-nota').textContent=`${correctas} de ${preguntasEval.length} preguntas correctas`;
+
+  const tbody=document.getElementById('tbody-revision');
+  tbody.innerHTML='';
+  preguntasEval.forEach((p,i)=>{
+    const ok=respuestas[i]===p.correctaIdx;
+    const ls=['A','B','C','D'];
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong>${i+1}</strong></td><td>${p.temaLabel}</td><td>${respuestas[i]>=0?ls[respuestas[i]]:'—'}</td><td>${ls[p.correctaIdx]}</td><td>${ok?'<span class="ic-ok">✔</span>':'<span class="ic-err">✘</span>'}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  showScreen('screen-resultado');
+  enviarSheets(nota,correctas);
+}
+
+// ══════════════════════════════════════════════════════
+//  GOOGLE SHEETS
+// ══════════════════════════════════════════════════════
+async function enviarSheets(nota,correctas){
+  const el=document.getElementById('estado-sheets');
+  el.className='sheets-wait'; el.style.display='block';
+  el.textContent='⏳ Registrando calificación en Google Sheets...';
+  const ahora=new Date();
+  const params=new URLSearchParams({
+    nombre:estudiante.nombre,ti:estudiante.ti,curso:estudiante.curso,
+    nota,correctas,total:preguntasEval.length,
+    fecha:ahora.toLocaleDateString('es-CO'),
+    hora:ahora.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})
+  });
+  try{
+    const r=await fetch(`${SHEETS_URL}?${params}`);
+    if(r.ok){el.className='sheets-ok';el.textContent='✅ Calificación registrada correctamente en Google Sheets.';}
+    else throw new Error('HTTP '+r.status);
+  }catch(e){
+    el.className='sheets-err';
+    el.textContent='⚠️ No se pudo conectar con Google Sheets. Nota: '+nota+' — Comunícasela a tu docente.';
+  }
+}
+</script>
+</body>
+</html>
