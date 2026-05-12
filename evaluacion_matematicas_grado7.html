@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación de Nivelación — Matemáticas 7° | Colegio Carlos Albán Holguín I.E.D.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #028090;
+    --green: #02C39A;
+    --navy-light: #112d52;
+    --teal-light: #03a0b3;
+    --green-light: #04e8b3;
+    --white: #ffffff;
+    --gray-100: #f0f4f8;
+    --gray-200: #d9e2ec;
+    --gray-400: #9aa5b4;
+    --gray-600: #627d98;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --success: #10b981;
+    --radius: 14px;
+    --shadow: 0 8px 32px rgba(10,35,66,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    min-height: 100vh;
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(2,128,144,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 80%, rgba(2,195,154,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(10,35,66,0.8) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 36px 20px 28px;
+    border-bottom: 1px solid rgba(2,195,154,0.2);
+    margin-bottom: 32px;
+  }
+  .header .school-tag {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(2,195,154,0.1);
+    border: 1px solid rgba(2,195,154,0.3);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 5vw, 34px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffffff 30%, var(--green-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .subtitle {
+    font-size: 14px;
+    color: var(--gray-400);
+    font-weight: 400;
+  }
+
+  /* CARDS */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 28px;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+  }
+
+  /* FORM ELEMENTS */
+  .form-group { margin-bottom: 18px; }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 7px;
+  }
+  select, input[type="text"], input[type="number"] {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 9px;
+    padding: 12px 16px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  select option { background: #0e2d4a; color: var(--white); }
+  select:focus, input:focus {
+    border-color: var(--green);
+    background: rgba(2,195,154,0.07);
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 14px 32px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--teal), var(--green));
+    color: var(--navy);
+    box-shadow: 0 4px 20px rgba(2,195,154,0.3);
+    width: 100%;
+    margin-top: 8px;
+  }
+  .btn-primary:hover { box-shadow: 0 6px 28px rgba(2,195,154,0.45); transform: translateY(-1px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white);
+  }
+
+  /* AVISO */
+  .aviso {
+    background: rgba(2,128,144,0.12);
+    border: 1px solid rgba(2,128,144,0.35);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .aviso h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green-light);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .aviso ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .aviso ul li {
+    font-size: 14px;
+    color: var(--gray-200);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .aviso ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+  }
+
+  /* PREGUNTA */
+  .question-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .question-counter {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    text-transform: uppercase;
+  }
+
+  /* TIMER */
+  .timer-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 9px;
+    padding: 8px 16px;
+    min-width: 90px;
+    justify-content: center;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .timer-box.warn { background: rgba(245,158,11,0.15); border-color: var(--warn); color: var(--warn); }
+  .timer-box.danger { background: rgba(239,68,68,0.15); border-color: var(--danger); color: var(--danger); animation: pulse 0.6s infinite alternate; }
+  @keyframes pulse { from { opacity: 1; } to { opacity: 0.5; } }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--green));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* OPCIONES */
+  .question-text {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.65;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.09);
+    border-radius: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    text-align: left;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    transition: background 0.18s, border-color 0.18s, transform 0.12s;
+    width: 100%;
+  }
+  .option-btn:hover { background: rgba(2,195,154,0.08); border-color: rgba(2,195,154,0.35); transform: translateX(2px); }
+  .option-btn.selected { background: rgba(2,195,154,0.13); border-color: var(--green); }
+  .option-btn .opt-letter {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border-radius: 6px;
+    background: rgba(2,128,144,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green-light);
+    margin-top: 1px;
+  }
+  .option-btn.selected .opt-letter { background: var(--green); color: var(--navy); }
+
+  /* RESULTS */
+  .result-score {
+    text-align: center;
+    padding: 36px 20px;
+  }
+  .result-score .nota-big {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(64px, 14vw, 96px);
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--teal-light), var(--green-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .result-score .nota-label {
+    font-size: 14px;
+    color: var(--gray-400);
+    margin-top: 8px;
+    margin-bottom: 28px;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .stat-box .sv { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--green); }
+  .stat-box .sl { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* REVIEW TABLE */
+  .review-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  .review-table th {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .review-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: top;
+  }
+  .review-table tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+  }
+  .badge-ok { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+  .badge-err { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+
+  /* BLOCKED SCREEN */
+  .blocked-screen {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .blocked-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .blocked-screen h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: var(--warn);
+  }
+  .blocked-screen p {
+    font-size: 15px;
+    color: var(--gray-400);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* SEND STATUS */
+  .send-status {
+    text-align: center;
+    padding: 14px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 16px;
+  }
+  .send-ok { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: #34d399; }
+  .send-err { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #f87171; }
+  .send-pending { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); color: var(--warn); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin: 24px 0;
+  }
+
+  @media (max-width: 540px) {
+    .card { padding: 20px 16px; }
+    .question-text { font-size: 15px; }
+    .option-btn { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="school-tag">Colegio Carlos Albán Holguín I.E.D.</div>
+    <h1>Evaluación de Nivelación<br>Matemáticas · Grado 7°</h1>
+    <p class="subtitle">Docente: Jesús Arias &nbsp;·&nbsp; Números Enteros · Periodo 1</p>
+  </div>
+
+  <!-- PANTALLA: REGISTRO -->
+  <div id="screen-registro" class="card">
+    <div class="section-title">📋 Datos del Estudiante</div>
+
+    <div class="form-group">
+      <label>Curso</label>
+      <select id="sel-curso">
+        <option value="">— Selecciona tu curso —</option>
+        <option value="702">702</option>
+        <option value="703">703</option>
+        <option value="704">704</option>
+        <option value="705">705</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Nombre del estudiante</label>
+      <select id="sel-nombre">
+        <option value="">— Primero selecciona tu curso —</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tarjeta de Identidad (10 dígitos)</label>
+      <input type="number" id="inp-ti" placeholder="Ej: 1023456789" maxlength="10" min="1000000000" max="9999999999">
+    </div>
+
+    <div id="error-msg" style="color:#f87171;font-size:13px;margin-bottom:12px;display:none;"></div>
+
+    <button class="btn btn-primary" onclick="validarRegistro()">Continuar →</button>
+  </div>
+
+  <!-- PANTALLA: AVISO -->
+  <div id="screen-aviso" class="hidden">
+    <div class="aviso">
+      <h3>⚠️ Lee antes de comenzar</h3>
+      <ul>
+        <li>La evaluación contiene <strong>10 preguntas</strong> seleccionadas aleatoriamente.</li>
+        <li>Tienes <strong>4 minutos por pregunta</strong>. Al agotarse el tiempo avanza automáticamente.</li>
+        <li>El temporizador se pondrá <strong style="color:var(--warn)">naranja</strong> al minuto restante y <strong style="color:var(--danger)">rojo pulsante</strong> en los últimos 30 segundos.</li>
+        <li>Solo tienes <strong>un intento</strong>. No podrás volver a responder una vez enviado.</li>
+        <li>La nota se calcula en escala colombiana de <strong>1,0 a 5,0</strong>.</li>
+        <li>Los resultados se envían automáticamente a la planilla del docente.</li>
+        <li>No cierres la ventana durante la evaluación.</li>
+      </ul>
+    </div>
+    <div class="card" style="margin-top:0;">
+      <div id="aviso-nombre" style="font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:18px;color:var(--green-light);"></div>
+      <button class="btn btn-primary" onclick="iniciarEvaluacion()">🚀 Iniciar Evaluación</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA: PREGUNTA -->
+  <div id="screen-pregunta" class="hidden">
+    <div class="question-header">
+      <span class="question-counter" id="q-counter">Pregunta 1 de 10</span>
+      <div class="timer-box" id="timer-box">
+        <span>⏱</span>
+        <span id="timer-display">4:00</span>
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:10%"></div>
+    </div>
+    <div class="card">
+      <p class="question-text" id="q-text"></p>
+      <div class="options" id="q-options"></div>
+      <div style="margin-top:24px;display:flex;justify-content:flex-end;">
+        <button class="btn btn-primary" id="btn-siguiente" style="width:auto;padding:12px 32px;" onclick="siguientePregunta()">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA: RESULTADOS -->
+  <div id="screen-resultados" class="hidden">
+    <div class="card">
+      <div class="result-score">
+        <div class="nota-big" id="res-nota">—</div>
+        <div class="nota-label">Nota final (escala 1,0 – 5,0)</div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="sv" id="res-correctas">—</div><div class="sl">Correctas</div></div>
+          <div class="stat-box"><div class="sv" id="res-total">10</div><div class="sl">Total</div></div>
+          <div class="stat-box"><div class="sv" id="res-pct">—</div><div class="sl">Acierto</div></div>
+        </div>
+        <div id="send-status" class="send-status send-pending">⏳ Enviando resultados…</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">📊 Revisión de Respuestas</div>
+      <div style="overflow-x:auto;">
+        <table class="review-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pregunta</th>
+              <th>Tu respuesta</th>
+              <th>Correcta</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="review-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA: BLOQUEADO -->
+  <div id="screen-bloqueado" class="hidden card">
+    <div class="blocked-screen">
+      <span class="blocked-icon">🔒</span>
+      <h2>Intento ya registrado</h2>
+      <p id="blocked-msg">Esta Tarjeta de Identidad ya realizó la evaluación. Solo se permite un intento por estudiante.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===========================
+// DATOS DE ESTUDIANTES
+// ===========================
+const ESTUDIANTES = {
+  "702": [
+    "BELTRAN DEVIA JUAN DAVID",
+    "BONNHETT VILLA ANGIE CAROLINA",
+    "CARDENAS CELY TANIA YAQUELIN",
+    "CARDENAS DIAZ MARIA PAULA",
+    "CASTIBLANCO AMAYA SAMANTHA",
+    "CELORIO NUÑEZ GESKARLYS MARIA",
+    "DE AVILA MONTES XAVI ALONSO",
+    "ESQUIVEL MATEUS MARIANA",
+    "GONZALEZ HUERTAS AXELL DAVID",
+    "GONZALEZ TRIVIÑO KENNED JARED",
+    "HERNANDEZ GALEA DEIKELBER JOSE",
+    "HERNANDEZ PEÑALOZA YERRY YHOJANA",
+    "LARA ROJAS FELIX ALEJANDRO",
+    "LOPEZ BERNAL LINA LUCIA",
+    "MAESTRE LAMILLA DANNA VALENTINA",
+    "MANCILLA PAREDES YESICA",
+    "MATTOS BERMUDEZ LAURA SOFIA",
+    "MENCO MENDOZA JUAN MARTIN",
+    "MONTERO GAONA RONANYELI DANIELA",
+    "MOSQUERA CABALLERO SAMUEL DAVID",
+    "MOSQUERA SINISTERRA KEVIN ANDRES",
+    "MUÑOZ VARGAS WUENYERBER ALBERTO",
+    "RADA SERRANO DYLAN GABRIEL",
+    "REYES BOHORQUEZ MICHELLE ALEJANDRA",
+    "RIVERA PEREZ THALIANA PAOLA",
+    "ROBAYO BERMUDEZ DANIEL FELIPE",
+    "ROCHA CORTES DIEGO ALEJANDRO",
+    "SALAZAR MALPA JUAN ANDRES",
+    "SALCEDO DIAZ YORYINA",
+    "SANCHEZ CASTIBLANCO ANGEL MATIAS",
+    "SANCHEZ MIRANDA SHARIT DAYANA",
+    "SEQUERA JUAREZ MARIANGEL VICTORIA",
+    "VELASQUEZ ALMAZO BREILIZ DAILIN",
+    "YEPES NAYSTH EMILI YAISIEL",
+    "MERCADO MARQUEZ BRIANIS SOFIA",
+    "MATEUS RUMBO WUIYENNYS GABRIELA"
+  ],
+  "703": [
+    "ABRIL FALLA VALENTINA",
+    "AGUILAR CUELLAR OSCAR ANDRES",
+    "BARBOSA ALQUERQUE XAIRELYS SARAY",
+    "BARRETO GIL PABLO ANDRES",
+    "CARDENAS MARTINEZ MARIA VALENTINA",
+    "CASTRO GOMEZ JESLY NICOLE",
+    "GARCIA MORALES CRISTOPHER ALEXANDER",
+    "GIL MEJIA ANA ZENETH",
+    "GOMEZ OYOLA ANGELI TATIANA",
+    "GUZMAN MEZA MATIAS",
+    "HENAO OROZCO MARIA FERNANDA",
+    "HIDALGO CALDERON JESUS DANIEL",
+    "HIDALGO CALDERON LINA PAOLA",
+    "HURTADO BUSTAMANTE DIEGO ALEJANDRO",
+    "LARA BUSTOS MAIKOL",
+    "LEMUS CUETO DILAN JARITH",
+    "LOZADA JIMENEZ DEIVI ESTEBAN",
+    "MALAVER OSORIO JOSE IGNACIO",
+    "MONTEALEGRE DANIELS LUCAS STEVE",
+    "MOSQUERA CARRILLO YERLY DAYANA",
+    "ORDOÑEZ LASSO EDIER STIVEN",
+    "PASCAGAZA DIAZ BRANDON ALEXIS",
+    "PEÑUELA SUAREZ ERIK STEVEN",
+    "PERDOMO RAYO YOJAN ANDRES",
+    "ROJAS ZAMBRANO RONNY JOSUES",
+    "SALCEDO DIAZ DEVANIS ALBERTO",
+    "SEPULVEDA FUENTES JUAN DAVID",
+    "SILVA GARCIA ANDRES DAVID",
+    "TAUTIVA ROJAS CRISTOPHER DUVAN",
+    "TORRES ORTIZ MARICELA",
+    "VELASQUEZ BERRIO JOEL FELIPE",
+    "REINA BEJARANO EDWAR ANDRES",
+    "MOSCOSO FAGUA SEBATIAN FELIPE",
+    "MACHADO VEGA DIRIANNY ISABEL"
+  ],
+  "704": [
+    "AVILA MORA ERICK SANTIAGO",
+    "AVILA TORRES ESTEFANY PAOLA",
+    "BARRIOS SUAREZ DEYVID ANDRES",
+    "BERMUDEZ CHILATRA ANDRES FELIPE",
+    "BERNAL MARTINEZ SARA VALENTINA",
+    "CASTELLANOS VILLA JUAN CAMILO",
+    "CRISTANCHO JAIMES DIANA VALENTINA",
+    "ELAGUILA SIERRA RICARDO",
+    "GALVIS SANCHEZ DYLAN JOSUE",
+    "GARCIA HERAZO ARTURO JOSE",
+    "GIL CORDERO VALENTINA SIMONA",
+    "GOMEZ OYOLA JOAN STIVEN",
+    "GRISALES ARIAS JUAN ESTEBAN",
+    "GUZMAN ARGUELLES JHOSEPH SANTIAGO",
+    "HERRERA DE LEON PAULA FERNANDA",
+    "LAGUNA DAVILA NAILIS NATALIA",
+    "LEON TIQUE ANGEL ELIAS",
+    "LOCARNO LOPEZ YEIMAR ALFONSO",
+    "LOPEZ ROMERO YIRED VALENTINA",
+    "MALDONADO VARGAS MATIAS JAIR",
+    "MARTINEZ HERNANDEZ LAURA VALENTINA",
+    "MEDINA PRINCE ANDERSON SLEIKER",
+    "MONSALVE CANTILLO ARMANDO RAFAEL",
+    "MONSALVE FONSECA DANIELA SOFIA",
+    "MONTAÑO BAUTISTA AMMY MARIANA",
+    "ORTEGA CUY JOSUE",
+    "OVIEDO TORRES DAYANNYS SOFIA",
+    "PEREZ HERRERA DUVAN ALEXANDER",
+    "PRADA COLORADO NICOL DAYANNA",
+    "RAMIREZ MOLINA ANDRES ESTIVEN",
+    "RONDON LEAL ADRIAN",
+    "SALGADO ROA JUAN PABLO",
+    "SUAREZ BERMUDEZ IVIANNYS KATERIN",
+    "TAPIERO ZAPATA DILAN ANDREY",
+    "VALLEJO BECERRA ANDRES FELIPE",
+    "VARON ROJAS ELKIN ESNEIDER"
+  ],
+  "705": [
+    "AVILA TORRES JHONATAN SMITH",
+    "AZOCAR AZOCAR SANTIAGO ALEXANDER",
+    "BARRETO ORTEGA SAMUEL",
+    "BENITEZ MANCIPE LAURA VALENTINA",
+    "BERRIO ZAMBRANO HUSSAIN LEANDRO",
+    "BONILLA GIL VALERY SOFIA",
+    "CABALLERO PATIÑO JEAN CARLOS",
+    "CAMACHO JARAMILLO NICOL CAMILA",
+    "CARDONA LOPEZ IAN THOMAS",
+    "CARVALLO GARCIA HELEN MICHELL",
+    "CASAS VACA FREYSMANN DAVID",
+    "CASQUETE PEREA JUANA VALENTINA",
+    "CASTRO ROJAS DANNA SOFIA",
+    "DE LA HOZ GUTIERREZ MARIANA SOFIA",
+    "DIAZ CATAÑO EMILY TATIANA",
+    "DUQUE LOPEZ SARA SOFIA",
+    "FALCON PADILLA ANYERSON YOHANDER",
+    "FLORES DIAZ JULIANNY VERONICA",
+    "GARZON QUEVEDO DAYHAN CAMILO",
+    "GOMEZ MONTOYA CHEIRA FERNANDA",
+    "LADINO BONILLA KAROLAIN",
+    "MONSALVE CANTILLO JOSE ARMANDO",
+    "PEÑARETE RODRIGUEZ SARAY SOFIA",
+    "RAMIREZ ZAMUDIO SHAIRA SOFIA",
+    "REDONDO AYALA YEIMYS PAOLA",
+    "RIVERO ROJAS ERICK GIOVANNY",
+    "RODRIGUEZ MAYORGA DILAN MATIAS",
+    "ROJAS RONCANCIO DEINER SANTIAGO",
+    "ROZO HERNANDEZ SAMUEL DANILO",
+    "RUIZ VILLAMIZAR LINA FERNANDA",
+    "SIERRA MARTINEZ DEREK SANTIAGO",
+    "SOACHA BRIÑEZ DEINI LIZETH",
+    "SURUMAY ROA LUIS ANTONIO",
+    "VARGAS CAÑIZALES DANNA SOFIA",
+    "VASQUEZ CARRERO DAIKER LEANDRO",
+    "ZAYAS BENAVIDES SARA SOFIA",
+    "ZULETA MOLINA DEINER JOSE"
+  ]
+};
+
+// ===========================
+// BANCO DE 20 PREGUNTAS
+// Basadas fielmente en los talleres de nivelación:
+// Taller 1 (Grado 6/7): S1 conceptos, S2 suma/resta, S3 mult/div, S4 plano/contexto, S5 operaciones combinadas
+// Taller 2 (Grado 7 - 704): Línea del tiempo, situaciones problema, polinomios aritméticos
+// Distribución: 5 conceptos/orden, 5 suma/resta/contexto, 5 mult/div, 5 operaciones combinadas
+// ===========================
+const BANCO = [
+  // ── BLOQUE A: CONCEPTOS, ORDEN Y VALOR ABSOLUTO (5 preguntas) ──
+  {
+    id: 1,
+    bloque: "A",
+    texto: "¿Cuál de las siguientes opciones ordena los números enteros de MENOR a MAYOR?",
+    opciones: ["-7, -2, 0, 3, 5", "5, 3, 0, -2, -7", "-2, -7, 0, 3, 5", "0, -2, -7, 3, 5"],
+    correcta: 0
+  },
+  {
+    id: 2,
+    bloque: "A",
+    texto: "¿Cuál es el valor absoluto de -11?",
+    opciones: ["-11", "0", "11", "-1"],
+    correcta: 2
+  },
+  {
+    id: 3,
+    bloque: "A",
+    texto: "¿Cuál es el opuesto del número -9?",
+    opciones: ["-9", "0", "9", "1/9"],
+    correcta: 2
+  },
+  {
+    id: 4,
+    bloque: "A",
+    texto: "En la recta numérica, ¿cuál afirmación es VERDADERA?",
+    opciones: [
+      "-8 está a la derecha de -3",
+      "Los enteros negativos son mayores que los positivos",
+      "-8 está a la izquierda de -3",
+      "El valor absoluto de -7 es -7"
+    ],
+    correcta: 2
+  },
+  {
+    id: 5,
+    bloque: "A",
+    texto: "En una línea del tiempo, el año 753 a.C. se representa como un número entero. ¿Cuál es su representación correcta?",
+    opciones: ["753", "-753", "+753", "0"],
+    correcta: 1
+  },
+
+  // ── BLOQUE B: SUMA Y RESTA / SITUACIONES PROBLEMA (5 preguntas) ──
+  {
+    id: 6,
+    bloque: "B",
+    texto: "La temperatura en la mañana es de -4°C y en la tarde sube 9°C. ¿Cuál es la temperatura final?",
+    opciones: ["13°C", "-13°C", "5°C", "-5°C"],
+    correcta: 2
+  },
+  {
+    id: 7,
+    bloque: "B",
+    texto: "Juan tiene una deuda de -15.000 pesos y paga 8.000 pesos. ¿Cuál es su saldo ahora?",
+    opciones: ["-7.000", "7.000", "-23.000", "23.000"],
+    correcta: 0
+  },
+  {
+    id: 8,
+    bloque: "B",
+    texto: "Un buzo está a -18 metros y sube 10 metros. ¿A qué profundidad queda?",
+    opciones: ["28 m", "-28 m", "8 m", "-8 m"],
+    correcta: 3
+  },
+  {
+    id: 9,
+    bloque: "B",
+    texto: "En el Páramo de Sumapaz la temperatura era -3°C. Subió 11°C y luego bajó 7°C. ¿Cuál es la temperatura final?",
+    opciones: ["1°C", "-1°C", "15°C", "-15°C"],
+    correcta: 0
+  },
+  {
+    id: 10,
+    bloque: "B",
+    texto: "Un jugador avanza 12 pasos y retrocede 18 pasos. ¿Cuál es su posición final respecto al inicio?",
+    opciones: ["30", "-30", "-6", "6"],
+    correcta: 2
+  },
+
+  // ── BLOQUE C: MULTIPLICACIÓN Y DIVISIÓN (5 preguntas) ──
+  {
+    id: 11,
+    bloque: "C",
+    texto: "¿Cuál es el resultado de (-4) × (-9)?",
+    opciones: ["-36", "36", "-13", "13"],
+    correcta: 1
+  },
+  {
+    id: 12,
+    bloque: "C",
+    texto: "¿Cuál es el resultado de (+7) × (-5)?",
+    opciones: ["35", "-35", "2", "-2"],
+    correcta: 1
+  },
+  {
+    id: 13,
+    bloque: "C",
+    texto: "Un vendedor tuvo una pérdida de $3.000 diarios durante 5 días seguidos. ¿Cuál es la pérdida total? Plantea con multiplicación.",
+    opciones: ["(+3.000) × (+5) = +15.000", "(-3.000) × (+5) = -15.000", "(-3.000) × (-5) = +15.000", "(+3.000) × (-5) = -15.000"],
+    correcta: 1
+  },
+  {
+    id: 14,
+    bloque: "C",
+    texto: "¿Cuál es el resultado de (-36) ÷ (-9)?",
+    opciones: ["-4", "4", "-45", "45"],
+    correcta: 1
+  },
+  {
+    id: 15,
+    bloque: "C",
+    texto: "Una empresa pierde -250 unidades y luego gana 400 unidades. Si cada unidad perdida cuesta $2, ¿cuál es la ganancia neta en unidades?",
+    opciones: ["-650", "650", "150", "-150"],
+    correcta: 2
+  },
+
+  // ── BLOQUE D: OPERACIONES COMBINADAS Y POLINOMIOS (5 preguntas) ──
+  {
+    id: 16,
+    bloque: "D",
+    texto: "Calcula: (-3) × (-4) + (-8) ÷ (+2)",
+    opciones: ["16", "8", "−16", "−8"],
+    correcta: 1
+  },
+  {
+    id: 17,
+    bloque: "D",
+    texto: "Calcula: (+5) − (−3) × (+2)",
+    opciones: ["−1", "1", "11", "−11"],
+    correcta: 2
+  },
+  {
+    id: 18,
+    bloque: "D",
+    texto: "Calcula: |−9| + (−4) × (+2)",
+    opciones: ["17", "1", "−17", "−1"],
+    correcta: 1
+  },
+  {
+    id: 19,
+    bloque: "D",
+    texto: "Calcula: (−6)² ÷ (−3) + (+7)",
+    opciones: ["−5", "5", "19", "−19"],
+    correcta: 0
+  },
+  {
+    id: 20,
+    bloque: "D",
+    texto: "Calcula: −7 + 12 − 5",
+    opciones: ["0", "−24", "10", "−10"],
+    correcta: 0
+  }
+];
+
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzo5rMDZbTjOxEJRDuWMNqe_adxoTFjPkUkiWya_yaPSoS6cxnbN8g0qmWWq_M8B4ZNQw/exec";
+
+// ===========================
+// ESTADO GLOBAL
+// ===========================
+let estado = {
+  nombre: "",
+  ti: "",
+  curso: "",
+  preguntas: [],
+  respuestas: [],
+  actual: 0,
+  timerInterval: null,
+  tiempoRestante: 240
+};
+
+// ===========================
+// UTILS
+// ===========================
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getFechaHora() {
+  const now = new Date();
+  const fecha = now.toLocaleDateString('es-CO', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  const hora = now.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return { fecha, hora };
+}
+
+// ===========================
+// SELECCIÓN DE ESTUDIANTES
+// ===========================
+document.getElementById('sel-curso').addEventListener('change', function () {
+  const curso = this.value;
+  const sel = document.getElementById('sel-nombre');
+  sel.innerHTML = '<option value="">— Selecciona tu nombre —</option>';
+  if (curso && ESTUDIANTES[curso]) {
+    const lista = [...ESTUDIANTES[curso]].sort();
+    lista.forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = n;
+      opt.textContent = n;
+      sel.appendChild(opt);
+    });
+  }
+});
+
+// ===========================
+// VALIDAR REGISTRO
+// ===========================
+function validarRegistro() {
+  const curso = document.getElementById('sel-curso').value;
+  const nombre = document.getElementById('sel-nombre').value;
+  const tiVal = document.getElementById('inp-ti').value.trim();
+  const errEl = document.getElementById('error-msg');
+
+  errEl.style.display = 'none';
+
+  if (!curso) { mostrarError("Por favor selecciona tu curso."); return; }
+  if (!nombre) { mostrarError("Por favor selecciona tu nombre."); return; }
+  if (!/^\d{10}$/.test(tiVal)) { mostrarError("La Tarjeta de Identidad debe tener exactamente 10 dígitos numéricos."); return; }
+
+  // Verificar intento único
+  const key = "eval_ti_" + tiVal;
+  if (localStorage.getItem(key)) {
+    const prevNombre = localStorage.getItem("eval_nombre_" + tiVal) || "el estudiante registrado";
+    estado.nombre = prevNombre;
+    mostrarPantalla('bloqueado');
+    document.getElementById('blocked-msg').textContent =
+      "La Tarjeta de Identidad " + tiVal + " pertenece a " + prevNombre + " y ya realizó la evaluación. Solo se permite un intento por estudiante.";
+    return;
+  }
+
+  estado.nombre = nombre;
+  estado.ti = tiVal;
+  estado.curso = curso;
+
+  mostrarPantalla('aviso');
+  document.getElementById('aviso-nombre').textContent = "👤 " + nombre + " — Curso " + curso;
+}
+
+function mostrarError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ===========================
+// INICIAR EVALUACIÓN
+// ===========================
+function iniciarEvaluacion() {
+  // Selección proporcional: 2A + 2B + 3C + 3D o 3+3+2+2 — hacemos 3 de cada bloque menos uno = 2+3+3+2
+  // Para 10 preguntas de 20: seleccionamos aleatoriamente manteniendo proporción
+  // Bloques: A(5) B(5) C(5) D(5) → tomamos 2 de A, 3 de B, 3 de C, 2 de D = 10
+  const byBloque = { A: [], B: [], C: [], D: [] };
+  BANCO.forEach(q => byBloque[q.bloque].push(q));
+
+  const sel = [
+    ...shuffle(byBloque.A).slice(0, 2),
+    ...shuffle(byBloque.B).slice(0, 3),
+    ...shuffle(byBloque.C).slice(0, 3),
+    ...shuffle(byBloque.D).slice(0, 2)
+  ];
+
+  // Mezclar orden de preguntas y opciones
+  estado.preguntas = shuffle(sel).map(q => {
+    // Crear índice de opciones mezcladas
+    const indices = shuffle([0, 1, 2, 3]);
+    const opcionesMezcladas = indices.map(i => q.opciones[i]);
+    const nuevaCorrecta = indices.indexOf(q.correcta);
+    return { ...q, opciones: opcionesMezcladas, correcta: nuevaCorrecta };
+  });
+
+  estado.respuestas = new Array(10).fill(null);
+  estado.actual = 0;
+
+  mostrarPantalla('pregunta');
+  mostrarPregunta();
+}
+
+// ===========================
+// MOSTRAR PREGUNTA
+// ===========================
+function mostrarPregunta() {
+  const idx = estado.actual;
+  const q = estado.preguntas[idx];
+
+  document.getElementById('q-counter').textContent = "Pregunta " + (idx + 1) + " de 10";
+  document.getElementById('progress-fill').style.width = ((idx + 1) / 10 * 100) + "%";
+  document.getElementById('q-text').textContent = q.texto;
+
+  const optCont = document.getElementById('q-options');
+  optCont.innerHTML = '';
+  const letras = ['A', 'B', 'C', 'D'];
+  q.opciones.forEach((op, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-letter">${letras[i]}</span><span>${op}</span>`;
+    btn.onclick = () => seleccionarOpcion(i, btn);
+    if (estado.respuestas[idx] === i) btn.classList.add('selected');
+    optCont.appendChild(btn);
+  });
+
+  reiniciarTimer();
+}
+
+function seleccionarOpcion(idx, btnEl) {
+  estado.respuestas[estado.actual] = idx;
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btnEl.classList.add('selected');
+}
+
+// ===========================
+// TIMER
+// ===========================
+function reiniciarTimer() {
+  clearInterval(estado.timerInterval);
+  estado.tiempoRestante = 240;
+  actualizarTimerUI();
+  estado.timerInterval = setInterval(() => {
+    estado.tiempoRestante--;
+    actualizarTimerUI();
+    if (estado.tiempoRestante <= 0) {
+      clearInterval(estado.timerInterval);
+      siguientePregunta();
+    }
+  }, 1000);
+}
+
+function actualizarTimerUI() {
+  const t = estado.tiempoRestante;
+  const m = Math.floor(t / 60);
+  const s = t % 60;
+  document.getElementById('timer-display').textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  const box = document.getElementById('timer-box');
+  box.classList.remove('warn', 'danger');
+  if (t <= 30) box.classList.add('danger');
+  else if (t <= 60) box.classList.add('warn');
+}
+
+// ===========================
+// SIGUIENTE PREGUNTA
+// ===========================
+function siguientePregunta() {
+  clearInterval(estado.timerInterval);
+  if (estado.actual < 9) {
+    estado.actual++;
+    mostrarPregunta();
+  } else {
+    finalizarEvaluacion();
+  }
+}
+
+// ===========================
+// FINALIZAR
+// ===========================
+function finalizarEvaluacion() {
+  clearInterval(estado.timerInterval);
+  mostrarPantalla('resultados');
+
+  let correctas = 0;
+  estado.preguntas.forEach((q, i) => {
+    if (estado.respuestas[i] === q.correcta) correctas++;
+  });
+
+  const total = 10;
+  const nota = (1 + (correctas / total) * 4).toFixed(1);
+  const pct = Math.round((correctas / total) * 100) + "%";
+
+  document.getElementById('res-nota').textContent = nota;
+  document.getElementById('res-correctas').textContent = correctas;
+  document.getElementById('res-total').textContent = total;
+  document.getElementById('res-pct').textContent = pct;
+
+  // Tabla de revisión
+  const tbody = document.getElementById('review-body');
+  tbody.innerHTML = '';
+  const letras = ['A', 'B', 'C', 'D'];
+  estado.preguntas.forEach((q, i) => {
+    const resp = estado.respuestas[i];
+    const ok = resp === q.correcta;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-family:'Syne',sans-serif;font-weight:700;color:var(--teal-light)">${i + 1}</td>
+      <td style="max-width:240px;color:var(--gray-200)">${q.texto.substring(0, 60)}…</td>
+      <td>${resp !== null ? letras[resp] + ") " + q.opciones[resp] : "<em style='color:var(--gray-400)'>Sin respuesta</em>"}</td>
+      <td style="color:var(--green-light)">${letras[q.correcta] + ") " + q.opciones[q.correcta]}</td>
+      <td><span class="badge ${ok ? 'badge-ok' : 'badge-err'}">${ok ? '✓ Correcta' : '✗ Incorrecta'}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Registrar en localStorage
+  const key = "eval_ti_" + estado.ti;
+  localStorage.setItem(key, "1");
+  localStorage.setItem("eval_nombre_" + estado.ti, estado.nombre);
+
+  // Enviar a Google Sheets
+  const { fecha, hora } = getFechaHora();
+  enviarResultados({ nombre: estado.nombre, ti: estado.ti, curso: estado.curso, nota, correctas, total, fecha, hora });
+}
+
+// ===========================
+// ENVÍO A GOOGLE SHEETS
+// ===========================
+async function enviarResultados(data) {
+  const statusEl = document.getElementById('send-status');
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    statusEl.className = "send-status send-ok";
+    statusEl.textContent = "✅ Resultados enviados correctamente al docente.";
+  } catch (err) {
+    statusEl.className = "send-status send-err";
+    statusEl.textContent = "⚠️ No fue posible enviar los resultados. Informa al docente: " + estado.nombre + " — Nota: " + data.nota;
+  }
+}
+
+// ===========================
+// PANTALLAS
+// ===========================
+function mostrarPantalla(nombre) {
+  document.getElementById('screen-registro').classList.add('hidden');
+  document.getElementById('screen-aviso').classList.add('hidden');
+  document.getElementById('screen-pregunta').classList.add('hidden');
+  document.getElementById('screen-resultados').classList.add('hidden');
+  document.getElementById('screen-bloqueado').classList.add('hidden');
+
+  const map = {
+    registro: 'screen-registro',
+    aviso: 'screen-aviso',
+    pregunta: 'screen-pregunta',
+    resultados: 'screen-resultados',
+    bloqueado: 'screen-bloqueado'
+  };
+  document.getElementById(map[nombre]).classList.remove('hidden');
+}
+</script>
+</body>
+</html>
