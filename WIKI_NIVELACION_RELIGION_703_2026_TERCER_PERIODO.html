@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nivelación 7° Religión · Wiki</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+:root{
+  --bg:#F3F6F2; --surface:#FFFFFF; --surface2:#F6F9F5; --ink:#1B2420; --ink-soft:#4A5A51;
+  --line:#6F8378; --line-soft:#D3DBD2; --accent:#2B6E76; --accent-soft:#DCEAEA;
+  --btn:#1D4F55; --on-btn:#FFFFFF;
+  --good:#1F6B3C; --good-soft:#DDF1E3; --bad:#A93226; --bad-soft:#FBE3DF; --warn:#6E4E00; --warn-soft:#FBF0D5;
+  --c0:#2B6E76; --c1:#9A6516; --c2:#B63F32; --c3:#4B5FA8; --c4:#3A7F50; --c5:#85479A;
+  --shadow:0 2px 0 rgba(27,36,32,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A16; --surface:#1B2620; --surface2:#223029; --ink:#ECF1EC; --ink-soft:#B4C1B8;
+    --line:#7C9084; --line-soft:#33443A; --accent:#57B0B8; --accent-soft:#1F3B3E;
+    --btn:#57B0B8; --on-btn:#0B1517;
+    --good:#8FDDA8; --good-soft:#1F3A2A; --bad:#FFA396; --bad-soft:#411F1B; --warn:#F2CB6A; --warn-soft:#3A2F12;
+    --c0:#57B0B8; --c1:#E0A93C; --c2:#F08A7C; --c3:#8FA2E8; --c4:#7FCB96; --c5:#C998DA;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A16; --surface:#1B2620; --surface2:#223029; --ink:#ECF1EC; --ink-soft:#B4C1B8;
+  --line:#7C9084; --line-soft:#33443A; --accent:#57B0B8; --accent-soft:#1F3B3E;
+  --btn:#57B0B8; --on-btn:#0B1517;
+  --good:#8FDDA8; --good-soft:#1F3A2A; --bad:#FFA396; --bad-soft:#411F1B; --warn:#F2CB6A; --warn-soft:#3A2F12;
+  --c0:#57B0B8; --c1:#E0A93C; --c2:#F08A7C; --c3:#8FA2E8; --c4:#7FCB96; --c5:#C998DA;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Public Sans',system-ui,'Segoe UI',Arial,sans-serif;font-size:18px;line-height:1.6}
+h1,h2,h3{font-family:'Fraunces',Georgia,'Times New Roman',serif;line-height:1.2;margin:0 0 .5em}
+h1{font-size:clamp(1.9rem,4vw,2.8rem)} h2{font-size:clamp(1.4rem,2.6vw,1.9rem)} h3{font-size:1.2rem}
+p{margin:.5em 0 .8em} ul,ol{margin:.4em 0 .9em;padding-left:1.4em} li{margin:.25em 0}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.mono,.frac,.num{font-family:'Space Mono',ui-monospace,Consolas,monospace}
+sup,sub{line-height:0}
+.per{text-decoration:overline;text-decoration-thickness:2px}
+
+/* fracciones */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .18em;line-height:1.15;font-size:.95em}
+.frac .n{border-bottom:2px solid currentColor;padding:0 .3em}
+.frac .d{padding:0 .3em}
+.mix{display:inline-flex;align-items:center;gap:.05em}
+.mix .whole{font-family:'Space Mono',monospace;font-weight:700}
+
+/* layout */
+.app{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow:auto;background:var(--surface);border-right:2px solid var(--line-soft);padding:16px 14px 24px}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:12px;cursor:pointer}
+.brand .m{font-size:2rem}
+.brand b{font-family:'Fraunces',serif;font-size:1.05rem;line-height:1.15;display:block}
+.brand small{color:var(--ink-soft);font-size:.8rem}
+.nav a{display:flex;gap:10px;align-items:center;padding:9px 10px;margin:3px 0;border-radius:12px;color:var(--ink);text-decoration:none;border:2px solid transparent;font-weight:500;font-size:.95rem;line-height:1.25}
+.nav a:hover{background:var(--surface2);border-color:var(--line-soft)}
+.nav a.on{background:var(--accent-soft);border-color:var(--t,var(--accent));font-weight:700}
+.nav .ic{font-size:1.25rem;width:1.6rem;text-align:center;flex:none}
+.nav .st{margin-left:auto;flex:none;font-size:.85rem;color:var(--ink-soft)}
+.nav .st.ok{color:var(--good);font-weight:700}
+.nav .hr{height:2px;background:var(--line-soft);margin:10px 0}
+.main{padding:22px clamp(16px,4vw,48px) 60px;max-width:980px;width:100%}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}
+.top .l{display:flex;gap:10px;align-items:center}
+.burger{display:none}
+.btn{background:var(--btn);color:var(--on-btn);border:2px solid var(--btn);border-radius:12px;padding:10px 16px;font-weight:700;font-size:1rem}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:6px 12px;font-size:.9rem}
+.btn[disabled]{opacity:.5;cursor:default}
+
+/* tarjetas */
+.card{background:var(--surface);border:2px solid var(--line-soft);border-radius:18px;padding:18px 20px;margin:16px 0;box-shadow:var(--shadow)}
+.card>h2,.card>h3{display:flex;gap:8px;align-items:center}
+.card.t{border-left:8px solid var(--t,var(--accent))}
+.hero{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:26px clamp(18px,4vw,40px);text-align:center}
+.hero .big{font-size:4.5rem;line-height:1;display:inline-block;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
+.hero p{max-width:60ch;margin-inline:auto;color:var(--ink-soft)}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.pill{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;font-weight:700}
+.pill[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);border-color:var(--btn)}
+.hint{color:var(--ink-soft);font-size:.95rem}
+.bar{height:16px;border-radius:999px;background:var(--line-soft);overflow:hidden;border:2px solid var(--line);max-width:520px;margin:10px auto}
+.bar i{display:block;height:100%;background:var(--good);width:0;transition:width .5s}
+.search{width:100%;max-width:520px;padding:12px 16px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:14px}
+.tc{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line-soft);border-top:8px solid var(--t);border-radius:16px;padding:14px 16px;text-decoration:none}
+.tc:hover{border-color:var(--t);transform:translateY(-2px)}
+.tc .ic{font-size:2rem}
+.tc b{display:block;font-family:'Fraunces',serif;font-size:1.1rem;margin:2px 0}
+.tc span.s{color:var(--ink-soft);font-size:.9rem;display:block}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.chip{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 10px;border-radius:999px;border:2px solid var(--line);background:var(--surface2);color:var(--ink)}
+.chip.a{border-color:var(--c4)} .chip.b{border-color:var(--c3)}
+.tc.dim{opacity:.55}
+
+/* contenido */
+.idea{background:var(--accent-soft);border:2px solid var(--t,var(--accent));border-radius:16px;padding:14px 18px;font-size:1.15rem;font-weight:600}
+.box{border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:12px 0;background:var(--surface2)}
+.box>b:first-child{display:block;margin-bottom:2px}
+.box.key{border-color:var(--t,var(--accent))}
+.box.tip{background:var(--good-soft);border-color:var(--good)}
+.box.warn{background:var(--warn-soft);border-color:var(--warn)}
+.box.ex{background:var(--surface);border-style:dashed}
+table.tbl{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem}
+.tbl th,.tbl td{border:2px solid var(--line-soft);padding:6px 10px;text-align:center}
+.tbl th{background:var(--accent-soft)}
+.tbl td.l,.tbl th.l{text-align:left}
+.scroll{overflow-x:auto}
+.big-eq{font-family:'Space Mono',monospace;font-size:1.25rem;text-align:center;margin:10px 0;padding:10px;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft);overflow-x:auto}
+.steps{list-style:none;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:none;gap:10px;margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft)}
+.steps li.show{display:flex;animation:in .35s}
+.steps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--btn);color:var(--on-btn);font-weight:700;display:grid;place-items:center}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.ans{display:none;margin-top:8px;padding:10px 14px;border-radius:12px;background:var(--good-soft);border:2px solid var(--good);font-weight:700}
+.ans.show{display:block;animation:in .35s}
+.ex-item{border:2px solid var(--line-soft);border-radius:16px;padding:14px 16px;margin:12px 0;background:var(--surface)}
+.ex-item .q{font-weight:600}
+.recipe{counter-reset:r;list-style:none;padding:0}
+.recipe li{counter-increment:r;padding:8px 12px 8px 46px;position:relative;margin:6px 0;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft)}
+.recipe li::before{content:counter(r);position:absolute;left:10px;top:7px;width:28px;height:28px;border-radius:8px;background:var(--t,var(--accent));color:var(--on-btn);display:grid;place-items:center;font-weight:700;font-family:'Space Mono',monospace}
+
+/* retos */
+.q-card{border:2px solid var(--line-soft);border-radius:16px;padding:14px 16px;margin:12px 0;background:var(--surface)}
+.q-card.done{border-color:var(--good);background:var(--good-soft)}
+.q-card .p{font-weight:600;margin-bottom:8px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;width:100%;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+.opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;background:var(--surface2);border:2px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.opt.good{background:var(--good-soft);border-color:var(--good);color:var(--ink);font-weight:700}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--ink);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.inp{padding:10px 14px;border:2px solid var(--line);border-radius:12px;font:inherit;font-family:'Space Mono',monospace;background:var(--surface);color:var(--ink);width:min(260px,100%)}
+.fb{margin-top:8px;padding:8px 12px;border-radius:12px;font-weight:600;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--good-soft);border:2px solid var(--good);color:var(--ink)}
+.fb.no{background:var(--bad-soft);border:2px solid var(--bad);color:var(--ink)}
+.badge{display:none;text-align:center;padding:14px;border-radius:16px;border:2px solid var(--good);background:var(--good-soft);margin-top:12px;font-weight:700}
+.badge.show{display:block;animation:pop .5s}
+.badge .b{font-size:2.6rem;display:block}
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:2px solid var(--line-soft);border-radius:12px;margin:8px 0;background:var(--surface);cursor:pointer}
+.check input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--btn)}
+.check.on{background:var(--good-soft);border-color:var(--good)}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.bd{font-size:2rem;padding:4px 10px;border-radius:14px;border:2px solid var(--line-soft);background:var(--surface2)}
+.bd.off{filter:grayscale(1);opacity:.4}
+.foot{margin-top:36px;color:var(--ink-soft);font-size:.85rem;text-align:center}
+.scrim{display:none}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;inset:0 25% 0 0;z-index:30;transform:translateX(-105%);transition:transform .25s;max-width:340px;box-shadow:0 0 0 100vmax rgba(0,0,0,0)}
+  .side.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.5)}
+  .burger{display:inline-block}
+  body{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.side,.top,.pager,.btn{display:none!important}.app{display:block}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side" aria-label="Menú de temas">
+    <div class="brand" id="brand" role="link" tabindex="0"><span class="m" id="bm"></span><span><b id="bt"></b><small id="bs"></small></span></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="main" id="main">
+    <div class="top">
+      <div class="l"><button class="btn ghost sm burger" id="burger" aria-label="Abrir menú de temas">☰ Temas</button></div>
+      <div class="row">
+        <button class="btn ghost sm" id="theme" aria-label="Cambiar entre modo claro y oscuro">🌓 Claro / oscuro</button>
+      </div>
+    </div>
+    <div id="view" aria-live="polite"></div>
+    <div class="foot" id="foot"></div>
+  </main>
+</div>
+<script>
+const WIKI = {
+key: 'nivel7rel2026',
+corto: 'Nivelación 7° Religión',
+titulo: 'Mi wiki de nivelación · Religión 7°',
+mascota: '🌍',
+pie: 'Religión 7° (703)',
+intro: 'En esta área miramos las religiones de manera general y respetuosa: <b>describimos lo que cada tradición cree y practica</b>, sin decir que una sea mejor, más verdadera o más importante que otra. Aquí encuentras la familia y los tipos de amor, y el recorrido por seis tradiciones, con ejemplos y retos para prepararte.',
+tallerInfo: {
+  A: '<b>Taller A</b> (20 puntos): confucianismo, budismo, cristianismo, islamismo y cómo compararlas y convivir. Verás solo los temas marcados «Taller A».',
+  B: '<b>Taller B</b> (40 puntos): la familia y los tres amores, judaísmo, hinduismo y todo lo del Taller A. Verás todos los temas.'
+},
+cierre: [
+  'Desarrolla cada punto <b>en su espacio</b>, de forma reflexiva y respetuosa.',
+  'Cuando describas una tradición, usa expresiones como <b>«según el…», «para los budistas…», «los cristianos creen…»</b>, sin juzgar.',
+  'Usa <b>ejemplos concretos</b> de tu casa, tu colegio o tu barrio cuando el punto lo pida.',
+  'Si un tema se te hace difícil, vuelve a su receta «¿Cómo lo resuelvo?» y repite el mini-reto.'
+],
+temas: [
+
+{ id:'comunidad-de-amor', icono:'🏠', color:0, taller:'B', titulo:'La familia como comunidad de amor',
+  idea:'Una familia es una comunidad de amor cuando sus miembros se cuidan, se apoyan, se aceptan y celebran juntos; eso convierte una casa en un hogar.',
+  palabras:'familia comunidad amor casa hogar acciones de amor',
+  insignia:'Constructor de hogares',
+  puedo:'explicar qué es una comunidad de amor, diferenciar casa de hogar y dar ejemplos de acciones de amor.',
+  teoria:`
+<p>La familia es el primer grupo al que pertenecemos: las personas que viven contigo y te aman, tu red de apoyo y el primer lugar donde se aprenden los valores.</p>
+<div class="box key"><b>Comunidad de amor</b>Es un grupo de personas que <b>se cuidan, se apoyan, celebran juntas, se aceptan y construyen relaciones de afecto</b>. Sin amor, la familia es solo un grupo que vive junto; con amor, es refugio, espacio de crecimiento y fuente de felicidad.</div>
+<div class="scroll"><table class="tbl"><tr><th></th><th>Casa</th><th>Hogar</th></tr>
+<tr><td class="l">Qué es</td><td>la estructura física: paredes, techo, cuartos</td><td>pertenencia, vínculos y afecto</td></tr>
+<tr><td class="l">Cómo se consigue</td><td>se compra o se arrienda</td><td>se construye con amor, todos los días</td></tr></table></div>
+<h3>Acciones concretas que muestran amor</h3>
+<ul><li>Escuchar con atención.</li><li>Ayudar sin que lo pidan.</li><li>Abrazar y compartir tiempo.</li><li>Perdonar y respetar los espacios de los demás.</li><li>Celebrar los logros.</li></ul>
+<div class="box tip"><b>Frase para recordar</b>Una familia sin amor es una casa vacía; una familia con amor es un hogar lleno de vida.</div>`,
+  ejemplos:[
+   { t:'Reconocer acciones de amor', e:'Sebastián reprueba una evaluación y su abuela lo abraza, le prepara una merienda y se sienta con él a repasar. ¿Qué acciones muestran amor?',
+     pasos:['Busca lo que hace la abuela: abrazar (afecto), preparar la merienda (cuidado) y repasar con él (apoyo).','Observa que no lo regaña ni lo deja solo: lo acompaña en un momento difícil.'], r:'Muestran amor: abrazar, cuidar y apoyar. Así la familia actúa como comunidad de amor.' },
+   { t:'Casa o hogar', e:'Una familia vive en un apartamento muy bonito, pero casi nunca comparten, no se escuchan y cada quien vive en su cuarto. ¿Es una casa o un hogar?',
+     pasos:['Lo físico (el apartamento) es la casa.','Faltan los vínculos: compartir y escuchar.','Un hogar se construye con afecto, no solo con una vivienda.'], r:'Tienen una casa, y pueden construir un hogar si empiezan a compartir y a escucharse.' }
+  ],
+  receta:['Define el concepto con tus palabras: ¿qué debe tener un grupo para ser comunidad de amor?','Para casa vs. hogar: la casa es lo físico; el hogar es lo afectivo.','Da acciones concretas y verdaderas de tu vida (escuchar, ayudar, perdonar…).','Cierra con una idea tuya: por qué importa el amor en la familia.'],
+  retos:[
+   { tipo:'mc', p:'¿Cuál frase describe mejor un hogar?', op:['Un edificio con muchos cuartos','El lugar donde hay pertenencia, vínculos y afecto','Una casa que se compra','El lugar donde se duerme'], c:1, exp:'El hogar se construye con afecto y pertenencia.', pista:'Piensa en lo que no se puede comprar.' },
+   { tipo:'mc', p:'¿Cuál NO es una acción que muestre amor en la familia?', op:['Escuchar con atención','Ayudar sin que lo pidan','Ignorar lo que le pasa al otro','Celebrar los logros'], c:2, exp:'Ignorar al otro no muestra amor.', pista:'Busca la que aleja.' },
+   { tipo:'vf', p:'Una comunidad de amor es un grupo que se cuida, se apoya y celebra junto.', c:true, exp:'Esa es la definición vista en clase.' },
+   { tipo:'vf', p:'La casa y el hogar significan exactamente lo mismo.', c:false, exp:'La casa es lo físico; el hogar son los vínculos y el afecto.' }
+  ]
+},
+
+{ id:'tres-amores', icono:'💞', color:2, taller:'B', titulo:'Eros, Ágape y Philia: los tres amores',
+  idea:'Eros es el amor de pareja; Ágape, el amor incondicional que da sin esperar nada; Philia, el amor de la amistad.',
+  palabras:'eros agape philia amor romantico incondicional amistad aristoteles fromm mandela',
+  insignia:'Experto en los tres amores',
+  puedo:'distinguir Eros, Ágape y Philia, reconocer un Eros sano y las marcas del ágape.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Amor</th><th>¿Qué es?</th><th>Entre quiénes</th><th>Se caracteriza por</th></tr>
+<tr><td class="l"><b>Eros</b></td><td class="l">amor romántico y de atracción (palabra griega)</td><td>una pareja</td><td>atracción, afecto y compromiso; es el punto de partida de muchas familias</td></tr>
+<tr><td class="l"><b>Ágape</b></td><td class="l">amor incondicional, desinteresado, universal y activo</td><td>personas en general</td><td>da sin esperar recibir; se expresa con acciones</td></tr>
+<tr><td class="l"><b>Philia</b></td><td class="l">amor de la amistad</td><td>amigos e iguales</td><td>recíproco, elegido y se construye con el tiempo</td></tr></table></div>
+<h3>Eros sano o desequilibrado</h3>
+<ul><li><b>Eros sano</b>: comunicación y respeto, decisiones tomadas entre los dos, crecimiento, seguridad y confianza.</li><li><b>Eros desequilibrado</b>: celos o control, falta de respeto a los límites del otro, sufrimiento.</li></ul>
+<h3>Ágape</h3>
+<p>Marcas del ágape: es <b>paciente, bondadoso, sin envidia, humilde, no busca lo suyo, no guarda rencor, todo lo soporta y perdura en el tiempo</b>. Para Erich Fromm, amar es una decisión y una promesa. En la historia, el perdón de Nelson Mandela tras 27 años de prisión o la valentía de Malala Yousafzai son ejemplos de ágape.</p>
+<h3>Philia</h3>
+<p>Para Aristóteles hay tres tipos de amistad: <b>por utilidad</b> (se buscan por un beneficio), <b>por placer</b> (se buscan por pasarla bien) y <b>perfecta o de virtud</b> (se quieren por cómo son y buscan el bien del otro).</p>
+<div class="box key"><b>Eros vs. Ágape</b>Eros se basa en la atracción; el ágape, en la elección y el compromiso. Eros suele ser selectivo (una persona); el ágape es universal. Eros recibe y da; el ágape da.</div>`,
+  ejemplos:[
+   { t:'¿Qué amor predomina?', e:'Una niña comparte su merienda con un compañero que no trajo nada, sin esperar nada a cambio. ¿Qué amor predomina?',
+     pasos:['Mira si espera algo a cambio: no.','Mira si es entre pareja o amigos elegidos: es un gesto hacia alguien que lo necesita.','Dar sin esperar recibir y con una acción concreta es el ágape.'], r:'Ágape: amor incondicional y activo.' },
+   { t:'Eros sano o desequilibrado', e:'Una pareja de jóvenes decide juntos cómo usar su tiempo y se respetan los espacios con amigos y familia. ¿Eros sano o desequilibrado?',
+     pasos:['Decisiones tomadas entre los dos → rasgo sano.','Respetar los espacios del otro → respeto a los límites.','Ninguna señal de celos ni de control.'], r:'Eros sano.' },
+   { t:'Tipo de amistad', e:'Dos amigas se ayudan en los estudios, se dicen la verdad con cariño y se alegran de los logros de la otra desde hace años. ¿Qué tipo de amistad es?',
+     pasos:['No es solo por conveniencia ni solo por pasarla bien.','Buscan el bien de la otra y se valoran por cómo son: virtud.'], r:'Amistad perfecta o de virtud (Philia en su mejor forma).' }
+  ],
+  receta:['Pregúntate: ¿entre quiénes ocurre? (pareja, amigos, cualquier persona).','¿Espera algo a cambio? Si no y da con acciones → ágape.','¿Es amistad elegida y recíproca? → Philia. ¿Hay atracción y compromiso de pareja? → Eros.','Justifica con una palabra clave: «incondicional», «recíproco», «atracción».'],
+  retos:[
+   { tipo:'mc', p:'Un vecino lleva todos los días la comida a un anciano del barrio sin esperar nada. Predomina:', op:['Eros','Ágape','Philia por utilidad','Ninguno'], c:1, exp:'Da sin esperar a cambio: ágape.', pista:'¿Espera algo a cambio?' },
+   { tipo:'mc', p:'Dos compañeros que se eligen como amigos y se acompañan desde hace años viven principalmente:', op:['Eros','Ágape','Philia','Ninguno'], c:2, exp:'Amistad elegida y recíproca: Philia.', pista:'Piensa en la amistad.' },
+   { tipo:'mc', p:'¿Cuál es una señal de Eros DESEQUILIBRADO?', op:['Comunicación y respeto','Celos y control','Decisiones entre los dos','Confianza'], c:1, exp:'Los celos y el control son señales desequilibradas.', pista:'Busca lo que hace sufrir al otro.' },
+   { tipo:'vf', p:'Una de las marcas del ágape es que no guarda rencor.', c:true, exp:'Perdona; Mandela es un ejemplo.' }
+  ]
+},
+
+{ id:'santuario-humanizacion', icono:'🌱', color:4, taller:'B', titulo:'La familia: santuario de vida y ámbito de humanización',
+  idea:'La familia protege y cuida la vida (santuario) y es donde aprendemos a vivir con otros respetando su dignidad (humanización).',
+  palabras:'santuario de vida humanizacion frankl fromm valores empatia responsabilidad dialogo respeto gratitud',
+  insignia:'Guardián de la vida',
+  puedo:'explicar por qué la familia es santuario de vida y ámbito de humanización, con valores y ejemplos.',
+  teoria:`
+<div class="box key"><b>Santuario de vida</b>Un santuario es un lugar que <b>protege, cuida y da seguridad</b>. La familia es el primer lugar donde se protege la vida humana. Para <b>Viktor Frankl</b>, el hogar es donde encontramos sentido para vivir.</div>
+<div class="box key"><b>Ámbito de humanización</b><b>Humanizarse</b> es aprender a vivir con otros respetando su dignidad. Para <b>Erich Fromm</b>, amar es un arte que se aprende, y el hogar es la primera escuela. Valores que se aprenden en casa: <b>empatía, responsabilidad, diálogo, respeto y gratitud</b>.</div>
+<div class="scroll"><table class="tbl"><tr><th>Valor</th><th>¿Qué es?</th><th>Ejemplo en casa</th></tr>
+<tr><td class="l">Empatía</td><td class="l">ponerme en el lugar del otro</td><td class="l">acompañar a un hermano que está triste</td></tr>
+<tr><td class="l">Responsabilidad</td><td class="l">cumplir con lo que me corresponde</td><td class="l">tender mi cama y hacer mis tareas</td></tr>
+<tr><td class="l">Diálogo</td><td class="l">hablar y escuchar para resolver</td><td class="l">conversar un desacuerdo sin gritar</td></tr>
+<tr><td class="l">Respeto</td><td class="l">reconocer la dignidad del otro</td><td class="l">pedir permiso, usar buen trato</td></tr>
+<tr><td class="l">Gratitud</td><td class="l">agradecer lo que recibo</td><td class="l">dar las gracias por la comida</td></tr></table></div>
+<div class="box tip"><b>Pregunta para pensar</b>¿Qué pasaría si en tu hogar nadie cuidara a nadie?</div>`,
+  ejemplos:[
+   { t:'Santuario de vida', e:'Explica con un ejemplo cómo tu familia es un «santuario de vida».',
+     pasos:['Define: un santuario protege, cuida y da seguridad.','Elige una situación real: por ejemplo, cuando alguien se enferma, la familia lo cuida, le lleva comida y lo acompaña.','Relaciona con Frankl: en el hogar se encuentra sentido y apoyo para seguir adelante.'], r:'Mi familia es un santuario de vida porque me cuida y me protege, por ejemplo cuando me enfermo.' },
+   { t:'Valor y ejemplo', e:'Escribe dos valores que se aprenden en casa y un ejemplo de cada uno.',
+     pasos:['Elige dos de la lista: respeto y gratitud.','Respeto: pedir permiso antes de usar algo ajeno.','Gratitud: agradecer a mi mamá cuando prepara la comida.'], r:'Respeto (pedir permiso) y gratitud (dar las gracias por la comida).' }
+  ],
+  receta:['Define el concepto con una frase corta (qué es un santuario / qué es humanizarse).','Nombra el autor o la idea si el punto lo pide (Frankl, Fromm).','Da un ejemplo real y concreto de tu casa.','Conecta el ejemplo con la definición.'],
+  retos:[
+   { tipo:'mc', p:'Para decir que la familia es «santuario de vida» se resalta que:', op:['Es un lugar religioso','Protege, cuida y da seguridad a la vida','Tiene muchas personas','Siempre es perfecta'], c:1, exp:'Un santuario protege y cuida.', pista:'¿Qué hace un santuario?' },
+   { tipo:'mc', p:'Humanizarse significa:', op:['Tener muchas cosas','Aprender a vivir con otros respetando su dignidad','Ganar siempre','Vivir solo'], c:1, exp:'Es aprender a convivir con respeto.', pista:'Piensa en convivir.' },
+   { tipo:'mc', p:'¿Cuál es un valor que se aprende en casa?', op:['Gratitud','Competencia desleal','Indiferencia','Rencor'], c:0, exp:'La gratitud es un valor (empatía, responsabilidad, diálogo, respeto y gratitud).', pista:'Busca el que sea un valor.' },
+   { tipo:'vf', p:'Según Viktor Frankl, el hogar es donde encontramos sentido para vivir.', c:true, exp:'Así se vio en clase.' }
+  ]
+},
+
+{ id:'tipos-familia', icono:'👨‍👩‍👧‍👦', color:1, taller:'B', titulo:'Tipos de familia',
+  idea:'Las familias tienen formas distintas (nuclear, monoparental, extensa, ensamblada, adoptiva…), pero en todas permanece el vínculo afectivo.',
+  palabras:'tipos de familia nuclear monoparental extensa ensamblada reconstituida homoparental adoptiva vinculo',
+  insignia:'Explorador de familias',
+  puedo:'identificar los tipos de familia y explicar qué permanece en todos.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Tipo</th><th>¿Cómo es?</th></tr>
+<tr><td class="l"><b>Nuclear</b></td><td class="l">madre, padre e hijos viven juntos</td></tr>
+<tr><td class="l"><b>Monoparental</b></td><td class="l">un solo padre o madre vive con sus hijos</td></tr>
+<tr><td class="l"><b>Extensa</b></td><td class="l">conviven varias generaciones o parientes: abuelos, tíos, primos…</td></tr>
+<tr><td class="l"><b>Ensamblada (reconstituida)</b></td><td class="l">una pareja con hijos de relaciones anteriores forma un solo hogar</td></tr>
+<tr><td class="l"><b>Homoparental</b></td><td class="l">la pareja que cría a los hijos es de dos madres o de dos padres</td></tr>
+<tr><td class="l"><b>Adoptiva</b></td><td class="l">una persona o pareja acoge legalmente a un niño como su hijo</td></tr></table></div>
+<div class="box key"><b>¿Qué permanece?</b>Aunque cambie la forma de la familia, permanece el <b>vínculo afectivo</b>: el amor, el cuidado y el apoyo. No hay familias mejores o peores; todas merecen respeto.</div>
+<p>Las familias han cambiado a lo largo de la historia: de familias extensas a nucleares y a muchas otras formas. Albert Camus decía, en el sentido visto en clase, que la familia no es perfecta, pero es donde uno aprende a seguir.</p>`,
+  ejemplos:[
+   { t:'Identificar el tipo', e:'Papá, mamá y dos hijos viven juntos. ¿Qué tipo de familia es? Y si una mamá vive sola con sus dos hijos, ¿cuál es?',
+     pasos:['Madre, padre e hijos conviviendo: nuclear.','Un solo adulto con sus hijos: monoparental.'], r:'Nuclear y monoparental, respectivamente.' },
+   { t:'Un caso más', e:'Un papá con una hija se une a una mamá con un hijo y forman un solo hogar. ¿Qué tipo es?',
+     pasos:['Hay hijos de relaciones anteriores.','Se juntan en un solo hogar.'], r:'Ensamblada (reconstituida).' },
+   { t:'Lo que permanece', e:'¿Qué tienen en común todos los tipos de familia?',
+     pasos:['Compara las formas: son distintas.','Lo que no cambia es el vínculo afectivo: amor, cuidado, apoyo.'], r:'El vínculo afectivo.' }
+  ],
+  receta:['Cuenta quiénes viven en el hogar y cómo se relacionan.','Compáralo con la tabla de tipos.','Elige el tipo que mejor describe el caso.','Si te preguntan qué permanece: el vínculo afectivo y el respeto.'],
+  retos:[
+   { tipo:'mc', p:'Abuelos, tíos y primos viven en la misma casa. Es una familia:', op:['Nuclear','Extensa','Monoparental','Adoptiva'], c:1, exp:'Conviven varias generaciones: extensa.', pista:'Mira a cuántas generaciones incluye.' },
+   { tipo:'mc', p:'Una pareja acoge legalmente a una niña como su hija. Es una familia:', op:['Ensamblada','Nuclear','Adoptiva','Extensa'], c:2, exp:'Adoptiva.', pista:'Piensa en «acoger legalmente».' },
+   { tipo:'mc', p:'Un papá vive solo con su hijo de 12 años. Es una familia:', op:['Monoparental','Extensa','Ensamblada','Nuclear'], c:0, exp:'Un solo padre con su hijo: monoparental.', pista:'¿Cuántos adultos hay?' },
+   { tipo:'vf', p:'Algunas familias son mejores que otras según su tipo.', c:false, exp:'Todas merecen respeto; lo que permanece es el vínculo afectivo.' }
+  ]
+},
+
+{ id:'judaismo', icono:'✡️', color:3, taller:'B', titulo:'Judaísmo',
+  idea:'Tradición monoteísta que nace con Abraham y se sostiene en una Alianza y en una memoria compartida; el Shabat se vive en familia.',
+  palabras:'judaismo abraham tora talmud alianza monoteismo shabat sinagoga kosher bar mitzva bat mitzva mesias',
+  insignia:'Viajero al judaísmo',
+  puedo:'describir el judaísmo: origen, textos, creencias, Shabat, Bar/Bat Mitzvá y familia.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Ficha</th><th>Judaísmo</th></tr>
+<tr><td class="l">Origen y figura</td><td class="l"><b>Abraham</b>, patriarca del pueblo hebreo (hace unos 4.000 años, ~2000 a. C.), en el Oriente Próximo</td></tr>
+<tr><td class="l">Textos sagrados</td><td class="l">la <b>Torá</b> y el <b>Talmud</b></td></tr>
+<tr><td class="l">Creencias clave</td><td class="l"><b>Monoteísmo</b> (un solo Dios, YHWH, sin imágenes) y la <b>Alianza</b> con el pueblo de Israel</td></tr>
+<tr><td class="l">Prácticas y símbolos</td><td class="l">Shabat, sinagoga, normas kosher, Bar/Bat Mitzvá</td></tr></table></div>
+<div class="box key"><b>Conceptos</b><b>Monoteísmo</b>: creer en un solo Dios. <b>Alianza</b>: el pacto o compromiso entre Dios y el pueblo de Israel.</div>
+<h3>Shabat y familia</h3>
+<ul><li>El <b>Shabat</b> es el descanso semanal: va del viernes al atardecer hasta el sábado al atardecer, y se celebra <b>en familia</b>.</li><li>El <b>Bar/Bat Mitzvá</b> (alrededor de los 12 o 13 años) marca que un joven asume sus responsabilidades religiosas; reúne a la familia extendida.</li><li>Los <b>padres transmiten</b> la fe y las tradiciones; la educación religiosa y ética empieza en casa.</li></ul>
+<div class="box tip"><b>Idea para cerrar</b>El judaísmo muestra cómo una alianza y una memoria compartida sostienen a un pueblo durante miles de años.</div>`,
+  ejemplos:[
+   { t:'Ficha de la tradición', e:'Completa: figura, texto sagrado y símbolo o práctica principal del judaísmo.',
+     pasos:['Figura: Abraham, patriarca del pueblo hebreo.','Texto: la Torá (y el Talmud).','Práctica: el Shabat.'], r:'Abraham · Torá · Shabat.' },
+   { t:'Describir sin juzgar', e:'Explica qué es el Shabat usando «según el judaísmo».',
+     pasos:['Di qué es: descanso semanal, de viernes al atardecer a sábado al atardecer.','Añade con quién: con la familia.','Usa la fórmula neutral: «Según el judaísmo…».'], r:'Según el judaísmo, el Shabat es el descanso semanal que se celebra en familia, del viernes al atardecer al sábado al atardecer.' }
+  ],
+  receta:['Recuerda la ficha: figura, textos, creencias clave, prácticas.','Define los conceptos (monoteísmo, Alianza) en una frase.','Para la familia: Shabat, Bar/Bat Mitzvá y transmisión de la fe.','Escribe con «según el…» y tradiciones de tu propia familia como ejemplo.'],
+  retos:[
+   { tipo:'mc', p:'¿Quién es considerado el patriarca del pueblo hebreo?', op:['Confucio','Abraham','Mahoma','Siddhartha'], c:1, exp:'Abraham.', pista:'Vivió hace unos 4.000 años.' },
+   { tipo:'mc', p:'El Shabat es:', op:['Una peregrinación','El descanso semanal celebrado en familia','Un texto sagrado','Un símbolo'], c:1, exp:'Descanso semanal de viernes a sábado.', pista:'Va del viernes al atardecer al sábado al atardecer.' },
+   { tipo:'mc', p:'Los textos sagrados del judaísmo son:', op:['La Torá y el Talmud','El Corán','Los Vedas','Las Analectas'], c:0, exp:'Torá y Talmud.', pista:'Recuerda la ficha.' },
+   { tipo:'vf', p:'El monoteísmo es creer en un solo Dios.', c:true, exp:'Mono = uno; teísmo = Dios.' }
+  ]
+},
+
+{ id:'hinduismo', icono:'🕉️', color:5, taller:'B', titulo:'Hinduismo',
+  idea:'Religión sin fundador único, nacida en el valle del Indo hace más de 3.500 años; cree en el samsara, el karma y el dharma.',
+  palabras:'hinduismo vedas upanishads bhagavad gita samsara karma dharma brahma vishnu shiva om diwali holi',
+  insignia:'Viajero al hinduismo',
+  puedo:'describir el hinduismo: origen, textos, samsara, karma y dharma, dioses, festivales y familia.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Ficha</th><th>Hinduismo</th></tr>
+<tr><td class="l">Origen</td><td class="l">se desarrolló gradualmente en el <b>valle del río Indo</b> (India), hace <b>más de 3.500 años</b>; <b>no tiene un fundador único</b></td></tr>
+<tr><td class="l">Textos sagrados</td><td class="l">los <b>Vedas</b>, los <b>Upanishads</b> y el <b>Bhagavad Gita</b></td></tr>
+<tr><td class="l">Dioses principales</td><td class="l"><b>Brahma, Vishnu y Shiva</b>, vistos como manifestaciones de una realidad última</td></tr>
+<tr><td class="l">Símbolo</td><td class="l">el <b>Om</b></td></tr>
+<tr><td class="l">Prácticas</td><td class="l">templos, yoga y meditación, festivales (<b>Diwali</b>, <b>Holi</b>)</td></tr></table></div>
+<div class="box key"><b>Tres ideas clave</b>
+<b>Samsara</b>: el ciclo de nacimiento, muerte y renacimiento.<br><b>Karma</b>: ley de causa y efecto; las acciones determinan el destino futuro.<br><b>Dharma</b>: el deber o propósito de vida de cada persona.</div>
+<h3>Familia</h3>
+<p>Se valora la <b>familia extensa</b> y el respeto a los mayores como parte del dharma. Los ritos de paso (nacimiento, matrimonio) involucran a toda la familia, y el matrimonio se entiende tradicionalmente como la unión entre familias.</p>`,
+  ejemplos:[
+   { t:'Relacionar conceptos', e:'Relaciona: Samsara, Karma y Dharma con A) causa y efecto, B) deber o propósito de vida, C) ciclo de renacimiento.',
+     pasos:['Samsara es el ciclo de nacimiento y renacimiento: C.','Karma es causa y efecto de las acciones: A.','Dharma es el deber o propósito de vida: B.'], r:'Samsara – C; Karma – A; Dharma – B.' },
+   { t:'Aplicar a un caso', e:'Mariana cuida a su abuela enferma sin que nadie se lo pida. Explica la situación con el dharma y el karma.',
+     pasos:['Dharma: cuidar a los mayores forma parte del deber en esta tradición.','Karma: las buenas acciones tienen buenas consecuencias en el destino.','Usa una fórmula neutral: «Según el hinduismo…».'], r:'Según el hinduismo, Mariana cumple su dharma al cuidar a su abuela, y esa buena acción genera buen karma.' }
+  ],
+  receta:['Ficha: dónde y cuándo nació, textos, dioses y símbolo.','Define samsara, karma y dharma con una frase cada uno.','Aplica el concepto al caso: ¿qué acción? ¿cuál es su deber? ¿qué consecuencia?','Escribe con «según el hinduismo…» y cierra con una semejanza o diferencia si te la piden.'],
+  retos:[
+   { tipo:'mc', p:'El hinduismo:', op:['Tiene un único fundador','No tiene un fundador único','Nació en el siglo VII','Se basa solo en el Corán'], c:1, exp:'Se construyó durante siglos por muchas comunidades.', pista:'Piensa en el origen gradual.' },
+   { tipo:'mc', p:'El karma es:', op:['El ciclo de renacimiento','La ley de causa y efecto','El deber de vida','Una fiesta'], c:1, exp:'Las acciones tienen consecuencias.', pista:'Causa y efecto.' },
+   { tipo:'mc', p:'Brahma, Vishnu y Shiva son:', op:['Textos sagrados','Festivales','Los tres dioses principales estudiados','Templos'], c:2, exp:'Los tres dioses principales.', pista:'Recuerda la ficha.' },
+   { tipo:'vf', p:'Diwali y Holi son festivales del hinduismo.', c:true, exp:'Así se vio en clase.' }
+  ]
+},
+
+{ id:'confucianismo', icono:'📜', color:0, taller:'AB', titulo:'Confucianismo',
+  idea:'Tradición china nacida con Confucio (siglo VI a. C.) centrada en la ética, el respeto y la familia, más que en un dios creador.',
+  palabras:'confucianismo confucio analectas ren xiao piedad filial li ritual ancestros virtud familia',
+  insignia:'Discípulo de Confucio',
+  puedo:'describir el confucianismo, sus virtudes (Ren, Xiao, Li) y aplicarlas a un caso.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Ficha</th><th>Confucianismo</th></tr>
+<tr><td class="l">Figura</td><td class="l"><b>Confucio</b> (Kong Fuzi), filósofo chino del <b>siglo VI a. C.</b>, en una época de inestabilidad política</td></tr>
+<tr><td class="l">Texto clave</td><td class="l">las <b>Analectas</b></td></tr>
+<tr><td class="l">¿Religión?</td><td class="l">se discute si es una <b>religión o un sistema ético y social</b>; <b>no tiene un dios creador central</b></td></tr>
+<tr><td class="l">Prácticas</td><td class="l">veneración a los ancestros, estudio de los clásicos, rituales de respeto, educación moral</td></tr></table></div>
+<div class="box key"><b>Virtudes clave</b>
+<b>Ren</b>: benevolencia o humanidad hacia los demás.<br><b>Xiao</b>: piedad filial, el respeto y cuidado a los padres y mayores; es la virtud más importante en la familia.<br><b>Li</b>: ritual, las normas de cortesía y respeto mutuo.</div>
+<p>Cada persona cumple un <b>rol</b> en la sociedad. Una sociedad ordenada depende de familias ordenadas; la familia es la <b>primera escuela de virtud</b>.</p>
+<div class="box tip"><b>Idea para cerrar</b>Se puede construir una tradición de vida sólida centrada en la ética y el respeto, más que en los dioses.</div>`,
+  ejemplos:[
+   { t:'Virtudes en una situación', e:'Todos los sábados Mateo ayuda a su abuela a subir las bolsas del mercado y la escucha con paciencia. ¿Qué virtudes del confucianismo hay?',
+     pasos:['Ayudar y cuidar a una persona mayor es xiao (piedad filial).','Escucharla con paciencia y buen trato es ren (benevolencia).','Tratarla con cortesía es parte de li (ritual).'], r:'Xiao (respeto y cuidado a la abuela) y ren (benevolencia); también la cortesía del li.' },
+   { t:'¿Religión o sistema ético?', e:'Explica por qué se discute si el confucianismo es una religión.',
+     pasos:['No tiene un dios creador central.','Se centra en la ética y el orden social.','Por eso unos lo ven como religión y otros como sistema ético y social.'], r:'Porque se enfoca en la ética y el orden social y no tiene un dios creador central.' }
+  ],
+  receta:['Ficha: quién, cuándo, texto, ¿dios creador?','Define Ren, Xiao y Li con tus palabras.','Aplica al caso: ¿qué acción concreta muestra cada virtud?','Justifica con «según el confucianismo…».'],
+  retos:[
+   { tipo:'mc', p:'El texto clave del confucianismo es:', op:['Las Analectas','El Corán','La Biblia','Los Vedas'], c:0, exp:'Las Analectas.', pista:'Reúnen las enseñanzas de Confucio.' },
+   { tipo:'mc', p:'La piedad filial (xiao) significa:', op:['Respeto y cuidado a los padres y mayores','Celebrar fiestas','Meditar en silencio','Viajar'], c:0, exp:'Es la virtud más importante en la familia.', pista:'Piensa en padres y abuelos.' },
+   { tipo:'mc', p:'¿Cuál afirmación es correcta?', op:['Tiene un dios creador central','Se discute si es religión o sistema ético y social','Nació en el siglo VII d. C.','Su fundador es Abraham'], c:1, exp:'No tiene dios creador central.', pista:'Piensa en ética.' },
+   { tipo:'vf', p:'Li se refiere al ritual y a las normas de cortesía y respeto mutuo.', c:true, exp:'Así es.' }
+  ]
+},
+
+{ id:'budismo', icono:'🪷', color:4, taller:'AB', titulo:'Budismo',
+  idea:'Camino de transformación personal que enseña las Cuatro Nobles Verdades para comprender y poner fin al sufrimiento.',
+  palabras:'budismo buda siddhartha gautama bodhi cuatro nobles verdades octuple sendero sufrimiento dukkha apego loto rueda dharma nirvana meditacion karuna',
+  insignia:'Caminante del Óctuple Sendero',
+  puedo:'describir el budismo: Buda, las Cuatro Nobles Verdades, sus símbolos y aplicarlas a un caso.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Ficha</th><th>Budismo</th></tr>
+<tr><td class="l">Figura</td><td class="l"><b>Siddhartha Gautama (Buda)</b>, príncipe, siglos VI-V a. C., frontera India-Nepal; logró su comprensión (iluminación) meditando bajo el <b>árbol Bodhi</b></td></tr>
+<tr><td class="l">Textos</td><td class="l"><b>Canon Pali</b> y sutras</td></tr>
+<tr><td class="l">¿Dios creador?</td><td class="l">No; es un camino de transformación personal</td></tr></table></div>
+<div class="box key"><b>Las Cuatro Nobles Verdades</b>
+<b>1.</b> La vida incluye sufrimiento (<i>dukkha</i>).<br><b>2.</b> El sufrimiento tiene una causa: el apego y el deseo.<br><b>3.</b> Es posible poner fin al sufrimiento.<br><b>4.</b> El camino para lograrlo es el <b>Óctuple Sendero</b> (8 pasos: conducta, sabiduría y meditación).</div>
+<h3>Símbolos</h3>
+<ul><li><b>Flor de loto</b>: la pureza que crece desde el lodo.</li><li><b>Rueda del Dharma</b>: representa las enseñanzas de Buda y el camino; sus radios son los pasos del Óctuple Sendero.</li></ul>
+<h3>Familia</h3>
+<p>Se valora la <b>compasión (karuna)</b>, empezando por la propia familia; querer sin apego excesivo; los padres guían con paciencia y cuidar a los padres ancianos es un acto de gratitud.</p>`,
+  ejemplos:[
+   { t:'Aplicar la segunda verdad', e:'Laura está muy molesta porque no le compraron un videojuego y no deja de pensar en él. Explica su situación con la segunda Noble Verdad y qué consejo daría el budismo.',
+     pasos:['Segunda verdad: el sufrimiento nace del apego y el deseo.','Laura sufre porque se aferra a algo que desea.','Consejo: soltar el apego, respirar, valorar lo que ya tiene, practicar la calma o la meditación.'], r:'Según el budismo, su malestar viene del apego y el deseo; le aconsejaría soltar el apego y practicar la calma.' },
+   { t:'Las cuatro verdades', e:'Escribe con tus palabras las cuatro verdades, numeradas.',
+     pasos:['1. Hay sufrimiento en la vida.','2. El sufrimiento viene del apego y del deseo.','3. Se puede acabar el sufrimiento.','4. El camino es el Óctuple Sendero.'], r:'Hay sufrimiento; tiene causa; puede cesar; el camino es el Óctuple Sendero.' }
+  ],
+  receta:['Ficha: quién, cuándo, árbol, textos.','Memoriza las 4 verdades con una palabra clave: sufrimiento, causa (apego), fin, camino.','Para casos: identifica qué desea o a qué se aferra la persona (2ª verdad).','Propón una acción tranquila: respirar, meditar, soltar, compasión.'],
+  retos:[
+   { tipo:'mc', p:'Siddhartha Gautama alcanzó su comprensión meditando bajo el árbol:', op:['Bodhi','De la vida','De Navidad','Del conocimiento'], c:0, exp:'El árbol Bodhi.', pista:'Árbol de la iluminación.' },
+   { tipo:'mc', p:'Según la segunda Noble Verdad, el sufrimiento nace de:', op:['La falta de dinero','El apego y el deseo','Los dioses','El clima'], c:1, exp:'Apego y deseo.', pista:'Segunda verdad: la causa.' },
+   { tipo:'mc', p:'La flor de loto representa:', op:['La guerra','La pureza que crece desde el lodo','Un texto','Un dios'], c:1, exp:'Pureza que surge desde el lodo.', pista:'Piensa en una flor que nace en agua turbia.' },
+   { tipo:'mc', p:'El camino para acabar con el sufrimiento es:', op:['El Óctuple Sendero','El Corán','El Shabat','El Ramadán'], c:0, exp:'Cuarta verdad.', pista:'8 pasos.' },
+   { tipo:'vf', p:'El budismo se basa en la existencia de un dios creador.', c:false, exp:'Es un camino de transformación personal, sin dios creador.' }
+  ]
+},
+
+{ id:'cristianismo', icono:'✝️', color:2, taller:'AB', titulo:'Cristianismo',
+  idea:'Tradición surgida en el siglo I en Judea alrededor de Jesús de Nazaret; su texto sagrado es la Biblia y la cruz es su símbolo principal.',
+  palabras:'cristianismo jesus de nazaret biblia antiguo nuevo testamento cruz sacramentos bautismo eucaristia navidad semana santa trinidad perdon',
+  insignia:'Viajero al cristianismo',
+  puedo:'describir el cristianismo: Jesús, la Biblia, sacramentos, cruz, familia y celebraciones.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Ficha</th><th>Cristianismo</th></tr>
+<tr><td class="l">Figura</td><td class="l"><b>Jesús de Nazaret</b>, predicador judío del <b>siglo I d. C.</b>, en Judea; el cristianismo surgió dentro de la tradición <b>judía</b></td></tr>
+<tr><td class="l">Texto sagrado</td><td class="l">la <b>Biblia</b>: <b>Antiguo Testamento</b> y <b>Nuevo Testamento</b></td></tr>
+<tr><td class="l">Creencias clave</td><td class="l">monoteísmo trinitario (Padre, Hijo y Espíritu Santo); muerte y resurrección de Jesús; amor al prójimo; diversidad interna (catolicismo, protestantismo, ortodoxia)</td></tr>
+<tr><td class="l">Símbolos y prácticas</td><td class="l">la <b>cruz</b>, la iglesia, sacramentos como el <b>bautismo</b> y la <b>eucaristía</b>, Navidad y Semana Santa</td></tr></table></div>
+<div class="box key"><b>La cruz</b>Según el cristianismo, recuerda la muerte y resurrección de Jesús y simboliza el amor y el sacrificio.</div>
+<h3>Familia y celebraciones</h3>
+<ul><li>El matrimonio se entiende como una unión de <b>amor y compromiso</b>.</li><li>La familia es espacio para practicar el <b>perdón y el servicio</b>; la fe y los valores se enseñan desde la primera infancia.</li><li><b>Navidad</b> (novenas, villancicos, cena en familia) y <b>Semana Santa</b> (procesiones y reflexión) reúnen a las familias en Colombia.</li></ul>`,
+  ejemplos:[
+   { t:'Ficha corta', e:'Escribe quién fue Jesús de Nazaret, cuándo y dónde vivió y en qué tradición surgió el cristianismo.',
+     pasos:['Predicador judío, en el siglo I d. C., en Judea.','El cristianismo surgió dentro de la tradición judía.'], r:'Jesús de Nazaret, siglo I d. C., Judea; surgió dentro del judaísmo.' },
+   { t:'Describir una celebración', e:'Describe la Navidad en Colombia y cómo reúne a las familias.',
+     pasos:['Di qué se celebra: según el cristianismo, el nacimiento de Jesús.','Cuenta cómo se vive: novenas, villancicos, cena en familia.','Explica el efecto: se reúne la familia extendida.'], r:'Según el cristianismo, en Navidad se celebra el nacimiento de Jesús; en Colombia se hacen novenas y cenas y se reúne la familia extendida.' }
+  ],
+  receta:['Ficha: figura, época y lugar, texto sagrado, símbolo.','Para sacramentos: nombra dos (bautismo, eucaristía) y explica qué representan.','Para celebraciones: qué se recuerda, cómo se vive en Colombia, cómo reúne a la familia.','Usa «según el cristianismo…» o «los cristianos creen…».'],
+  retos:[
+   { tipo:'mc', p:'La Biblia se divide en:', op:['Corán y Torá','Antiguo y Nuevo Testamento','Vedas y Upanishads','Analectas y sutras'], c:1, exp:'Antiguo y Nuevo Testamento.', pista:'Dos partes.' },
+   { tipo:'mc', p:'Jesús de Nazaret vivió en el siglo:', op:['VI a. C.','I d. C.','VII d. C.','XV d. C.'], c:1, exp:'Siglo I d. C., en Judea.', pista:'Después de Cristo, primer siglo.' },
+   { tipo:'mc', p:'Dos sacramentos cristianos son:', op:['Bautismo y eucaristía','Shabat y Hajj','Ramadán y Diwali','Yoga y meditación'], c:0, exp:'Bautismo y eucaristía.', pista:'Recuerda la ficha.' },
+   { tipo:'vf', p:'El cristianismo surgió dentro de la tradición judía.', c:true, exp:'Jesús era un predicador judío.' }
+  ]
+},
+
+{ id:'islamismo', icono:'🕌', color:3, taller:'AB', titulo:'Islamismo',
+  idea:'Tradición monoteísta nacida en el siglo VII con Mahoma; su texto sagrado es el Corán y se organiza en cinco pilares.',
+  palabras:'islamismo islam mahoma coran alá cinco pilares ramadan hajj salat mezquita meca medina limosna ayuno peregrinacion',
+  insignia:'Viajero al islamismo',
+  puedo:'describir el islamismo: Mahoma, el Corán, los cinco pilares, Ramadán, Hajj y la familia.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Ficha</th><th>Islamismo</th></tr>
+<tr><td class="l">Figura</td><td class="l"><b>Mahoma</b>, último profeta del islam, <b>siglo VII d. C.</b>, península arábiga (<b>La Meca</b> y <b>Medina</b>)</td></tr>
+<tr><td class="l">Texto sagrado</td><td class="l">el <b>Corán</b>, que se cree que es la palabra de Alá revelada a Mahoma</td></tr>
+<tr><td class="l">Creencias clave</td><td class="l">monoteísmo estricto (Alá, sin imágenes); los cinco pilares; reconoce a Abraham, Moisés y Jesús como profetas anteriores</td></tr></table></div>
+<div class="box key"><b>Los cinco pilares</b>
+<b>1.</b> Profesión de fe (<i>Shahada</i>).<br><b>2.</b> Oración (<i>Salat</i>): cinco veces al día, hacia La Meca.<br><b>3.</b> Limosna (<i>Zakat</i>): ayudar a quien lo necesita.<br><b>4.</b> Ayuno (<i>Sawm</i>) en el mes de Ramadán.<br><b>5.</b> Peregrinación (<i>Hajj</i>) a La Meca.</div>
+<ul><li><b>Ramadán</b>: mes de ayuno (desde el amanecer hasta el atardecer), reflexión y generosidad; las familias se reúnen al atardecer a compartir la comida.</li><li><b>Hajj</b>: la peregrinación a La Meca.</li><li>El respeto y el cuidado a los padres es una obligación moral; la familia extendida participa en las decisiones importantes.</li></ul>`,
+  ejemplos:[
+   { t:'Ramadán en familia', e:'Una compañera cuenta que en el Ramadán su familia se reúne al atardecer para compartir la comida después del ayuno. ¿Qué sentido tiene?',
+     pasos:['Ramadán es un mes de ayuno, reflexión y generosidad.','Al atardecer se rompe el ayuno y se comparte la comida.','Se vive en comunidad y familia, y fortalece los lazos.'], r:'Según el islamismo, el Ramadán es un tiempo de ayuno, reflexión y generosidad que se vive en familia y comunidad.' },
+   { t:'Los cinco pilares', e:'Escribe los cinco pilares en orden.',
+     pasos:['1. Profesión de fe.','2. Oración.','3. Limosna.','4. Ayuno (Ramadán).','5. Peregrinación (Hajj).'], r:'Profesión de fe, oración, limosna, ayuno y peregrinación.' }
+  ],
+  receta:['Ficha: figura, siglo, lugares, texto.','Memoriza los pilares con las iniciales: fe, oración, limosna, ayuno, peregrinación.','Para el Ramadán y el Hajj: define cada uno en una frase.','Para preguntas a un compañero, escribe una pregunta respetuosa que invite a contar.'],
+  retos:[
+   { tipo:'mc', p:'El texto sagrado del islamismo es:', op:['La Biblia','El Corán','La Torá','Las Analectas'], c:1, exp:'El Corán.', pista:'Se cree que es palabra de Alá.' },
+   { tipo:'mc', p:'El Hajj es:', op:['El mes de ayuno','La peregrinación a La Meca','La oración diaria','La limosna'], c:1, exp:'Peregrinación a La Meca.', pista:'Uno de los cinco pilares.' },
+   { tipo:'mc', p:'¿Cuál NO es uno de los cinco pilares?', op:['Oración','Ayuno','Bautismo','Limosna'], c:2, exp:'El bautismo es un sacramento cristiano.', pista:'Busca el que pertenece a otra tradición.' },
+   { tipo:'vf', p:'Mahoma vivió en el siglo VII d. C.', c:true, exp:'En La Meca y Medina.' }
+  ]
+},
+
+{ id:'comparo-y-convivo', icono:'🤝', color:1, taller:'AB', titulo:'Comparo y convivo',
+  idea:'Comparar tradiciones nos ayuda a ver semejanzas y diferencias sin juzgar y a convivir con respeto.',
+  palabras:'comparar semejanzas diferencias convivencia respeto monoteismo cuadro comparativo',
+  insignia:'Constructor de convivencia',
+  puedo:'comparar tradiciones, distinguir monoteístas de las que no se centran en un dios creador y proponer acciones de convivencia.',
+  teoria:`
+<div class="scroll"><table class="tbl"><tr><th>Tradición</th><th>Figura</th><th>Texto</th><th>Símbolo o práctica</th></tr>
+<tr><td class="l">Confucianismo</td><td>Confucio</td><td>Analectas</td><td>veneración a ancestros, rituales de respeto</td></tr>
+<tr><td class="l">Budismo</td><td>Siddhartha Gautama</td><td>Canon Pali y sutras</td><td>loto, rueda del Dharma, meditación</td></tr>
+<tr><td class="l">Cristianismo</td><td>Jesús de Nazaret</td><td>Biblia</td><td>cruz, sacramentos</td></tr>
+<tr><td class="l">Islamismo</td><td>Mahoma</td><td>Corán</td><td>cinco pilares, Ramadán, Hajj</td></tr>
+<tr><td class="l">Judaísmo</td><td>Abraham</td><td>Torá y Talmud</td><td>Shabat</td></tr>
+<tr><td class="l">Hinduismo</td><td>sin fundador único</td><td>Vedas, Upanishads, Bhagavad Gita</td><td>Om, Diwali, Holi</td></tr></table></div>
+<div class="box key"><b>¿Dios creador?</b>De las cuatro tradiciones del Taller A: <b>cristianismo e islamismo son monoteístas</b>; <b>confucianismo y budismo no se centran en un dios creador</b>.</div>
+<h3>Cómo comparar sin juzgar</h3>
+<ul><li>Describe lo que cada tradición cree y practica: «según el…», «para los…».</li><li>Busca una <b>semejanza</b> (por ejemplo, la importancia de respetar a los padres) y una <b>diferencia</b> (por ejemplo, si hay un dios creador).</li><li>No digas que una sea mejor o peor.</li></ul>
+<h3>Convivir con respeto</h3>
+<p>Escucha sin burlarte, haz preguntas respetuosas para conocer a los demás, respeta los espacios y las celebraciones, y rechaza el trato discriminatorio en el colegio y en el barrio.</p>`,
+  ejemplos:[
+   { t:'Una semejanza y una diferencia', e:'Compara el cristianismo y el islamismo.',
+     pasos:['Semejanza: ambos son monoteístas y valoran el respeto a la familia.','Diferencia: el texto sagrado (Biblia / Corán) y la figura central (Jesús / Mahoma).','Escribe con «según…» y sin juzgar.'], r:'Ambos son monoteístas; se diferencian en su texto sagrado y su figura central.' },
+   { t:'Acciones de convivencia', e:'Escribe dos acciones concretas para convivir con respeto.',
+     pasos:['En el colegio: escuchar sin burlarme de las creencias distintas.','En el barrio: preguntar con respeto y respetar las celebraciones de los vecinos.'], r:'Escuchar sin burlarme y preguntar con respeto.' }
+  ],
+  receta:['Usa el cuadro comparativo: figura, texto, símbolo/práctica.','Para comparar: una semejanza y una diferencia, con «según…».','Para monoteísmo: ¿hay un solo Dios creador?','Para convivencia: acciones concretas, reales y respetuosas.'],
+  retos:[
+   { tipo:'mc', p:'De estas cuatro tradiciones, no se centran en un dios creador:', op:['Cristianismo e islamismo','Confucianismo y budismo','Cristianismo y budismo','Islamismo y confucianismo'], c:1, exp:'Confucianismo y budismo.', pista:'Recuerda las fichas.' },
+   { tipo:'mc', p:'¿Cuál es el texto sagrado del cristianismo?', op:['Corán','Torá','Biblia','Analectas'], c:2, exp:'La Biblia.', pista:'Antiguo y Nuevo Testamento.' },
+   { tipo:'mc', p:'¿Cuál es una forma respetuosa de describir una tradición?', op:['Decir que es mejor que otra','Usar «según el…» sin juzgar','Burlarse','Ignorar'], c:1, exp:'Describir sin juzgar.', pista:'Describe sin comparar valor.' },
+   { tipo:'vf', p:'Es correcto decir que una religión es mejor que otra.', c:false, exp:'En esta área se describe sin juzgar.' }
+  ]
+}
+
+]
+};
+
+</script>
+<script>
+(function(){
+'use strict';
+var W = WIKI;
+function $(s,el){return (el||document).querySelector(s)}
+function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))}
+var store = {
+  get:function(k){try{var v=localStorage.getItem(W.key+':'+k);return v?JSON.parse(v):null}catch(e){return null}},
+  set:function(k,v){try{localStorage.setItem(W.key+':'+k,JSON.stringify(v))}catch(e){}}
+};
+var S = {
+  taller: store.get('taller')||'B',
+  done: store.get('done')||{},
+  visited: store.get('visited')||{},
+  check: store.get('check')||{}
+};
+function save(){store.set('taller',S.taller);store.set('done',S.done);store.set('visited',S.visited);store.set('check',S.check)}
+
+/* fracciones {3/4} y {2 1/4} */
+function fmt(h){
+  return String(h).replace(/\{(?:(-?\d+)\s)?([^\s{}\/<>]+)\/([^\s{}\/<>]+)\}/g,function(m,w,n,d){
+    var f='<span class="frac"><span class="n">'+n+'</span><span class="d">'+d+'</span></span>';
+    return w?'<span class="mix"><span class="whole">'+w+'</span>'+f+'</span>':f;
+  });
+}
+function strip(h){return String(h).replace(/<[^>]+>/g,' ').replace(/\{[^}]*\}/g,' ').toLowerCase()}
+W.temas.forEach(function(t,i){
+  t.i=i; t.idx=strip(t.titulo+' '+t.idea+' '+(t.palabras||'')+' '+t.teoria);
+  t.insignia=t.insignia||('Experto en '+t.titulo.toLowerCase());
+});
+function visible(t){return S.taller==='B'||t.taller.indexOf('A')>=0}
+function vis(){return W.temas.filter(visible)}
+function isDone(t){return (S.done[t.id]||[]).length>=t.retos.length}
+function chips(t){
+  return '<div class="chips">'+(t.taller.indexOf('A')>=0?'<span class="chip a">Taller A</span>':'')+'<span class="chip b">Taller B</span></div>';
+}
+
+/* navegación */
+function buildNav(){
+  var h='<a href="#inicio" data-r="inicio"><span class="ic">🏠</span>Inicio</a><div class="hr"></div>';
+  vis().forEach(function(t,n){
+    var st=isDone(t)?'<span class="st ok" title="Insignia ganada">✔ 🏅</span>':(S.visited[t.id]?'<span class="st" title="Ya lo visitaste">•</span>':'');
+    h+='<a href="#'+t.id+'" data-r="'+t.id+'" style="--t:var(--c'+(t.color%6)+')"><span class="ic">'+t.icono+'</span><span>'+(n+1)+'. '+t.titulo+'</span>'+st+'</a>';
+  });
+  h+='<div class="hr"></div><a href="#cierre" data-r="cierre"><span class="ic">🏁</span>Cierre y autoevaluación</a>';
+  $('#nav').innerHTML=h;
+}
+function markNav(r){
+  $$('#nav a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-r')===r)});
+}
+
+/* retos */
+function norm(s){return String(s).toLowerCase().replace(/[−–—]/g,'-').replace(/,/g,'.').replace(/\s+/g,'').replace(/[×·]/g,'*').replace(/÷/g,'/')}
+function renderReto(t){
+  var out='';
+  t.retos.forEach(function(q,k){
+    var dn=(S.done[t.id]||[]).indexOf(k)>=0;
+    out+='<div class="q-card'+(dn?' done':'')+'" data-k="'+k+'"><div class="p">'+(k+1)+'. '+fmt(q.p)+'</div>';
+    if(q.tipo==='input'){
+      out+='<div class="row"><input class="inp" type="text" inputmode="text" autocomplete="off" aria-label="Tu respuesta a la pregunta '+(k+1)+'" placeholder="Escribe tu respuesta"><button class="btn sm chk">Revisar</button></div>';
+    }else{
+      var ops=q.tipo==='vf'?['Verdadero','Falso']:q.op;
+      out+='<div class="opts">';
+      ops.forEach(function(o,j){out+='<button class="opt" data-j="'+j+'"><span class="k">'+'ABCD'[j]+'</span><span>'+fmt(o)+'</span></button>'});
+      out+='</div>';
+    }
+    out+='<div class="fb" role="status"></div></div>';
+  });
+  out+='<div class="badge" id="badge"><span class="b">🏅</span>¡Insignia ganada! '+t.insignia+'</div>';
+  return out;
+}
+function setFb(card,ok,msg){
+  var fb=$('.fb',card); fb.className='fb show '+(ok?'ok':'no'); fb.innerHTML=(ok?'✔ ':'✘ ')+fmt(msg);
+}
+function solved(t,card,k,q){
+  var d=S.done[t.id]||(S.done[t.id]=[]);
+  if(d.indexOf(k)<0)d.push(k);
+  card.classList.add('done'); save(); checkBadge(t,false); buildNav(); markNav(t.id); updateBar();
+}
+function checkBadge(t,quiet){
+  var b=$('#badge'); if(!b)return;
+  if(isDone(t)){b.classList.add('show')}
+}
+function wireReto(t){
+  $$('.q-card').forEach(function(card){
+    var k=+card.getAttribute('data-k'), q=t.retos[k];
+    if(q.tipo==='input'){
+      var go=function(){
+        var v=norm($('.inp',card).value); if(!v)return;
+        var ok=q.a.some(function(a){return norm(a)===v});
+        if(ok){setFb(card,true,'¡Correcto! '+(q.exp||''));solved(t,card,k,q)}
+        else setFb(card,false,'Todavía no. '+(q.pista||'Revisa el procedimiento y vuelve a intentarlo.'));
+      };
+      $('.chk',card).addEventListener('click',go);
+      $('.inp',card).addEventListener('keydown',function(e){if(e.key==='Enter')go()});
+    }else{
+      $$('.opt',card).forEach(function(btn){btn.addEventListener('click',function(){
+        var j=+btn.getAttribute('data-j');
+        var ok=q.tipo==='vf'?((j===0)===q.c):(j===q.c);
+        if(ok){btn.classList.add('good');$$('.opt',card).forEach(function(b){b.disabled=true});setFb(card,true,'¡Correcto! '+(q.exp||''));solved(t,card,k,q)}
+        else{btn.classList.add('bad');setFb(card,false,q.pista||'No es esa. Vuelve a la teoría o a los ejemplos y prueba otra opción.');setTimeout(function(){btn.classList.remove('bad')},600)}
+      })});
+    }
+    if((S.done[t.id]||[]).indexOf(k)>=0){
+      var fb=$('.fb',card); fb.className='fb show ok'; fb.innerHTML='✔ Ya resuelta. '+fmt(q.exp||'');
+      if(q.tipo==='input')$('.inp',card).value=q.a[0];
+      else{var j=q.tipo==='vf'?(q.c?0:1):q.c; var ob=$$('.opt',card)[j]; if(ob)ob.classList.add('good'); $$('.opt',card).forEach(function(b){b.disabled=true})}
+    }
+  });
+  checkBadge(t,true);
+}
+
+/* ejemplos con pasos */
+function renderEj(t){
+  var o='';
+  t.ejemplos.forEach(function(e,i){
+    o+='<div class="ex-item" data-e="'+i+'"><h3>'+fmt(e.t)+'</h3><div class="q">'+fmt(e.e)+'</div><ol class="steps">';
+    e.pasos.forEach(function(p){o+='<li><div>'+fmt(p)+'</div></li>'});
+    o+='</ol><div class="ans">➜ '+fmt(e.r)+'</div><div class="row" style="margin-top:8px"><button class="btn sm nx">Ver el primer paso</button><button class="btn ghost sm all">Ver todo</button></div></div>';
+  });
+  return o;
+}
+function wireEj(){
+  $$('.ex-item').forEach(function(it){
+    var li=$$('.steps li',it), n=0, ans=$('.ans',it), nx=$('.nx',it), all=$('.all',it);
+    function upd(){
+      if(n>=li.length){ans.classList.add('show');nx.disabled=true;nx.textContent='Listo ✔';all.style.display='none'}
+      else nx.textContent=n===0?'Ver el primer paso':'Ver el siguiente paso ('+(n+1)+' de '+li.length+')';
+    }
+    nx.addEventListener('click',function(){if(n<li.length){li[n].classList.add('show');n++}upd()});
+    all.addEventListener('click',function(){li.forEach(function(l){l.classList.add('show')});n=li.length;upd()});
+    upd();
+  });
+}
+
+/* vistas */
+function progress(){var v=vis();return {d:v.filter(isDone).length,n:v.length}}
+function updateBar(){
+  var p=progress(), b=$('#pbar'), tx=$('#ptxt');
+  if(b)b.style.width=(p.n?Math.round(100*p.d/p.n):0)+'%';
+  if(tx)tx.textContent=p.d+' de '+p.n+' insignias';
+}
+function viewHome(q){
+  var v=vis(), ql=(q||'').toLowerCase().trim();
+  var h='<section class="hero"><span class="big" aria-hidden="true">'+W.mascota+'</span><h1>'+W.titulo+'</h1><p>'+fmt(W.intro)+'</p>';
+  h+='<div class="pills" role="group" aria-label="Elige tu taller"><button class="pill" data-ta="A" aria-pressed="'+(S.taller==='A')+'">Voy a hacer el Taller A</button><button class="pill" data-ta="B" aria-pressed="'+(S.taller==='B')+'">Voy a hacer el Taller B</button></div>';
+  h+='<p class="hint" id="tinfo">'+fmt(W.tallerInfo[S.taller])+'</p>';
+  h+='<div class="bar" aria-hidden="true"><i id="pbar"></i></div><div class="hint" id="ptxt"></div>';
+  h+='<p style="margin-top:14px"><input class="search" id="q" type="search" placeholder="🔍 Busca un tema o una palabra…" aria-label="Buscar tema" value="'+(q||'').replace(/"/g,'')+'"></p>';
+  h+='<p><a class="btn" href="#'+(v[0]?v[0].id:'cierre')+'" style="text-decoration:none;display:inline-block">¡Empezar el recorrido!</a></p></section>';
+  h+='<div class="card"><h2>🧭 Cómo usar este wiki</h2><ol><li><b>Elige tu taller</b> arriba: así ves solo los temas que necesitas.</li><li>En cada tema lee la <b>idea</b>, la <b>teoría</b> y abre los <b>ejemplos paso a paso</b>.</li><li>Usa el recuadro <b>«¿Cómo lo resuelvo?»</b> como receta y practica en el <b>mini-reto</b> para ganar la insignia.</li><li>Al final haz la <b>autoevaluación</b> y resuelve tu taller con tus propias manos.</li></ol><p class="hint">Aquí aprendes <i>cómo</i> se hace; los ejercicios de tu taller los resuelves tú, en tu cuaderno, con procedimiento.</p></div>';
+  h+='<h2 style="margin-top:22px">Temas de tu taller</h2><div class="grid" id="grid">';
+  W.temas.forEach(function(t,n){
+    var show=visible(t), match=!ql||t.idx.indexOf(ql)>=0;
+    if(!show||!match)return;
+    h+='<a class="tc" href="#'+t.id+'" style="--t:var(--c'+(t.color%6)+')"><span class="ic">'+t.icono+'</span><b>'+t.titulo+'</b><span class="s">'+fmt(t.idea)+'</span>'+chips(t)+(isDone(t)?'<span class="chip" style="border-color:var(--good)">🏅 Insignia ganada</span>':'')+'</a>';
+  });
+  h+='</div>';
+  return h;
+}
+function viewTema(t){
+  var v=vis(), pos=v.indexOf(t);
+  var h='<article style="--t:var(--c'+(t.color%6)+')"><div class="card t"><div class="hint">Tema '+(pos>=0?(pos+1)+' de '+v.length:'')+'</div><h1>'+t.icono+' '+t.titulo+'</h1>'+chips(t)+'<div class="idea">💡 '+fmt(t.idea)+'</div></div>';
+  h+='<section class="card t"><h2>📖 Teoría</h2>'+fmt(t.teoria)+'</section>';
+  h+='<section class="card t"><h2>🔎 Ejemplos resueltos</h2><p class="hint">Estos ejemplos son distintos de los de tu taller, pero se resuelven con la misma lógica. Ábrelos paso a paso.</p>'+renderEj(t)+'</section>';
+  h+='<section class="card t"><h2>🧭 ¿Cómo lo resuelvo?</h2><ol class="recipe">'+t.receta.map(function(r){return '<li>'+fmt(r)+'</li>'}).join('')+'</ol></section>';
+  h+='<section class="card t"><h2>🎮 Mini-reto</h2><p class="hint">Contesta todas bien para ganar la insignia «'+t.insignia+'». Si fallas, puedes intentarlo otra vez.</p>'+renderReto(t)+'</section>';
+  var prev=v[pos-1], next=v[pos+1];
+  h+='<div class="pager"><a class="btn ghost" style="text-decoration:none" href="#'+(prev?prev.id:'inicio')+'">← '+(prev?prev.titulo:'Inicio')+'</a><a class="btn" style="text-decoration:none" href="#'+(next?next.id:'cierre')+'">'+(next?next.titulo:'Ir al cierre')+' →</a></div></article>';
+  return h;
+}
+function viewCierre(){
+  var v=vis();
+  var h='<section class="card"><h1>🏁 Cierre y autoevaluación</h1><p>Marca lo que ya puedes hacer. Si algo te falta, vuelve a ese tema con el botón.</p>';
+  h+='<div class="badges" aria-label="Insignias">'+v.map(function(t){return '<span class="bd'+(isDone(t)?'':' off')+'" title="'+t.insignia+'">'+t.icono+'</span>'}).join('')+'</div></section>';
+  h+='<section class="card"><h2>✅ Lo que ya sé hacer</h2>';
+  v.forEach(function(t){
+    var on=!!S.check[t.id];
+    h+='<label class="check'+(on?' on':'')+'"><input type="checkbox" data-c="'+t.id+'"'+(on?' checked':'')+'><span>Puedo '+fmt(t.puedo)+' <a href="#'+t.id+'">(ver tema)</a></span></label>';
+  });
+  h+='</section><section class="card"><h2>📝 Ahora, a tu taller</h2><ul>'+W.cierre.map(function(c){return '<li>'+fmt(c)+'</li>'}).join('')+'</ul></section>';
+  h+='<p><button class="btn ghost sm" id="reset">Borrar mi progreso en este dispositivo</button></p>';
+  return h;
+}
+
+/* router */
+function route(){
+  var r=(location.hash||'#inicio').slice(1)||'inicio';
+  var t=W.temas.filter(function(x){return x.id===r})[0], html;
+  if(t){
+    if(!visible(t)){S.taller='B';save()}
+    html=viewTema(t);S.visited[t.id]=1;save();
+  }else if(r==='cierre')html=viewCierre();
+  else{html=viewHome('');r='inicio'}
+  $('#view').innerHTML=html;
+  buildNav();markNav(r);
+  $('#side').classList.remove('open');
+  window.scrollTo(0,0);
+  if(t){wireEj();wireReto(t)}
+  if(r==='inicio')wireHome();
+  if(r==='cierre')wireCierre();
+  updateBar();
+  document.title=(t?t.titulo+' · ':'')+W.titulo;
+}
+function wireHome(){
+  $$('.pill').forEach(function(p){p.addEventListener('click',function(){
+    S.taller=p.getAttribute('data-ta');save();
+    $('#view').innerHTML=viewHome($('#q').value);buildNav();markNav('inicio');wireHome();updateBar();
+  })});
+  var q=$('#q');
+  q.addEventListener('input',function(){
+    var pos=q.value;
+    $('#view').innerHTML=viewHome(pos);wireHome();updateBar();
+    var nq=$('#q');nq.focus();nq.setSelectionRange(pos.length,pos.length);
+  });
+}
+function wireCierre(){
+  $$('input[data-c]').forEach(function(c){c.addEventListener('change',function(){
+    S.check[c.getAttribute('data-c')]=c.checked;save();c.parentNode.classList.toggle('on',c.checked);
+  })});
+  $('#reset').addEventListener('click',function(){
+    S.done={};S.visited={};S.check={};save();route();
+  });
+}
+$('#bm').textContent=W.mascota;$('#bt').textContent=W.corto;$('#bs').textContent='Wiki de nivelación 2026';
+$('#foot').innerHTML='Colegio Carlos Albán Holguín I.E.D. · '+W.pie+' · Material de estudio para la nivelación del tercer periodo 2026. Tu progreso se guarda solo en este dispositivo.';
+$('#brand').addEventListener('click',function(){location.hash='#inicio'});
+$('#brand').addEventListener('keydown',function(e){if(e.key==='Enter')location.hash='#inicio'});
+$('#burger').addEventListener('click',function(){$('#side').classList.toggle('open')});
+$('#theme').addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+});
+document.addEventListener('click',function(e){
+  var s=$('#side'); if(s.classList.contains('open')&&!s.contains(e.target)&&e.target.id!=='burger')s.classList.remove('open');
+});
+window.addEventListener('hashchange',route);
+route();
+})();
+</script>
+</body>
+</html>
