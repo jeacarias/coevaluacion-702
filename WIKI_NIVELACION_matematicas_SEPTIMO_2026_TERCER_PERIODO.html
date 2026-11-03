@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nivelación 7° Matemáticas · Wiki</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+:root{
+  --bg:#F3F6F2; --surface:#FFFFFF; --surface2:#F6F9F5; --ink:#1B2420; --ink-soft:#4A5A51;
+  --line:#6F8378; --line-soft:#D3DBD2; --accent:#2B6E76; --accent-soft:#DCEAEA;
+  --btn:#1D4F55; --on-btn:#FFFFFF;
+  --good:#1F6B3C; --good-soft:#DDF1E3; --bad:#A93226; --bad-soft:#FBE3DF; --warn:#6E4E00; --warn-soft:#FBF0D5;
+  --c0:#2B6E76; --c1:#9A6516; --c2:#B63F32; --c3:#4B5FA8; --c4:#3A7F50; --c5:#85479A;
+  --shadow:0 2px 0 rgba(27,36,32,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A16; --surface:#1B2620; --surface2:#223029; --ink:#ECF1EC; --ink-soft:#B4C1B8;
+    --line:#7C9084; --line-soft:#33443A; --accent:#57B0B8; --accent-soft:#1F3B3E;
+    --btn:#57B0B8; --on-btn:#0B1517;
+    --good:#8FDDA8; --good-soft:#1F3A2A; --bad:#FFA396; --bad-soft:#411F1B; --warn:#F2CB6A; --warn-soft:#3A2F12;
+    --c0:#57B0B8; --c1:#E0A93C; --c2:#F08A7C; --c3:#8FA2E8; --c4:#7FCB96; --c5:#C998DA;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A16; --surface:#1B2620; --surface2:#223029; --ink:#ECF1EC; --ink-soft:#B4C1B8;
+  --line:#7C9084; --line-soft:#33443A; --accent:#57B0B8; --accent-soft:#1F3B3E;
+  --btn:#57B0B8; --on-btn:#0B1517;
+  --good:#8FDDA8; --good-soft:#1F3A2A; --bad:#FFA396; --bad-soft:#411F1B; --warn:#F2CB6A; --warn-soft:#3A2F12;
+  --c0:#57B0B8; --c1:#E0A93C; --c2:#F08A7C; --c3:#8FA2E8; --c4:#7FCB96; --c5:#C998DA;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Public Sans',system-ui,'Segoe UI',Arial,sans-serif;font-size:18px;line-height:1.6}
+h1,h2,h3{font-family:'Fraunces',Georgia,'Times New Roman',serif;line-height:1.2;margin:0 0 .5em}
+h1{font-size:clamp(1.9rem,4vw,2.8rem)} h2{font-size:clamp(1.4rem,2.6vw,1.9rem)} h3{font-size:1.2rem}
+p{margin:.5em 0 .8em} ul,ol{margin:.4em 0 .9em;padding-left:1.4em} li{margin:.25em 0}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.mono,.frac,.num{font-family:'Space Mono',ui-monospace,Consolas,monospace}
+sup,sub{line-height:0}
+.per{text-decoration:overline;text-decoration-thickness:2px}
+
+/* fracciones */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .18em;line-height:1.15;font-size:.95em}
+.frac .n{border-bottom:2px solid currentColor;padding:0 .3em}
+.frac .d{padding:0 .3em}
+.mix{display:inline-flex;align-items:center;gap:.05em}
+.mix .whole{font-family:'Space Mono',monospace;font-weight:700}
+
+/* layout */
+.app{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow:auto;background:var(--surface);border-right:2px solid var(--line-soft);padding:16px 14px 24px}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:12px;cursor:pointer}
+.brand .m{font-size:2rem}
+.brand b{font-family:'Fraunces',serif;font-size:1.05rem;line-height:1.15;display:block}
+.brand small{color:var(--ink-soft);font-size:.8rem}
+.nav a{display:flex;gap:10px;align-items:center;padding:9px 10px;margin:3px 0;border-radius:12px;color:var(--ink);text-decoration:none;border:2px solid transparent;font-weight:500;font-size:.95rem;line-height:1.25}
+.nav a:hover{background:var(--surface2);border-color:var(--line-soft)}
+.nav a.on{background:var(--accent-soft);border-color:var(--t,var(--accent));font-weight:700}
+.nav .ic{font-size:1.25rem;width:1.6rem;text-align:center;flex:none}
+.nav .st{margin-left:auto;flex:none;font-size:.85rem;color:var(--ink-soft)}
+.nav .st.ok{color:var(--good);font-weight:700}
+.nav .hr{height:2px;background:var(--line-soft);margin:10px 0}
+.main{padding:22px clamp(16px,4vw,48px) 60px;max-width:980px;width:100%}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}
+.top .l{display:flex;gap:10px;align-items:center}
+.burger{display:none}
+.btn{background:var(--btn);color:var(--on-btn);border:2px solid var(--btn);border-radius:12px;padding:10px 16px;font-weight:700;font-size:1rem}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:6px 12px;font-size:.9rem}
+.btn[disabled]{opacity:.5;cursor:default}
+
+/* tarjetas */
+.card{background:var(--surface);border:2px solid var(--line-soft);border-radius:18px;padding:18px 20px;margin:16px 0;box-shadow:var(--shadow)}
+.card>h2,.card>h3{display:flex;gap:8px;align-items:center}
+.card.t{border-left:8px solid var(--t,var(--accent))}
+.hero{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:26px clamp(18px,4vw,40px);text-align:center}
+.hero .big{font-size:4.5rem;line-height:1;display:inline-block;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
+.hero p{max-width:60ch;margin-inline:auto;color:var(--ink-soft)}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.pill{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;font-weight:700}
+.pill[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);border-color:var(--btn)}
+.hint{color:var(--ink-soft);font-size:.95rem}
+.bar{height:16px;border-radius:999px;background:var(--line-soft);overflow:hidden;border:2px solid var(--line);max-width:520px;margin:10px auto}
+.bar i{display:block;height:100%;background:var(--good);width:0;transition:width .5s}
+.search{width:100%;max-width:520px;padding:12px 16px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:14px}
+.tc{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line-soft);border-top:8px solid var(--t);border-radius:16px;padding:14px 16px;text-decoration:none}
+.tc:hover{border-color:var(--t);transform:translateY(-2px)}
+.tc .ic{font-size:2rem}
+.tc b{display:block;font-family:'Fraunces',serif;font-size:1.1rem;margin:2px 0}
+.tc span.s{color:var(--ink-soft);font-size:.9rem;display:block}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.chip{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 10px;border-radius:999px;border:2px solid var(--line);background:var(--surface2);color:var(--ink)}
+.chip.a{border-color:var(--c4)} .chip.b{border-color:var(--c3)}
+.tc.dim{opacity:.55}
+
+/* contenido */
+.idea{background:var(--accent-soft);border:2px solid var(--t,var(--accent));border-radius:16px;padding:14px 18px;font-size:1.15rem;font-weight:600}
+.box{border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:12px 0;background:var(--surface2)}
+.box>b:first-child{display:block;margin-bottom:2px}
+.box.key{border-color:var(--t,var(--accent))}
+.box.tip{background:var(--good-soft);border-color:var(--good)}
+.box.warn{background:var(--warn-soft);border-color:var(--warn)}
+.box.ex{background:var(--surface);border-style:dashed}
+table.tbl{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem}
+.tbl th,.tbl td{border:2px solid var(--line-soft);padding:6px 10px;text-align:center}
+.tbl th{background:var(--accent-soft)}
+.tbl td.l,.tbl th.l{text-align:left}
+.scroll{overflow-x:auto}
+.big-eq{font-family:'Space Mono',monospace;font-size:1.25rem;text-align:center;margin:10px 0;padding:10px;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft);overflow-x:auto}
+.steps{list-style:none;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:none;gap:10px;margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft)}
+.steps li.show{display:flex;animation:in .35s}
+.steps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--btn);color:var(--on-btn);font-weight:700;display:grid;place-items:center}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.ans{display:none;margin-top:8px;padding:10px 14px;border-radius:12px;background:var(--good-soft);border:2px solid var(--good);font-weight:700}
+.ans.show{display:block;animation:in .35s}
+.ex-item{border:2px solid var(--line-soft);border-radius:16px;padding:14px 16px;margin:12px 0;background:var(--surface)}
+.ex-item .q{font-weight:600}
+.recipe{counter-reset:r;list-style:none;padding:0}
+.recipe li{counter-increment:r;padding:8px 12px 8px 46px;position:relative;margin:6px 0;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft)}
+.recipe li::before{content:counter(r);position:absolute;left:10px;top:7px;width:28px;height:28px;border-radius:8px;background:var(--t,var(--accent));color:var(--on-btn);display:grid;place-items:center;font-weight:700;font-family:'Space Mono',monospace}
+
+/* retos */
+.q-card{border:2px solid var(--line-soft);border-radius:16px;padding:14px 16px;margin:12px 0;background:var(--surface)}
+.q-card.done{border-color:var(--good);background:var(--good-soft)}
+.q-card .p{font-weight:600;margin-bottom:8px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;width:100%;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+.opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;background:var(--surface2);border:2px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.opt.good{background:var(--good-soft);border-color:var(--good);color:var(--ink);font-weight:700}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--ink);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.inp{padding:10px 14px;border:2px solid var(--line);border-radius:12px;font:inherit;font-family:'Space Mono',monospace;background:var(--surface);color:var(--ink);width:min(260px,100%)}
+.fb{margin-top:8px;padding:8px 12px;border-radius:12px;font-weight:600;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--good-soft);border:2px solid var(--good);color:var(--ink)}
+.fb.no{background:var(--bad-soft);border:2px solid var(--bad);color:var(--ink)}
+.badge{display:none;text-align:center;padding:14px;border-radius:16px;border:2px solid var(--good);background:var(--good-soft);margin-top:12px;font-weight:700}
+.badge.show{display:block;animation:pop .5s}
+.badge .b{font-size:2.6rem;display:block}
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:2px solid var(--line-soft);border-radius:12px;margin:8px 0;background:var(--surface);cursor:pointer}
+.check input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--btn)}
+.check.on{background:var(--good-soft);border-color:var(--good)}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.bd{font-size:2rem;padding:4px 10px;border-radius:14px;border:2px solid var(--line-soft);background:var(--surface2)}
+.bd.off{filter:grayscale(1);opacity:.4}
+.foot{margin-top:36px;color:var(--ink-soft);font-size:.85rem;text-align:center}
+.scrim{display:none}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;inset:0 25% 0 0;z-index:30;transform:translateX(-105%);transition:transform .25s;max-width:340px;box-shadow:0 0 0 100vmax rgba(0,0,0,0)}
+  .side.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.5)}
+  .burger{display:inline-block}
+  body{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.side,.top,.pager,.btn{display:none!important}.app{display:block}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side" aria-label="Menú de temas">
+    <div class="brand" id="brand" role="link" tabindex="0"><span class="m" id="bm"></span><span><b id="bt"></b><small id="bs"></small></span></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="main" id="main">
+    <div class="top">
+      <div class="l"><button class="btn ghost sm burger" id="burger" aria-label="Abrir menú de temas">☰ Temas</button></div>
+      <div class="row">
+        <button class="btn ghost sm" id="theme" aria-label="Cambiar entre modo claro y oscuro">🌓 Claro / oscuro</button>
+      </div>
+    </div>
+    <div id="view" aria-live="polite"></div>
+    <div class="foot" id="foot"></div>
+  </main>
+</div>
+<script>
+const WIKI = {
+key: 'nivel7mat2026',
+corto: 'Nivelación 7° Matemáticas',
+titulo: 'Mi wiki de nivelación · Matemáticas 7°',
+mascota: '🦉',
+pie: 'Matemáticas 7° (702, 703, 704, 705)',
+intro: 'Aquí está todo lo que necesitas para entender los temas de tus talleres de nivelación: enteros, fracciones, razones, proporciones y proporcionalidad directa. Cada tema trae teoría, ejemplos paso a paso, una receta para resolver y un mini-reto con insignia.',
+tallerInfo: {
+  A: '<b>Taller A</b> (20 puntos): solo el tercer periodo. Verás los temas marcados «Taller A»: fracciones, MCM, razón, proporción y proporcionalidad directa.',
+  B: '<b>Taller B</b> (40 puntos): enteros, racionales y todo lo del tercer periodo. Verás todos los temas del wiki.'
+},
+cierre: [
+  'Resuelve tu taller <b>en orden</b>, cada punto en su espacio y <b>mostrando las operaciones</b>.',
+  'Escribe los resultados como <b>fracción irreducible o número mixto</b>, como en los ejemplos.',
+  'En los puntos de «análisis crítico», explica con tus palabras <b>qué error se cometió</b> y escribe el procedimiento correcto.',
+  'Si un tema se te hace difícil, vuelve a su receta «¿Cómo lo resuelvo?» y repite el mini-reto.'
+],
+temas: [
+
+/* 1 */
+{ id:'enteros-orden', icono:'🌡️', color:0, taller:'B', titulo:'Enteros: orden, opuesto y valor absoluto',
+  idea:'Los números enteros incluyen positivos, negativos y el cero; se ordenan sobre la recta numérica.',
+  palabras:'recta numérica opuesto valor absoluto negativo positivo ordenar comparar',
+  insignia:'Explorador de la recta numérica',
+  puedo:'ordenar números enteros, hallar el opuesto de un número y calcular valores absolutos.',
+  teoria:`
+<p>Los <b>números enteros</b> son los positivos (1, 2, 3…), el cero y los negativos (−1, −2, −3…). Sirven para hablar de temperaturas bajo cero, pisos del sótano o deudas.</p>
+<div class="box key"><b>La recta numérica</b>El <b>cero</b> está en el centro. A la derecha están los positivos y a la izquierda los negativos. <b>Entre más a la derecha, mayor es el número.</b></div>
+<div class="big-eq">… −4 &nbsp;−3 &nbsp;−2 &nbsp;−1 &nbsp;<b>0</b>&nbsp; 1 &nbsp;2 &nbsp;3 &nbsp;4 …</div>
+<h3>Comparar y ordenar</h3>
+<ul><li>Todo negativo es menor que cero y que cualquier positivo.</li><li>Entre dos negativos, <b>es menor el que tiene el número más grande sin el signo</b>: −9 &lt; −2, porque −9 está más lejos del cero hacia la izquierda.</li></ul>
+<h3>Opuesto</h3>
+<p>El <b>opuesto</b> de un número es el que está a su misma distancia del cero, pero al otro lado. Se obtiene cambiando el signo: el opuesto de 6 es −6 y el opuesto de −10 es 10. El opuesto de 0 es 0.</p>
+<h3>Valor absoluto</h3>
+<p>El <b>valor absoluto</b> |a| es la distancia de a al cero. Como una distancia no puede ser negativa, <b>siempre es positivo o cero</b>: |−7| = 7 y |7| = 7.</p>
+<div class="box warn"><b>Error frecuente</b>Pensar que −10 es mayor que −2 «porque 10 es mayor que 2». Imagínate la temperatura: −10 °C es más frío que −2 °C.</div>`,
+  ejemplos:[
+   { t:'Ordenar enteros', e:'Ordena de menor a mayor: −6, 2, −11, 0, −1.',
+     pasos:['Separa los negativos (−6, −11, −1), el cero y los positivos (2).','Ordena los negativos: el de número más grande es el menor. Entonces −11 &lt; −6 &lt; −1.','Después va el cero y al final el positivo.'],
+     r:'−11, −6, −1, 0, 2' },
+   { t:'Opuesto y valor absoluto', e:'Calcula |−8| + |−13| − |4| y escribe el opuesto de −5.',
+     pasos:['Quita los signos dentro de cada barra: |−8| = 8, |−13| = 13, |4| = 4.','Opera en orden: 8 + 13 − 4 = 17.','El opuesto de −5 se obtiene cambiando el signo: 5.'],
+     r:'El resultado es 17 y el opuesto de −5 es 5.' }
+  ],
+  receta:['Dibuja (o imagina) la recta numérica con el cero en el centro.','Para ordenar: primero separa negativos, cero y positivos.','Entre negativos, el que tiene el número más grande «sin signo» es el menor.','Para |a|: quita el signo y luego opera. Para el opuesto: cambia el signo.'],
+  retos:[
+   { tipo:'mc', p:'¿Cuál es el menor: −9 o −3?', op:['−3','−9','Son iguales','No se puede saber'], c:1, exp:'−9 está más a la izquierda que −3.', pista:'Piensa en temperaturas: ¿cuál es más fría?' },
+   { tipo:'input', p:'Calcula |−14| − |6|.', a:['8'], exp:'14 − 6 = 8.', pista:'Primero convierte cada valor absoluto en un número positivo.' },
+   { tipo:'vf', p:'El opuesto de −7 es 7.', c:true, exp:'Se cambia el signo.' },
+   { tipo:'mc', p:'¿Cuál es el orden correcto de menor a mayor de −4, 1, −10 y 0?', op:['−4, −10, 0, 1','−10, −4, 0, 1','0, 1, −4, −10','1, 0, −4, −10'], c:1, exp:'−10 &lt; −4 &lt; 0 &lt; 1.', pista:'Empieza por el negativo que tiene el número más grande.' }
+  ]
+},
+
+/* 2 */
+{ id:'enteros-suma-resta', icono:'➕', color:1, taller:'B', titulo:'Suma y resta de enteros',
+  idea:'Para sumar o restar enteros se usan las reglas de los signos; restar un número es sumar su opuesto.',
+  palabras:'suma resta signos opuesto adición sustracción',
+  insignia:'Maestro de los signos',
+  puedo:'sumar y restar números enteros aplicando las reglas de los signos.',
+  teoria:`
+<div class="box key"><b>Regla 1 · Signos iguales</b>Se <b>suman</b> los números y se deja el mismo signo.<br>(−5) + (−3) = −8 &nbsp;·&nbsp; 5 + 3 = 8</div>
+<div class="box key"><b>Regla 2 · Signos distintos</b>Se <b>restan</b> los números (el mayor menos el menor) y se deja el <b>signo del número de mayor valor absoluto</b>.<br>(−9) + 4 = −5 &nbsp;·&nbsp; 9 + (−4) = 5</div>
+<div class="box key"><b>Regla 3 · Restar es sumar el opuesto</b>a − b = a + (−b). Por eso, <b>restar un negativo equivale a sumar</b>: a − (−b) = a + b.</div>
+<p>Ejemplo de la regla 3: 6 − (−2) = 6 + 2 = 8.</p>
+<h3>Cuando hay varios sumandos</h3>
+<p>Se resuelve de izquierda a derecha, paso por paso, o se agrupan los positivos por un lado y los negativos por otro y se restan al final.</p>
+<div class="box warn"><b>Error frecuente</b>Calcular −9 − (−2) como −11. El signo «menos menos» se vuelve más: −9 − (−2) = −9 + 2 = −7.</div>
+<div class="box tip"><b>Truco con la recta</b>Sumar un positivo es avanzar a la derecha; sumar un negativo es retroceder a la izquierda.</div>`,
+  ejemplos:[
+   { t:'Suma con varios términos', e:'Calcula (−14) + 9 + (−6).',
+     pasos:['Primero: (−14) + 9. Signos distintos: 14 − 9 = 5, y gana el 14 (negativo): −5.','Luego: (−5) + (−6). Signos iguales: 5 + 6 = 11, con signo negativo: −11.'], r:'−11' },
+   { t:'Restar un negativo', e:'Calcula 10 − (−5) − 18.',
+     pasos:['Convierte «menos menos» en más: 10 + 5 − 18.','10 + 5 = 15.','15 − 18 = −3 (18 es mayor y es el que resta, entonces el resultado es negativo).'], r:'−3' },
+   { t:'Cuatro términos', e:'Calcula −7 − 3 + 12 − (−4).',
+     pasos:['Reescribe: −7 − 3 + 12 + 4.','−7 − 3 = −10.','−10 + 12 = 2.','2 + 4 = 6.'], r:'6' }
+  ],
+  receta:['Quita los paréntesis: «menos negativo» se vuelve «más».','Resuelve de izquierda a derecha.','Signos iguales: suma y conserva el signo. Signos distintos: resta y usa el signo del mayor.','Comprueba con la recta numérica o con una situación real (deuda, temperatura).'],
+  retos:[
+   { tipo:'input', p:'Calcula (−8) + (−5).', a:['-13'], exp:'Signos iguales: 8 + 5 = 13, negativo.', pista:'Si los dos son negativos, se suman y el resultado es negativo.' },
+   { tipo:'input', p:'Calcula 6 − (−9).', a:['15'], exp:'6 + 9 = 15.', pista:'Menos un negativo es más un positivo.' },
+   { tipo:'mc', p:'−12 + 20 =', op:['−32','8','−8','32'], c:1, exp:'Signos distintos: 20 − 12 = 8, y gana el 20 (positivo).', pista:'Resta los números y usa el signo del mayor.' },
+   { tipo:'mc', p:'−3 − 7 =', op:['4','−4','10','−10'], c:3, exp:'−3 − 7 = −3 + (−7) = −10.', pista:'Restar 7 es lo mismo que sumar −7.' },
+   { tipo:'vf', p:'−4 − (−4) = −8.', c:false, exp:'−4 + 4 = 0.' }
+  ]
+},
+
+/* 3 */
+{ id:'enteros-mult-div', icono:'✖️', color:2, taller:'B', titulo:'Multiplicación y división de enteros',
+  idea:'Se multiplican o dividen los números y el signo lo da la ley de los signos.',
+  palabras:'ley de los signos multiplicar dividir producto cociente',
+  insignia:'Dominador de la ley de signos',
+  puedo:'multiplicar y dividir números enteros con la ley de los signos.',
+  teoria:`
+<div class="box key"><b>Ley de los signos</b>
+<div class="scroll"><table class="tbl"><tr><th>Signos</th><th>Resultado</th><th>Ejemplo</th></tr>
+<tr><td>+ y +</td><td>+</td><td>3 × 4 = 12</td></tr>
+<tr><td>− y −</td><td>+</td><td>(−3) × (−4) = 12</td></tr>
+<tr><td>+ y −</td><td>−</td><td>3 × (−4) = −12</td></tr>
+<tr><td>− y +</td><td>−</td><td>(−3) × 4 = −12</td></tr></table></div>
+<b>Signos iguales dan +; signos diferentes dan −.</b> Vale igual para la división.</div>
+<h3>Varios factores</h3>
+<p>Cuenta cuántos factores son negativos: si hay una cantidad <b>par</b>, el resultado es positivo; si es <b>impar</b>, es negativo. Luego multiplica los números sin signo.</p>
+<h3>División</h3>
+<p>Divide los números y aplica la misma ley: (−84) ÷ 7 = −12 y (−84) ÷ (−7) = 12.</p>
+<div class="box warn"><b>Ojo</b>La ley de signos <b>no</b> es la de la suma. Por ejemplo, (−3) + (−4) = −7, pero (−3) × (−4) = +12.</div>`,
+  ejemplos:[
+   { t:'Tres factores', e:'Calcula (−4) × (−5) × (−3).',
+     pasos:['Hay tres factores negativos (cantidad impar): el resultado será negativo.','Multiplica los números sin signo: 4 × 5 × 3 = 60.','Pon el signo: −60.'], r:'−60' },
+   { t:'División', e:'Calcula (−84) ÷ 7.',
+     pasos:['Signos distintos: el resultado será negativo.','84 ÷ 7 = 12.'], r:'−12' },
+   { t:'Operación combinada', e:'Calcula [(−6) × (−9)] ÷ (−3).',
+     pasos:['Primero el corchete: (−6) × (−9) = 54 (signos iguales).','Luego: 54 ÷ (−3). Signos distintos: negativo. 54 ÷ 3 = 18.'], r:'−18' }
+  ],
+  receta:['Cuenta los signos negativos: par → +, impar → −.','Multiplica o divide los números sin signo.','Escribe el signo que encontraste.','Si hay corchetes o paréntesis, resuélvelos primero.'],
+  retos:[
+   { tipo:'input', p:'Calcula (−7) × (−3).', a:['21'], exp:'Signos iguales: positivo.', pista:'Dos negativos dan positivo.' },
+   { tipo:'input', p:'Calcula (−45) ÷ 9.', a:['-5'], exp:'Signos distintos: negativo.', pista:'45 ÷ 9 = 5, ¿y el signo?' },
+   { tipo:'mc', p:'(−2) × (−2) × (−2) =', op:['8','−8','6','−6'], c:1, exp:'Tres negativos (impar): resultado negativo; 2 × 2 × 2 = 8.', pista:'Cuenta los negativos.' },
+   { tipo:'mc', p:'[(−12) × 5] ÷ (−4) =', op:['15','−15','−60','60'], c:0, exp:'(−12) × 5 = −60; (−60) ÷ (−4) = 15.', pista:'Resuelve primero el corchete.' },
+   { tipo:'vf', p:'(−18) ÷ (−6) = −3.', c:false, exp:'Signos iguales dan positivo: (−18) ÷ (−6) = 3.' }
+  ]
+},
+
+/* 4 */
+{ id:'enteros-potencias-jerarquia', icono:'🧮', color:3, taller:'B', titulo:'Potencias, raíces y jerarquía de operaciones',
+  idea:'Las potencias y raíces se resuelven antes que × y ÷, y estas antes que + y −; los paréntesis mandan primero.',
+  palabras:'potencia raíz cuadrada raíz cúbica base exponente jerarquía orden operaciones',
+  insignia:'Jefe del orden de operaciones',
+  puedo:'calcular potencias y raíces con enteros y resolver operaciones combinadas respetando la jerarquía.',
+  teoria:`
+<h3>Potencia</h3>
+<p>aⁿ significa multiplicar la <b>base</b> a por sí misma <b>n veces</b> (n es el exponente): (−2)³ = (−2)(−2)(−2) = −8.</p>
+<div class="box key"><b>Signo de una potencia</b>Base negativa y exponente <b>par</b> → resultado <b>positivo</b>. Base negativa y exponente <b>impar</b> → resultado <b>negativo</b>.</div>
+<div class="box warn"><b>Cuidado con los paréntesis</b>(−3)² = 9, pero −3² = −9 (aquí solo el 3 está elevado al cuadrado).</div>
+<h3>Raíces</h3>
+<ul><li><b>Raíz cuadrada</b>: √49 = 7, porque 7² = 49.</li><li><b>Raíz cúbica</b>: ∛(−27) = −3, porque (−3)³ = −27. La raíz cúbica sí puede ser negativa.</li></ul>
+<h3>Jerarquía de las operaciones</h3>
+<ol><li>Paréntesis y corchetes.</li><li>Potencias y raíces.</li><li>Multiplicaciones y divisiones (de izquierda a derecha).</li><li>Sumas y restas (de izquierda a derecha).</li></ol>`,
+  ejemplos:[
+   { t:'Potencia con base negativa', e:'Calcula (−5)² y (−2)⁵.',
+     pasos:['(−5)² = (−5)(−5) = 25: exponente par, positivo.','(−2)⁵: exponente impar, negativo. 2⁵ = 32, entonces −32.'], r:'(−5)² = 25 y (−2)⁵ = −32' },
+   { t:'Operación combinada', e:'Calcula 3 + (−2)³ × 2 − √81 ÷ 3.',
+     pasos:['Potencias y raíces: (−2)³ = −8 y √81 = 9. Queda 3 + (−8) × 2 − 9 ÷ 3.','Multiplicaciones y divisiones: (−8) × 2 = −16 y 9 ÷ 3 = 3. Queda 3 − 16 − 3.','Sumas y restas: 3 − 16 = −13; −13 − 3 = −16.'], r:'−16' },
+   { t:'Raíz cúbica y potencia', e:'Calcula (−5)² + ∛(−8).',
+     pasos:['(−5)² = 25 y ∛(−8) = −2.','25 + (−2) = 23.'], r:'23' }
+  ],
+  receta:['Subraya los paréntesis y resuélvelos primero.','Calcula potencias y raíces (ojo con el signo de la base).','Haz × y ÷ de izquierda a derecha.','Haz + y − de izquierda a derecha. Reescribe la operación en cada paso.'],
+  retos:[
+   { tipo:'input', p:'Calcula (−4)².', a:['16'], exp:'Exponente par: positivo.', pista:'(−4)(−4)…' },
+   { tipo:'input', p:'Calcula (−2)⁵.', a:['-32'], exp:'Exponente impar: negativo; 2⁵ = 32.', pista:'Cinco factores negativos.' },
+   { tipo:'input', p:'Calcula ∛(−125).', a:['-5'], exp:'(−5)³ = −125.', pista:'¿Qué número multiplicado tres veces por sí mismo da −125?' },
+   { tipo:'mc', p:'10 − 3 × (−2)² =', op:['−2','28','−26','14'], c:0, exp:'(−2)² = 4; 3 × 4 = 12; 10 − 12 = −2.', pista:'Primero la potencia, luego la multiplicación.' },
+   { tipo:'mc', p:'2 + 3 × 4 =', op:['20','14','24','9'], c:1, exp:'Primero 3 × 4 = 12 y luego 2 + 12 = 14.', pista:'La multiplicación se hace antes que la suma.' }
+  ]
+},
+
+/* 5 */
+{ id:'enteros-problemas', icono:'🏙️', color:4, taller:'B', titulo:'Problemas con números enteros',
+  idea:'Para resolver un problema, traduce la situación a números con signo: sube o gana es +, baja o debe es −.',
+  palabras:'problemas temperatura deuda sótano pisos ganancia pérdida',
+  insignia:'Detective de problemas con enteros',
+  puedo:'plantear y resolver problemas de la vida diaria con números enteros.',
+  teoria:`
+<p>Los enteros aparecen en muchas situaciones de Bosa y de tu casa:</p>
+<div class="scroll"><table class="tbl"><tr><th>Situación</th><th>Positivo (+)</th><th>Negativo (−)</th></tr>
+<tr><td class="l">Temperatura</td><td>sube</td><td>baja</td></tr>
+<tr><td class="l">Dinero</td><td>tengo, gano, me pagan</td><td>debo, gasto, pierdo</td></tr>
+<tr><td class="l">Edificio</td><td>pisos hacia arriba</td><td>sótanos</td></tr></table></div>
+<div class="box key"><b>Método en 4 pasos</b>1) Lee y subraya los datos. 2) Escribe cada dato como entero con signo. 3) Escribe la operación. 4) Resuelve y responde con una frase y la unidad.</div>
+<div class="box tip"><b>Dividir una deuda en cuotas</b>Una deuda es negativa. Si se paga en cuotas iguales, cada cuota también se escribe negativa: (−deuda) ÷ (número de cuotas). Lo que aún se debe es la deuda menos lo pagado.</div>`,
+  ejemplos:[
+   { t:'El ascensor', e:'Un ascensor está en el piso 2 de un edificio con sótanos. Baja 4 pisos y luego sube 7. ¿En qué piso queda?',
+     pasos:['Piso inicial: 2. Bajar es negativo: −4. Subir es positivo: +7.','Operación: 2 − 4 + 7.','2 − 4 = −2 (piso 2 del sótano) y −2 + 7 = 5.'], r:'Queda en el piso 5.' },
+   { t:'Deuda en cuotas', e:'Una familia debe $105.000 de un mercado a crédito (−105.000) y lo paga en 5 cuotas iguales. ¿De cuánto es cada cuota? Después de pagar 2 cuotas, ¿cuánto sigue debiendo?',
+     pasos:['Cuota: (−105.000) ÷ 5 = −21.000.','Dos cuotas pagadas: 2 × 21.000 = 42.000.','Lo que debe ahora: −105.000 + 42.000 = −63.000.'], r:'Cada cuota es de −$21.000 y todavía debe $63.000 (−63.000).' },
+   { t:'Temperatura', e:'En un día frío, a las 5 a. m. la temperatura era de −3 °C. Hasta el mediodía subió 9 °C y por la noche bajó 11 °C. ¿Qué temperatura hizo en la noche?',
+     pasos:['Mediodía: −3 + 9 = 6 °C.','Noche: 6 − 11 = −5 °C.'], r:'−5 °C' }
+  ],
+  receta:['Subraya los datos y decide qué es positivo y qué es negativo.','Escribe la operación con enteros.','Resuelve paso a paso con las reglas de signos.','Responde con una frase completa y la unidad (°C, $, piso).'],
+  retos:[
+   { tipo:'input', p:'La temperatura era de 3 °C y bajó 8 °C. ¿Qué temperatura hay ahora? (solo el número)', a:['-5'], exp:'3 − 8 = −5.', pista:'Bajar es restar.' },
+   { tipo:'input', p:'Una tienda debe $60.000 (−60.000) y paga la deuda en 4 cuotas iguales. ¿De cuánto es cada cuota? Escríbela con su signo (sin puntos).', a:['-15000','-15.000'], exp:'(−60.000) ÷ 4 = −15.000.', pista:'Divide 60.000 entre 4 y escribe el signo negativo.' },
+   { tipo:'mc', p:'Un buzo está a −12 m y sube 5 m. ¿A qué altura queda?', op:['−17 m','−7 m','7 m','17 m'], c:1, exp:'−12 + 5 = −7.', pista:'Subir es sumar.' },
+   { tipo:'mc', p:'Daniela tenía $20.000. Gastó $35.000 con tarjeta. ¿Cuál es su saldo?', op:['$15.000','−$15.000','$55.000','−$55.000'], c:1, exp:'20.000 − 35.000 = −15.000: quedó debiendo.', pista:'Si gasta más de lo que tiene, queda debiendo.' }
+  ]
+},
+
+/* 6 */
+{ id:'fracciones-mixtos-equivalentes', icono:'🍕', color:5, taller:'AB', titulo:'Fracciones: impropias, mixtos y equivalentes',
+  idea:'Una misma cantidad se puede escribir como fracción impropia, número mixto o fracciones equivalentes.',
+  palabras:'fracción propia impropia número mixto equivalentes amplificar numerador denominador',
+  insignia:'Transformador de fracciones',
+  puedo:'convertir entre fracción impropia y número mixto, y hallar fracciones equivalentes.',
+  teoria:`
+<p>En {a/b}, el <b>denominador</b> b dice en cuántas partes iguales se divide el todo y el <b>numerador</b> a dice cuántas partes se toman.</p>
+<ul><li><b>Fracción propia</b>: el numerador es menor que el denominador (vale menos que 1): {3/4}.</li><li><b>Fracción impropia</b>: el numerador es mayor o igual que el denominador (vale 1 o más): {9/4}.</li><li><b>Número mixto</b>: una parte entera y una fracción propia: {2 1/4}.</li></ul>
+<div class="box key"><b>De impropia a mixto</b>Divide el numerador entre el denominador. El <b>cociente</b> es el entero, el <b>residuo</b> es el nuevo numerador y el denominador no cambia.<br>{9/4}: 9 ÷ 4 = 2 y sobra 1 → {2 1/4}.</div>
+<div class="box key"><b>De mixto a impropia</b>Multiplica el entero por el denominador, suma el numerador y deja el mismo denominador.<br>{2 1/4}: (2 × 4 + 1) = 9 → {9/4}.</div>
+<div class="box key"><b>Fracciones equivalentes</b>Se obtienen multiplicando (amplificar) o dividiendo (simplificar) numerador y denominador <b>por el mismo número</b>: {1/2} = {2/4} = {3/6} = {4/8}.</div>
+<div class="box tip"><b>Para completar una equivalente</b>Mira por cuánto cambió el denominador y haz lo mismo con el numerador.</div>`,
+  ejemplos:[
+   { t:'Impropia → mixto', e:'Escribe {37/6} como número mixto.',
+     pasos:['Divide: 37 ÷ 6 = 6 y sobra 1 (porque 6 × 6 = 36).','El entero es 6, el residuo 1 es el numerador y el denominador sigue siendo 6.'], r:'{6 1/6}' },
+   { t:'Mixto → impropia', e:'Escribe {4 3/5} como fracción impropia.',
+     pasos:['Entero × denominador: 4 × 5 = 20.','Súmale el numerador: 20 + 3 = 23.','Deja el denominador: 5.'], r:'{23/5}' },
+   { t:'Amplificar para completar', e:'Completa: {7/9} = {x/54}.',
+     pasos:['¿Por cuánto se multiplicó el denominador? 54 ÷ 9 = 6.','Multiplica el numerador por 6: 7 × 6 = 42.'], r:'x = 42, es decir {7/9} = {42/54}' }
+  ],
+  receta:['Impropia → mixto: divide y escribe cociente, residuo y el mismo denominador.','Mixto → impropia: entero × denominador + numerador, sobre el mismo denominador.','Equivalentes: multiplica o divide arriba y abajo por el mismo número.','Comprueba: ¿la fracción nueva vale lo mismo?'],
+  retos:[
+   { tipo:'mc', p:'{41/9} escrita como número mixto es:', op:['{4 5/9}','{5 4/9}','{4 41/9}','{3 5/9}'], c:0, exp:'41 ÷ 9 = 4 y sobra 5 → {4 5/9}.', pista:'Divide 41 entre 9 y mira el residuo.' },
+   { tipo:'input', p:'Escribe {3 4/7} como fracción impropia (con la barra /).', a:['25/7'], exp:'3 × 7 + 4 = 25.', pista:'Entero × denominador + numerador.' },
+   { tipo:'input', p:'Completa: {4/5} = {x/35}. ¿Cuánto vale x?', a:['28'], exp:'35 ÷ 5 = 7 y 4 × 7 = 28.', pista:'¿Por cuánto se multiplicó el 5 para llegar a 35?' },
+   { tipo:'vf', p:'{7/3} es una fracción propia.', c:false, exp:'7 es mayor que 3: es impropia ({7/3} = {2 1/3}).' }
+  ]
+},
+
+/* 7 */
+{ id:'fracciones-simplificar-comparar', icono:'⚖️', color:0, taller:'AB', titulo:'Simplificar, comparar y ordenar fracciones',
+  idea:'Simplifica hasta la fracción irreducible y, para comparar, lleva las fracciones a un mismo denominador.',
+  palabras:'simplificar irreducible comparar ordenar mayor menor denominador común productos cruzados',
+  insignia:'Juez de fracciones',
+  puedo:'simplificar fracciones, compararlas y ordenarlas de menor a mayor.',
+  teoria:`
+<h3>Simplificar</h3>
+<p>Simplificar es <b>dividir numerador y denominador por un mismo número</b> hasta que ya no se pueda. El resultado es la <b>fracción irreducible</b>. Lo más rápido es dividir por el <b>máximo común divisor</b>; si no lo ves, divide por 2, 3, 5… varias veces.</p>
+<h3>Comparar</h3>
+<ul><li><b>Mismo denominador</b>: es mayor la que tiene mayor numerador.</li><li><b>Distinto denominador</b>: conviértelas a un denominador común (usa el MCM) y compara numeradores.</li><li><b>Productos cruzados</b> para dos fracciones: {a/b} y {c/d}. Compara a × d con c × b: la fracción del lado del producto mayor es la mayor.</li></ul>
+<div class="box warn"><b>Error frecuente</b>Decir que {3/5} es mayor que {2/3} «porque 3 es mayor que 2». Hay que mirar numerador <i>y</i> denominador a la vez: {3/5} = {9/15} y {2/3} = {10/15}.</div>
+<h3>Una fracción entre otras dos</h3>
+<p>Convierte ambas a un denominador común grande; en medio sobran numeradores. Si no hay espacio, usa un denominador aún mayor (duplícalo).</p>`,
+  ejemplos:[
+   { t:'Simplificar', e:'Simplifica {48/72}.',
+     pasos:['Divide por 2: {24/36}.','Divide por 2 otra vez: {12/18}.','Divide por 6: {2/3}. Ya no hay un número que divida a 2 y a 3 a la vez.'], r:'{2/3}' },
+   { t:'Ordenar', e:'Ordena de menor a mayor: {3/4}, {5/8}, {2/3}, {7/12}.',
+     pasos:['MCM de 4, 8, 3 y 12 = 24.','Convierte: {3/4} = {18/24}, {5/8} = {15/24}, {2/3} = {16/24}, {7/12} = {14/24}.','Ordena los numeradores: 14 &lt; 15 &lt; 16 &lt; 18.'], r:'{7/12} &lt; {5/8} &lt; {2/3} &lt; {3/4}' },
+   { t:'Una fracción en medio', e:'Escribe una fracción entre {1/4} y {1/3}.',
+     pasos:['Denominador común 12: {3/12} y {4/12}. No hay numerador entero en medio.','Duplica: {6/24} y {8/24}.','En medio está {7/24}.'], r:'{7/24} (hay muchas respuestas posibles)' }
+  ],
+  receta:['Simplificar: divide arriba y abajo por el mismo número hasta que no se pueda más.','Comparar: halla el MCM de los denominadores y convierte.','Compara solo los numeradores y ordena.','Escribe el orden con los símbolos &lt; o &gt; y las fracciones originales.'],
+  retos:[
+   { tipo:'input', p:'Simplifica {30/45} (escribe la fracción con /).', a:['2/3'], exp:'Divide entre 15: {2/3}.', pista:'Prueba dividiendo entre 5 y luego entre 3.' },
+   { tipo:'mc', p:'¿Cuál es verdadera?', op:['{4/7} &lt; {5/9}','{4/7} &gt; {5/9}','{4/7} = {5/9}','No se pueden comparar'], c:1, exp:'Productos cruzados: 4 × 9 = 36 y 5 × 7 = 35. Como 36 &gt; 35, {4/7} &gt; {5/9}.', pista:'Multiplica en cruz: 4 × 9 y 5 × 7.' },
+   { tipo:'vf', p:'{5/8} &gt; {3/4}.', c:false, exp:'{5/8} = {5/8} y {3/4} = {6/8}: {3/4} es mayor.' },
+   { tipo:'mc', p:'El orden de menor a mayor de {1/2}, {3/5} y {2/5} es:', op:['{3/5}, {1/2}, {2/5}','{2/5}, {1/2}, {3/5}','{1/2}, {2/5}, {3/5}','{2/5}, {3/5}, {1/2}'], c:1, exp:'Con denominador 10: {4/10} &lt; {5/10} &lt; {6/10}.', pista:'Lleva las tres a denominador 10.' }
+  ]
+},
+
+/* 8 */
+{ id:'mcm', icono:'🚌', color:1, taller:'AB', titulo:'Múltiplos y mínimo común múltiplo (MCM)',
+  idea:'El MCM es el menor número que es múltiplo de varios números a la vez; sirve para el denominador común y para problemas de coincidencia.',
+  palabras:'mcm minimo comun multiplo factores primos descomposicion coinciden rutas',
+  insignia:'Maestro del MCM',
+  puedo:'hallar el MCM de dos o más números y usarlo en problemas de coincidencia.',
+  teoria:`
+<p>Los <b>múltiplos</b> de un número son los que aparecen en su tabla: múltiplos de 4 → 4, 8, 12, 16, 20, 24… El <b>mínimo común múltiplo (MCM)</b> de varios números es el <b>menor</b> múltiplo que tienen en común distinto de 0.</p>
+<div class="box key"><b>Método de la descomposición en factores primos</b>
+1) Descompón cada número en factores primos.<br>2) Toma <b>todos los primos que aparezcan</b>, cada uno con su <b>mayor exponente</b>.<br>3) Multiplica.</div>
+<div class="box ex"><b>Ejemplo:</b> 12 = 2² × 3 y 18 = 2 × 3². Mayor exponente de 2: 2². Mayor exponente de 3: 3². MCM = 4 × 9 = 36.</div>
+<h3>¿Para qué sirve?</h3>
+<ul><li>Para encontrar el <b>denominador común</b> al sumar, restar o comparar fracciones.</li><li>Para problemas en que <b>dos cosas se repiten cada cierto tiempo</b> y quieres saber cuándo coinciden (rutas de buses, turnos, luces).</li></ul>
+<div class="box warn"><b>No lo confundas</b>El MCM nunca es menor que el mayor de los números. Si te da un número menor, revisa.</div>`,
+  ejemplos:[
+   { t:'MCM de dos números', e:'Halla el MCM de 9 y 12.',
+     pasos:['9 = 3² y 12 = 2² × 3.','Mayor exponente de 2: 2². Mayor exponente de 3: 3².','MCM = 4 × 9 = 36.'], r:'36' },
+   { t:'MCM de tres números', e:'Halla el MCM de 4, 10 y 15.',
+     pasos:['4 = 2², 10 = 2 × 5, 15 = 3 × 5.','Primos: 2 (mayor exponente 2²), 3 (3¹) y 5 (5¹).','MCM = 4 × 3 × 5 = 60.'], r:'60' },
+   { t:'Problema de coincidencia', e:'Dos rutas alimentadoras salen juntas del Portal de Bosa a las 6:00 a. m. Una sale cada 10 minutos y la otra cada 15. ¿Cuándo vuelven a salir juntas?',
+     pasos:['Se pide cuándo coinciden: es un problema de MCM.','10 = 2 × 5 y 15 = 3 × 5. MCM = 2 × 3 × 5 = 30.','Coinciden cada 30 minutos: 6:00 + 30 min = 6:30 a. m.'], r:'Vuelven a salir juntas a las 6:30 a. m.' }
+  ],
+  receta:['Descompón cada número en factores primos.','Elige todos los primos, cada uno con su mayor exponente.','Multiplícalos: ese es el MCM.','En problemas: el MCM es cada cuánto coinciden; súmalo a la hora de inicio.'],
+  retos:[
+   { tipo:'input', p:'Halla el MCM de 6 y 8.', a:['24'], exp:'6 = 2 × 3 y 8 = 2³; MCM = 8 × 3 = 24.', pista:'Múltiplos de 8: 8, 16, 24… ¿cuál es también múltiplo de 6?' },
+   { tipo:'input', p:'Halla el MCM de 5 y 7.', a:['35'], exp:'5 y 7 son primos entre sí: 5 × 7 = 35.', pista:'No tienen factores comunes.' },
+   { tipo:'mc', p:'El MCM de 12, 16 y 24 es:', op:['24','48','96','192'], c:1, exp:'12 = 2² × 3, 16 = 2⁴, 24 = 2³ × 3; MCM = 2⁴ × 3 = 48.', pista:'Mayor exponente de 2 y de 3.' },
+   { tipo:'input', p:'Dos luces parpadean cada 4 s y cada 6 s. Si se encienden juntas, ¿cada cuántos segundos coinciden?', a:['12'], exp:'MCM(4, 6) = 12.', pista:'Es un problema de MCM.' }
+  ]
+},
+
+/* 9 */
+{ id:'fracciones-suma-resta', icono:'🥣', color:2, taller:'AB', titulo:'Suma y resta de fracciones',
+  idea:'Con igual denominador se opera con los numeradores; con distinto denominador primero se busca un denominador común.',
+  palabras:'sumar restar fracciones heterogeneas homogeneas mixtos denominador comun',
+  insignia:'Chef de las fracciones',
+  puedo:'sumar y restar fracciones y números mixtos, con igual y distinto denominador.',
+  teoria:`
+<div class="box key"><b>Igual denominador</b>Se suman o restan los numeradores y el denominador se deja igual: {2/9} + {4/9} = {6/9} = {2/3} (simplifica al final).</div>
+<div class="box key"><b>Distinto denominador</b>
+1) Halla el MCM de los denominadores.<br>2) Convierte cada fracción a una equivalente con ese denominador.<br>3) Suma o resta los numeradores.<br>4) Simplifica y, si es impropia, escríbela como mixto.</div>
+<h3>Con números mixtos</h3>
+<ul><li><b>Suma</b>: suma los enteros por un lado y las fracciones por otro; si la fracción da impropia, pásala al entero.</li><li><b>Resta</b> (o cuando no se pueda restar): conviértelos a fracciones impropias, opera y regresa a mixto.</li></ul>
+<div class="box warn"><b>Error frecuente</b>Sumar numeradores con numeradores <i>y</i> denominadores con denominadores: {1/2} + {1/3} ≠ {2/5}. El denominador común no se suma, se busca.</div>`,
+  ejemplos:[
+   { t:'Igual denominador', e:'Calcula {7/10} + {9/10} − {3/10}.',
+     pasos:['Opera los numeradores: 7 + 9 − 3 = 13.','El denominador queda 10: {13/10}.','Como es impropia: {13/10} = {1 3/10}.'], r:'{13/10} = {1 3/10}' },
+   { t:'Distinto denominador', e:'Calcula {2/3} + {5/8}.',
+     pasos:['MCM de 3 y 8 = 24.','{2/3} = {16/24} y {5/8} = {15/24}.','{16/24} + {15/24} = {31/24} = {1 7/24}.'], r:'{31/24} = {1 7/24}' },
+   { t:'Resta de mixtos', e:'Calcula {3 1/4} − {1 5/6}.',
+     pasos:['A impropias: {3 1/4} = {13/4} y {1 5/6} = {11/6}.','MCM de 4 y 6 = 12: {13/4} = {39/12} y {11/6} = {22/12}.','{39/12} − {22/12} = {17/12} = {1 5/12}.'], r:'{17/12} = {1 5/12}' }
+  ],
+  receta:['¿Los denominadores son iguales? Si no, halla el MCM.','Convierte cada fracción al denominador común.','Opera los numeradores; el denominador no cambia.','Simplifica y expresa como mixto si queda impropia.'],
+  retos:[
+   { tipo:'input', p:'Calcula {2/9} + {4/9} y simplifica (escribe con /).', a:['2/3'], exp:'{6/9} = {2/3}.', pista:'Suma los numeradores y simplifica.' },
+   { tipo:'input', p:'Calcula {1/2} + {1/3} (escribe con /).', a:['5/6'], exp:'{3/6} + {2/6} = {5/6}.', pista:'Denominador común: 6.' },
+   { tipo:'input', p:'Calcula {5/6} − {1/4} (escribe con /).', a:['7/12'], exp:'{10/12} − {3/12} = {7/12}.', pista:'MCM de 6 y 4 = 12.' },
+   { tipo:'mc', p:'{2 1/5} + {1 3/5} =', op:['{3 4/5}','{3 4/10}','{4 4/5}','{3 2/5}'], c:0, exp:'Enteros: 2 + 1 = 3. Fracciones: {1/5} + {3/5} = {4/5}.', pista:'Suma enteros con enteros y fracciones con fracciones.' },
+   { tipo:'mc', p:'{7/8} − {1/2} =', op:['{6/6}','{3/8}','{6/8}','{1/8}'], c:1, exp:'{7/8} − {4/8} = {3/8}.', pista:'Convierte {1/2} a octavos.' }
+  ]
+},
+
+/* 10 */
+{ id:'fracciones-mult-div', icono:'🔁', color:3, taller:'AB', titulo:'Multiplicar, dividir y combinar fracciones',
+  idea:'Multiplicar es «arriba con arriba, abajo con abajo»; dividir es multiplicar por la fracción invertida.',
+  palabras:'multiplicar dividir fracciones reciproco inverso simplificar jerarquia parentesis fraccion de una cantidad',
+  insignia:'Estratega de fracciones',
+  puedo:'multiplicar y dividir fracciones y resolver operaciones combinadas con paréntesis.',
+  teoria:`
+<div class="box key"><b>Multiplicación</b>{a/b} × {c/d} = {a×c/b×d}. Antes de multiplicar, <b>simplifica en cruz</b> (un numerador con un denominador de la otra fracción) para trabajar con números más pequeños.</div>
+<div class="box key"><b>División</b>{a/b} ÷ {c/d} = {a/b} × {d/c}. Se multiplica por el <b>inverso</b> (la fracción invertida) del divisor.</div>
+<ul><li>Un <b>número entero</b> es una fracción con denominador 1: 5 = {5/1}.</li><li>Un <b>mixto</b> se convierte antes a impropia.</li><li><b>Fracción de una cantidad</b>: «{3/4} de 20» = {3/4} × 20 = 15.</li></ul>
+<h3>Operaciones combinadas</h3>
+<p>Se mantiene la jerarquía: primero los paréntesis (cada uno por separado), luego × y ÷, y por último + y −.</p>
+<div class="box warn"><b>Error frecuente</b>Para multiplicar, <i>no</i> se necesita denominador común. Ese paso es solo para sumar y restar.</div>`,
+  ejemplos:[
+   { t:'Multiplicar simplificando', e:'Calcula {6/7} × {14/9}.',
+     pasos:['Simplifica en cruz: 6 y 9 se dividen entre 3 (quedan 2 y 3); 14 y 7 se dividen entre 7 (quedan 2 y 1).','Multiplica: {2×2/1×3} = {4/3}.','Como es impropia: {4/3} = {1 1/3}.'], r:'{4/3} = {1 1/3}' },
+   { t:'Dividir', e:'Calcula {5/6} ÷ {10/9}.',
+     pasos:['Invierte el divisor y multiplica: {5/6} × {9/10}.','Simplifica: 5 con 10 (÷5) y 9 con 6 (÷3): {1/2} × {3/2}.','{1×3/2×2} = {3/4}.'], r:'{3/4}' },
+   { t:'Operación combinada', e:'Calcula ({1/2} + {1/3}) ÷ ({3/4} − {1/2}).',
+     pasos:['Primer paréntesis: {3/6} + {2/6} = {5/6}.','Segundo paréntesis: {3/4} − {2/4} = {1/4}.','División: {5/6} ÷ {1/4} = {5/6} × {4/1} = {20/6} = {10/3} = {3 1/3}.'], r:'{10/3} = {3 1/3}' }
+  ],
+  receta:['Convierte mixtos a impropias y enteros a fracción con denominador 1.','Multiplicación: simplifica en cruz y multiplica. División: invierte la segunda y multiplica.','En operaciones combinadas: resuelve cada paréntesis primero.','Simplifica el resultado final.'],
+  retos:[
+   { tipo:'input', p:'Calcula {3/8} × {4/9} (escribe con /).', a:['1/6'], exp:'{12/72} = {1/6}.', pista:'Simplifica en cruz o al final.' },
+   { tipo:'input', p:'Calcula {2/5} ÷ {4/15} (escribe con /).', a:['3/2'], exp:'{2/5} × {15/4} = {30/20} = {3/2}.', pista:'Invierte la segunda fracción.' },
+   { tipo:'input', p:'Calcula {3/4} de 20.', a:['15'], exp:'20 ÷ 4 = 5 y 5 × 3 = 15.', pista:'Divide 20 en 4 partes y toma 3.' },
+   { tipo:'mc', p:'{1/2} ÷ {1/4} =', op:['{1/8}','2','{1/2}','8'], c:1, exp:'{1/2} × 4 = 2: en un medio caben 2 cuartos.', pista:'Invierte {1/4} y multiplica.' }
+  ]
+},
+
+/* 11 */
+{ id:'razon-proporcion', icono:'🎯', color:4, taller:'AB', titulo:'Razón y proporción',
+  idea:'Una razón compara dos cantidades; una proporción es la igualdad de dos razones.',
+  palabras:'razon proporcion extremos medios producto cruzado valor faltante constante',
+  insignia:'Maestro de las proporciones',
+  puedo:'calcular razones, reconocer proporciones y hallar el valor que falta.',
+  teoria:`
+<h3>Razón</h3>
+<p>Una <b>razón</b> compara dos cantidades por medio de una división. Se escribe a : b o {a/b} y se lee «a es a b». Se puede simplificar como una fracción.</p>
+<div class="box ex"><b>Ejemplo:</b> en un curso hay 18 niños y 24 niñas. La razón de niños a niñas es 18 : 24 = 3 : 4.</div>
+<p>Cuando las cantidades tienen unidades distintas, la razón es una tasa: 120 km en 2 h es una razón de 60 km/h.</p>
+<h3>Proporción</h3>
+<p>Una <b>proporción</b> es la igualdad de dos razones: {a/b} = {c/d}. Sus términos a y d son los <b>extremos</b>; b y c son los <b>medios</b>.</p>
+<div class="box key"><b>Propiedad fundamental</b>En una proporción, el <b>producto de los extremos es igual al producto de los medios</b>: a × d = b × c.</div>
+<h3>Valor faltante</h3>
+<p>Para hallar x en {a/b} = {x/d}: x = (a × d) ÷ b. Es decir, multiplica en cruz y divide entre el número que quedó solo.</p>
+<div class="box warn"><b>Ojo</b>Para decir que dos razones forman una proporción hay que comprobar los productos cruzados, o simplificar ambas y ver si dan lo mismo.</div>`,
+  ejemplos:[
+   { t:'Simplificar una razón', e:'En una tienda hay 15 pares de tenis negros y 25 blancos. ¿Cuál es la razón entre negros y blancos?',
+     pasos:['Escribe la razón: 15 : 25.','Simplifica dividiendo entre 5: 3 : 5.'], r:'La razón es 3 : 5.' },
+   { t:'¿Forman una proporción?', e:'¿Forman una proporción {12/20} y {9/15}?',
+     pasos:['Multiplica en cruz: 12 × 15 = 180 y 20 × 9 = 180.','Los productos son iguales, entonces sí forman una proporción.','Comprobación: ambas se simplifican a {3/5}.'], r:'Sí, forman una proporción.' },
+   { t:'Valor que falta', e:'Halla x en {7/12} = {x/60}.',
+     pasos:['Multiplica en cruz: 7 × 60 = 12 × x → 420 = 12x.','Divide entre 12: x = 420 ÷ 12 = 35.','Comprueba: {7/12} y {35/60} se simplifican a {7/12}.'], r:'x = 35' }
+  ],
+  receta:['Escribe la razón como fracción y simplifícala.','Para comprobar una proporción: productos cruzados.','Para hallar x: multiplica en cruz y divide entre el número que quedó solo.','Comprueba simplificando las dos razones.'],
+  retos:[
+   { tipo:'input', p:'Simplifica la razón 15 : 25 (escríbela como a:b).', a:['3:5','3/5'], exp:'Dividiendo entre 5: 3 : 5.', pista:'Divide ambos números entre 5.' },
+   { tipo:'input', p:'Halla x en {4/9} = {12/x}.', a:['27'], exp:'4x = 9 × 12 = 108, x = 27.', pista:'Multiplica en cruz: 4 · x = 9 · 12.' },
+   { tipo:'vf', p:'{6/8} y {9/12} forman una proporción.', c:true, exp:'6 × 12 = 72 y 8 × 9 = 72.' },
+   { tipo:'mc', p:'En {2/3} = {x/18}, el valor de x es:', op:['9','12','27','6'], c:1, exp:'x = 2 × 18 ÷ 3 = 12.', pista:'Multiplica 2 × 18 y divide entre 3.' }
+  ]
+},
+
+/* 12 */
+{ id:'proporcionalidad-directa', icono:'📈', color:5, taller:'AB', titulo:'Proporcionalidad directa',
+  idea:'Dos magnitudes son directamente proporcionales cuando su cociente y ÷ x es siempre el mismo número (la constante k).',
+  palabras:'proporcionalidad directa constante k tabla y=kx magnitud proporcional',
+  insignia:'Analista de tablas',
+  puedo:'reconocer si una tabla es de proporcionalidad directa, hallar k y escribir y = kx.',
+  teoria:`
+<p>Dos magnitudes son <b>directamente proporcionales</b> si al <b>multiplicar</b> una por un número, la otra también queda multiplicada por ese mismo número. Si una se duplica, la otra se duplica; si una se triplica, la otra se triplica.</p>
+<div class="box key"><b>La constante de proporcionalidad k</b>k = y ÷ x. En una relación de proporcionalidad directa, <b>todas las parejas dan el mismo k</b>. La fórmula es <b>y = k · x</b>.</div>
+<h3>¿Cómo reconocerla en una tabla?</h3>
+<p>Calcula y ÷ x en cada columna. Si <b>todos dan igual</b>, es directa. Si no, no lo es.</p>
+<div class="scroll"><table class="tbl"><tr><th>x</th><td>2</td><td>4</td><td>6</td></tr><tr><th>y</th><td>10</td><td>20</td><td>30</td></tr><tr><th>y ÷ x</th><td>5</td><td>5</td><td>5</td></tr></table></div>
+<p>Aquí k = 5 y y = 5x.</p>
+<div class="box warn"><b>Casos que NO son directos</b>• Cuando la diferencia es constante pero el cociente no (x: 1, 2, 3 → y: 4, 6, 8: los cocientes son 4, 3 y 2,67).<br>• Cuando una magnitud sube y la otra baja (x: 1, 2, 4 → y: 8, 4, 2): es otra relación, no directa.</div>`,
+  ejemplos:[
+   { t:'Reconocer y hallar k', e:'¿Es directa la relación? x: 3, 6, 9, 12 · y: 21, 42, 63, 84. Si lo es, halla k.',
+     pasos:['Calcula y ÷ x: 21 ÷ 3 = 7; 42 ÷ 6 = 7; 63 ÷ 9 = 7; 84 ÷ 12 = 7.','Todos dan 7: sí es directa.','k = 7 y la fórmula es y = 7x.'], r:'Sí es directa, con k = 7.' },
+   { t:'Una que no lo es', e:'¿Es directa? x: 1, 2, 3 · y: 4, 6, 8.',
+     pasos:['4 ÷ 1 = 4; 6 ÷ 2 = 3; 8 ÷ 3 ≈ 2,67.','Los cocientes cambian: no es directa (y solo aumenta 2 cada vez).'], r:'No es directa.' },
+   { t:'Completar una tabla', e:'3 lápices cuestan $2.400 y el precio es directamente proporcional a la cantidad. Halla k, escribe la fórmula y calcula el precio de 7 lápices.',
+     pasos:['k = 2.400 ÷ 3 = 800 (precio de un lápiz).','Fórmula: y = 800x.','Para x = 7: y = 800 × 7 = 5.600.'], r:'k = 800; y = 800x; 7 lápices cuestan $5.600.' }
+  ],
+  receta:['Calcula y ÷ x en cada pareja.','Si todos los cocientes son iguales, es directa; ese número es k.','Escribe la fórmula y = kx.','Usa la fórmula para completar valores: y = kx, o x = y ÷ k.'],
+  retos:[
+   { tipo:'input', p:'En la tabla x: 5, 10 · y: 20, 40, ¿cuánto vale k?', a:['4'], exp:'20 ÷ 5 = 4 y 40 ÷ 10 = 4.', pista:'Divide y entre x.' },
+   { tipo:'mc', p:'¿Cuál tabla es de proporcionalidad directa?', op:['x: 1, 2, 3 · y: 3, 5, 7','x: 2, 4, 6 · y: 6, 12, 18','x: 1, 2, 4 · y: 12, 6, 3','x: 1, 2, 3 · y: 5, 6, 7'], c:1, exp:'En la segunda, y ÷ x = 3 siempre.', pista:'Calcula y ÷ x en cada tabla.' },
+   { tipo:'input', p:'Si k = 15 y x = 6, ¿cuánto vale y en y = kx?', a:['90'], exp:'15 × 6 = 90.', pista:'Multiplica k por x.' },
+   { tipo:'vf', p:'Si al duplicar x, la y se triplica, la relación es directa.', c:false, exp:'En una relación directa, si x se duplica, y también se duplica.' }
+  ]
+},
+
+/* 13 */
+{ id:'escala-problemas', icono:'🗺️', color:0, taller:'AB', titulo:'Escalas y problemas de la vida diaria',
+  idea:'Las proporciones, las fracciones y las razones sirven para resolver problemas de mapas, mercado, velocidad y repartos.',
+  palabras:'escala plano mapa velocidad kilometros hora problema aplicado fraccion de cantidad bolsas reparto',
+  insignia:'Solucionador de problemas',
+  puedo:'resolver problemas de escala, velocidad constante, fracciones de una cantidad y proporcionalidad directa.',
+  teoria:`
+<h3>Escala</h3>
+<p>Una escala <b>1 : n</b> significa que <b>1 cm del plano equivale a n cm de la realidad</b>. Es una proporcionalidad directa con k = n.</p>
+<ul><li><b>De plano a realidad</b>: multiplica por n.</li><li><b>De realidad a plano</b>: divide entre n.</li><li>Recuerda las unidades: 100 cm = 1 m.</li></ul>
+<h3>Velocidad constante</h3>
+<p>Si algo viaja siempre al mismo ritmo, distancia y tiempo son directamente proporcionales: velocidad = distancia ÷ tiempo; distancia = velocidad × tiempo; tiempo = distancia ÷ velocidad.</p>
+<h3>Fracciones en problemas</h3>
+<ul><li><b>«Fracción de una cantidad»</b> → multiplica: {5/12} de 48 = 20.</li><li><b>«¿Cuántas porciones caben?»</b> → divide entre el tamaño de cada porción (¡fracciones!).</li></ul>
+<div class="box key"><b>Método</b>1) Subraya datos y pregunta. 2) Decide qué operación o proporción usar. 3) Resuelve mostrando el procedimiento. 4) Responde con una frase y la unidad.</div>`,
+  ejemplos:[
+   { t:'Escala', e:'En un plano de escala 1 : 500, un lote mide 6 cm. ¿Cuántos metros mide en la realidad? Y si en la realidad una calle mide 12 m, ¿cuánto mide en el plano?',
+     pasos:['Plano → realidad: 6 × 500 = 3.000 cm = 30 m.','Realidad → plano: 12 m = 1.200 cm; 1.200 ÷ 500 = 2,4 cm.'], r:'El lote mide 30 m; la calle mide 2,4 cm en el plano.' },
+   { t:'Cuántas bolsas caben', e:'En la plaza, un vendedor empaca arveja en bolsas de {3/4} de kilo y tiene 10 kilos. ¿Cuántas bolsas completas llena y cuánta arveja sobra?',
+     pasos:['Divide: 10 ÷ {3/4} = 10 × {4/3} = {40/3} = {13 1/3}.','Llena 13 bolsas completas. Esas gastan 13 × {3/4} = {39/4} = 9,75 kg.','Sobra: 10 − {39/4} = {1/4} kg.'], r:'13 bolsas completas y sobra {1/4} de kilo.' },
+   { t:'Velocidad constante', e:'Un bus recorre 90 km en 2 horas, siempre al mismo ritmo. ¿Cuál es su velocidad? ¿Cuántos km recorre en 5 horas? ¿Cuánto tarda en recorrer 135 km?',
+     pasos:['Velocidad: 90 ÷ 2 = 45 km/h.','En 5 horas: 45 × 5 = 225 km.','Para 135 km: 135 ÷ 45 = 3 horas.'], r:'45 km/h; 225 km; 3 horas.' }
+  ],
+  receta:['Identifica el tipo: escala, tasa (velocidad, precio) o fracción de cantidad.','Halla la constante (k, la velocidad o el precio de una unidad).','Aplica la multiplicación o la división según lo que te piden.','Revisa unidades y responde con una frase completa.'],
+  retos:[
+   { tipo:'input', p:'En un plano de escala 1 : 100, una habitación mide 8 cm. ¿Cuántos metros mide en la realidad? (solo el número)', a:['8'], exp:'8 × 100 = 800 cm = 8 m.', pista:'Multiplica por 100 y pasa de cm a m.' },
+   { tipo:'input', p:'En un plano de escala 1 : 300, un salón mide 15 m en la realidad. ¿Cuántos cm mide en el plano? (solo el número)', a:['5'], exp:'15 m = 1.500 cm; 1.500 ÷ 300 = 5.', pista:'Pasa los metros a cm y divide entre 300.' },
+   { tipo:'input', p:'En un curso de 48 estudiantes, {5/12} van en bicicleta. ¿Cuántos van en bicicleta?', a:['20'], exp:'48 ÷ 12 = 4 y 4 × 5 = 20.', pista:'Calcula la fracción de 48.' },
+   { tipo:'input', p:'Con 9 kilos de papa se llenan bolsas de {3/4} de kilo. ¿Cuántas bolsas se llenan?', a:['12'], exp:'9 ÷ {3/4} = 9 × {4/3} = 12.', pista:'Divide entre una fracción: multiplica por la invertida.' }
+  ]
+}
+
+]
+};
+
+</script>
+<script>
+(function(){
+'use strict';
+var W = WIKI;
+function $(s,el){return (el||document).querySelector(s)}
+function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))}
+var store = {
+  get:function(k){try{var v=localStorage.getItem(W.key+':'+k);return v?JSON.parse(v):null}catch(e){return null}},
+  set:function(k,v){try{localStorage.setItem(W.key+':'+k,JSON.stringify(v))}catch(e){}}
+};
+var S = {
+  taller: store.get('taller')||'B',
+  done: store.get('done')||{},
+  visited: store.get('visited')||{},
+  check: store.get('check')||{}
+};
+function save(){store.set('taller',S.taller);store.set('done',S.done);store.set('visited',S.visited);store.set('check',S.check)}
+
+/* fracciones {3/4} y {2 1/4} */
+function fmt(h){
+  return String(h).replace(/\{(?:(-?\d+)\s)?([^\s{}\/<>]+)\/([^\s{}\/<>]+)\}/g,function(m,w,n,d){
+    var f='<span class="frac"><span class="n">'+n+'</span><span class="d">'+d+'</span></span>';
+    return w?'<span class="mix"><span class="whole">'+w+'</span>'+f+'</span>':f;
+  });
+}
+function strip(h){return String(h).replace(/<[^>]+>/g,' ').replace(/\{[^}]*\}/g,' ').toLowerCase()}
+W.temas.forEach(function(t,i){
+  t.i=i; t.idx=strip(t.titulo+' '+t.idea+' '+(t.palabras||'')+' '+t.teoria);
+  t.insignia=t.insignia||('Experto en '+t.titulo.toLowerCase());
+});
+function visible(t){return S.taller==='B'||t.taller.indexOf('A')>=0}
+function vis(){return W.temas.filter(visible)}
+function isDone(t){return (S.done[t.id]||[]).length>=t.retos.length}
+function chips(t){
+  return '<div class="chips">'+(t.taller.indexOf('A')>=0?'<span class="chip a">Taller A</span>':'')+'<span class="chip b">Taller B</span></div>';
+}
+
+/* navegación */
+function buildNav(){
+  var h='<a href="#inicio" data-r="inicio"><span class="ic">🏠</span>Inicio</a><div class="hr"></div>';
+  vis().forEach(function(t,n){
+    var st=isDone(t)?'<span class="st ok" title="Insignia ganada">✔ 🏅</span>':(S.visited[t.id]?'<span class="st" title="Ya lo visitaste">•</span>':'');
+    h+='<a href="#'+t.id+'" data-r="'+t.id+'" style="--t:var(--c'+(t.color%6)+')"><span class="ic">'+t.icono+'</span><span>'+(n+1)+'. '+t.titulo+'</span>'+st+'</a>';
+  });
+  h+='<div class="hr"></div><a href="#cierre" data-r="cierre"><span class="ic">🏁</span>Cierre y autoevaluación</a>';
+  $('#nav').innerHTML=h;
+}
+function markNav(r){
+  $$('#nav a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-r')===r)});
+}
+
+/* retos */
+function norm(s){return String(s).toLowerCase().replace(/[−–—]/g,'-').replace(/,/g,'.').replace(/\s+/g,'').replace(/[×·]/g,'*').replace(/÷/g,'/')}
+function renderReto(t){
+  var out='';
+  t.retos.forEach(function(q,k){
+    var dn=(S.done[t.id]||[]).indexOf(k)>=0;
+    out+='<div class="q-card'+(dn?' done':'')+'" data-k="'+k+'"><div class="p">'+(k+1)+'. '+fmt(q.p)+'</div>';
+    if(q.tipo==='input'){
+      out+='<div class="row"><input class="inp" type="text" inputmode="text" autocomplete="off" aria-label="Tu respuesta a la pregunta '+(k+1)+'" placeholder="Escribe tu respuesta"><button class="btn sm chk">Revisar</button></div>';
+    }else{
+      var ops=q.tipo==='vf'?['Verdadero','Falso']:q.op;
+      out+='<div class="opts">';
+      ops.forEach(function(o,j){out+='<button class="opt" data-j="'+j+'"><span class="k">'+'ABCD'[j]+'</span><span>'+fmt(o)+'</span></button>'});
+      out+='</div>';
+    }
+    out+='<div class="fb" role="status"></div></div>';
+  });
+  out+='<div class="badge" id="badge"><span class="b">🏅</span>¡Insignia ganada! '+t.insignia+'</div>';
+  return out;
+}
+function setFb(card,ok,msg){
+  var fb=$('.fb',card); fb.className='fb show '+(ok?'ok':'no'); fb.innerHTML=(ok?'✔ ':'✘ ')+fmt(msg);
+}
+function solved(t,card,k,q){
+  var d=S.done[t.id]||(S.done[t.id]=[]);
+  if(d.indexOf(k)<0)d.push(k);
+  card.classList.add('done'); save(); checkBadge(t,false); buildNav(); markNav(t.id); updateBar();
+}
+function checkBadge(t,quiet){
+  var b=$('#badge'); if(!b)return;
+  if(isDone(t)){b.classList.add('show')}
+}
+function wireReto(t){
+  $$('.q-card').forEach(function(card){
+    var k=+card.getAttribute('data-k'), q=t.retos[k];
+    if(q.tipo==='input'){
+      var go=function(){
+        var v=norm($('.inp',card).value); if(!v)return;
+        var ok=q.a.some(function(a){return norm(a)===v});
+        if(ok){setFb(card,true,'¡Correcto! '+(q.exp||''));solved(t,card,k,q)}
+        else setFb(card,false,'Todavía no. '+(q.pista||'Revisa el procedimiento y vuelve a intentarlo.'));
+      };
+      $('.chk',card).addEventListener('click',go);
+      $('.inp',card).addEventListener('keydown',function(e){if(e.key==='Enter')go()});
+    }else{
+      $$('.opt',card).forEach(function(btn){btn.addEventListener('click',function(){
+        var j=+btn.getAttribute('data-j');
+        var ok=q.tipo==='vf'?((j===0)===q.c):(j===q.c);
+        if(ok){btn.classList.add('good');$$('.opt',card).forEach(function(b){b.disabled=true});setFb(card,true,'¡Correcto! '+(q.exp||''));solved(t,card,k,q)}
+        else{btn.classList.add('bad');setFb(card,false,q.pista||'No es esa. Vuelve a la teoría o a los ejemplos y prueba otra opción.');setTimeout(function(){btn.classList.remove('bad')},600)}
+      })});
+    }
+    if((S.done[t.id]||[]).indexOf(k)>=0){
+      var fb=$('.fb',card); fb.className='fb show ok'; fb.innerHTML='✔ Ya resuelta. '+fmt(q.exp||'');
+      if(q.tipo==='input')$('.inp',card).value=q.a[0];
+      else{var j=q.tipo==='vf'?(q.c?0:1):q.c; var ob=$$('.opt',card)[j]; if(ob)ob.classList.add('good'); $$('.opt',card).forEach(function(b){b.disabled=true})}
+    }
+  });
+  checkBadge(t,true);
+}
+
+/* ejemplos con pasos */
+function renderEj(t){
+  var o='';
+  t.ejemplos.forEach(function(e,i){
+    o+='<div class="ex-item" data-e="'+i+'"><h3>'+fmt(e.t)+'</h3><div class="q">'+fmt(e.e)+'</div><ol class="steps">';
+    e.pasos.forEach(function(p){o+='<li><div>'+fmt(p)+'</div></li>'});
+    o+='</ol><div class="ans">➜ '+fmt(e.r)+'</div><div class="row" style="margin-top:8px"><button class="btn sm nx">Ver el primer paso</button><button class="btn ghost sm all">Ver todo</button></div></div>';
+  });
+  return o;
+}
+function wireEj(){
+  $$('.ex-item').forEach(function(it){
+    var li=$$('.steps li',it), n=0, ans=$('.ans',it), nx=$('.nx',it), all=$('.all',it);
+    function upd(){
+      if(n>=li.length){ans.classList.add('show');nx.disabled=true;nx.textContent='Listo ✔';all.style.display='none'}
+      else nx.textContent=n===0?'Ver el primer paso':'Ver el siguiente paso ('+(n+1)+' de '+li.length+')';
+    }
+    nx.addEventListener('click',function(){if(n<li.length){li[n].classList.add('show');n++}upd()});
+    all.addEventListener('click',function(){li.forEach(function(l){l.classList.add('show')});n=li.length;upd()});
+    upd();
+  });
+}
+
+/* vistas */
+function progress(){var v=vis();return {d:v.filter(isDone).length,n:v.length}}
+function updateBar(){
+  var p=progress(), b=$('#pbar'), tx=$('#ptxt');
+  if(b)b.style.width=(p.n?Math.round(100*p.d/p.n):0)+'%';
+  if(tx)tx.textContent=p.d+' de '+p.n+' insignias';
+}
+function viewHome(q){
+  var v=vis(), ql=(q||'').toLowerCase().trim();
+  var h='<section class="hero"><span class="big" aria-hidden="true">'+W.mascota+'</span><h1>'+W.titulo+'</h1><p>'+fmt(W.intro)+'</p>';
+  h+='<div class="pills" role="group" aria-label="Elige tu taller"><button class="pill" data-ta="A" aria-pressed="'+(S.taller==='A')+'">Voy a hacer el Taller A</button><button class="pill" data-ta="B" aria-pressed="'+(S.taller==='B')+'">Voy a hacer el Taller B</button></div>';
+  h+='<p class="hint" id="tinfo">'+fmt(W.tallerInfo[S.taller])+'</p>';
+  h+='<div class="bar" aria-hidden="true"><i id="pbar"></i></div><div class="hint" id="ptxt"></div>';
+  h+='<p style="margin-top:14px"><input class="search" id="q" type="search" placeholder="🔍 Busca un tema o una palabra…" aria-label="Buscar tema" value="'+(q||'').replace(/"/g,'')+'"></p>';
+  h+='<p><a class="btn" href="#'+(v[0]?v[0].id:'cierre')+'" style="text-decoration:none;display:inline-block">¡Empezar el recorrido!</a></p></section>';
+  h+='<div class="card"><h2>🧭 Cómo usar este wiki</h2><ol><li><b>Elige tu taller</b> arriba: así ves solo los temas que necesitas.</li><li>En cada tema lee la <b>idea</b>, la <b>teoría</b> y abre los <b>ejemplos paso a paso</b>.</li><li>Usa el recuadro <b>«¿Cómo lo resuelvo?»</b> como receta y practica en el <b>mini-reto</b> para ganar la insignia.</li><li>Al final haz la <b>autoevaluación</b> y resuelve tu taller con tus propias manos.</li></ol><p class="hint">Aquí aprendes <i>cómo</i> se hace; los ejercicios de tu taller los resuelves tú, en tu cuaderno, con procedimiento.</p></div>';
+  h+='<h2 style="margin-top:22px">Temas de tu taller</h2><div class="grid" id="grid">';
+  W.temas.forEach(function(t,n){
+    var show=visible(t), match=!ql||t.idx.indexOf(ql)>=0;
+    if(!show||!match)return;
+    h+='<a class="tc" href="#'+t.id+'" style="--t:var(--c'+(t.color%6)+')"><span class="ic">'+t.icono+'</span><b>'+t.titulo+'</b><span class="s">'+fmt(t.idea)+'</span>'+chips(t)+(isDone(t)?'<span class="chip" style="border-color:var(--good)">🏅 Insignia ganada</span>':'')+'</a>';
+  });
+  h+='</div>';
+  return h;
+}
+function viewTema(t){
+  var v=vis(), pos=v.indexOf(t);
+  var h='<article style="--t:var(--c'+(t.color%6)+')"><div class="card t"><div class="hint">Tema '+(pos>=0?(pos+1)+' de '+v.length:'')+'</div><h1>'+t.icono+' '+t.titulo+'</h1>'+chips(t)+'<div class="idea">💡 '+fmt(t.idea)+'</div></div>';
+  h+='<section class="card t"><h2>📖 Teoría</h2>'+fmt(t.teoria)+'</section>';
+  h+='<section class="card t"><h2>🔎 Ejemplos resueltos</h2><p class="hint">Estos ejemplos son distintos de los de tu taller, pero se resuelven con la misma lógica. Ábrelos paso a paso.</p>'+renderEj(t)+'</section>';
+  h+='<section class="card t"><h2>🧭 ¿Cómo lo resuelvo?</h2><ol class="recipe">'+t.receta.map(function(r){return '<li>'+fmt(r)+'</li>'}).join('')+'</ol></section>';
+  h+='<section class="card t"><h2>🎮 Mini-reto</h2><p class="hint">Contesta todas bien para ganar la insignia «'+t.insignia+'». Si fallas, puedes intentarlo otra vez.</p>'+renderReto(t)+'</section>';
+  var prev=v[pos-1], next=v[pos+1];
+  h+='<div class="pager"><a class="btn ghost" style="text-decoration:none" href="#'+(prev?prev.id:'inicio')+'">← '+(prev?prev.titulo:'Inicio')+'</a><a class="btn" style="text-decoration:none" href="#'+(next?next.id:'cierre')+'">'+(next?next.titulo:'Ir al cierre')+' →</a></div></article>';
+  return h;
+}
+function viewCierre(){
+  var v=vis();
+  var h='<section class="card"><h1>🏁 Cierre y autoevaluación</h1><p>Marca lo que ya puedes hacer. Si algo te falta, vuelve a ese tema con el botón.</p>';
+  h+='<div class="badges" aria-label="Insignias">'+v.map(function(t){return '<span class="bd'+(isDone(t)?'':' off')+'" title="'+t.insignia+'">'+t.icono+'</span>'}).join('')+'</div></section>';
+  h+='<section class="card"><h2>✅ Lo que ya sé hacer</h2>';
+  v.forEach(function(t){
+    var on=!!S.check[t.id];
+    h+='<label class="check'+(on?' on':'')+'"><input type="checkbox" data-c="'+t.id+'"'+(on?' checked':'')+'><span>Puedo '+fmt(t.puedo)+' <a href="#'+t.id+'">(ver tema)</a></span></label>';
+  });
+  h+='</section><section class="card"><h2>📝 Ahora, a tu taller</h2><ul>'+W.cierre.map(function(c){return '<li>'+fmt(c)+'</li>'}).join('')+'</ul></section>';
+  h+='<p><button class="btn ghost sm" id="reset">Borrar mi progreso en este dispositivo</button></p>';
+  return h;
+}
+
+/* router */
+function route(){
+  var r=(location.hash||'#inicio').slice(1)||'inicio';
+  var t=W.temas.filter(function(x){return x.id===r})[0], html;
+  if(t){
+    if(!visible(t)){S.taller='B';save()}
+    html=viewTema(t);S.visited[t.id]=1;save();
+  }else if(r==='cierre')html=viewCierre();
+  else{html=viewHome('');r='inicio'}
+  $('#view').innerHTML=html;
+  buildNav();markNav(r);
+  $('#side').classList.remove('open');
+  window.scrollTo(0,0);
+  if(t){wireEj();wireReto(t)}
+  if(r==='inicio')wireHome();
+  if(r==='cierre')wireCierre();
+  updateBar();
+  document.title=(t?t.titulo+' · ':'')+W.titulo;
+}
+function wireHome(){
+  $$('.pill').forEach(function(p){p.addEventListener('click',function(){
+    S.taller=p.getAttribute('data-ta');save();
+    $('#view').innerHTML=viewHome($('#q').value);buildNav();markNav('inicio');wireHome();updateBar();
+  })});
+  var q=$('#q');
+  q.addEventListener('input',function(){
+    var pos=q.value;
+    $('#view').innerHTML=viewHome(pos);wireHome();updateBar();
+    var nq=$('#q');nq.focus();nq.setSelectionRange(pos.length,pos.length);
+  });
+}
+function wireCierre(){
+  $$('input[data-c]').forEach(function(c){c.addEventListener('change',function(){
+    S.check[c.getAttribute('data-c')]=c.checked;save();c.parentNode.classList.toggle('on',c.checked);
+  })});
+  $('#reset').addEventListener('click',function(){
+    S.done={};S.visited={};S.check={};save();route();
+  });
+}
+$('#bm').textContent=W.mascota;$('#bt').textContent=W.corto;$('#bs').textContent='Wiki de nivelación 2026';
+$('#foot').innerHTML='Colegio Carlos Albán Holguín I.E.D. · '+W.pie+' · Material de estudio para la nivelación del tercer periodo 2026. Tu progreso se guarda solo en este dispositivo.';
+$('#brand').addEventListener('click',function(){location.hash='#inicio'});
+$('#brand').addEventListener('keydown',function(e){if(e.key==='Enter')location.hash='#inicio'});
+$('#burger').addEventListener('click',function(){$('#side').classList.toggle('open')});
+$('#theme').addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+});
+document.addEventListener('click',function(e){
+  var s=$('#side'); if(s.classList.contains('open')&&!s.contains(e.target)&&e.target.id!=='burger')s.classList.remove('open');
+});
+window.addEventListener('hashchange',route);
+route();
+})();
+</script>
+</body>
+</html>
