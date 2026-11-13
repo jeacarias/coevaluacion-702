@@ -1,0 +1,1948 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nivelación final 8° Matemáticas · Wiki</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+:root{
+  --bg:#F3F6F2; --surface:#FFFFFF; --surface2:#F6F9F5; --ink:#1B2420; --ink-soft:#4A5A51;
+  --line:#6F8378; --line-soft:#D3DBD2; --accent:#2B6E76; --accent-soft:#DCEAEA;
+  --btn:#1D4F55; --on-btn:#FFFFFF;
+  --good:#1F6B3C; --good-soft:#DDF1E3; --bad:#A93226; --bad-soft:#FBE3DF; --warn:#6E4E00; --warn-soft:#FBF0D5;
+  --c0:#2B6E76; --c1:#9A6516; --c2:#B63F32; --c3:#4B5FA8; --c4:#3A7F50; --c5:#85479A;
+  --shadow:0 2px 0 rgba(27,36,32,.08);
+  --grid:rgba(43,110,118,.11);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A16; --surface:#1B2620; --surface2:#223029; --ink:#ECF1EC; --ink-soft:#B4C1B8;
+    --line:#7C9084; --line-soft:#33443A; --accent:#57B0B8; --accent-soft:#1F3B3E;
+    --btn:#57B0B8; --on-btn:#0B1517;
+    --good:#8FDDA8; --good-soft:#1F3A2A; --bad:#FFA396; --bad-soft:#411F1B; --warn:#F2CB6A; --warn-soft:#3A2F12;
+    --c0:#57B0B8; --c1:#E0A93C; --c2:#F08A7C; --c3:#8FA2E8; --c4:#7FCB96; --c5:#C998DA;
+    --shadow:none; --grid:rgba(87,176,184,.09);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A16; --surface:#1B2620; --surface2:#223029; --ink:#ECF1EC; --ink-soft:#B4C1B8;
+  --line:#7C9084; --line-soft:#33443A; --accent:#57B0B8; --accent-soft:#1F3B3E;
+  --btn:#57B0B8; --on-btn:#0B1517;
+  --good:#8FDDA8; --good-soft:#1F3A2A; --bad:#FFA396; --bad-soft:#411F1B; --warn:#F2CB6A; --warn-soft:#3A2F12;
+  --c0:#57B0B8; --c1:#E0A93C; --c2:#F08A7C; --c3:#8FA2E8; --c4:#7FCB96; --c5:#C998DA;
+  --shadow:none; --grid:rgba(87,176,184,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;color:var(--ink);font-family:'Public Sans',system-ui,'Segoe UI',Arial,sans-serif;font-size:18px;line-height:1.6;text-rendering:optimizeLegibility}
+html.big body{font-size:23px}
+h1,h2,h3{font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:600;line-height:1.18;margin:0 0 .5em;text-wrap:balance;letter-spacing:-.005em}
+h1{font-size:clamp(1.9rem,4vw,2.8rem)} h2{font-size:clamp(1.4rem,2.6vw,1.9rem)} h3{font-size:1.2rem}
+p{margin:.5em 0 .8em;text-wrap:pretty} ul,ol{margin:.4em 0 .9em;padding-left:1.4em} li{margin:.25em 0}
+.card p,.card li{max-width:72ch}
+.card .box p,.card .box li,.card td p{max-width:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.mono,.frac,.num{font-family:'Space Mono',ui-monospace,Consolas,monospace}
+sup,sub{line-height:0}
+.per{text-decoration:overline;text-decoration-thickness:2px}
+
+/* fracciones */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .18em;line-height:1.15;font-size:.95em}
+.frac .n{border-bottom:2px solid currentColor;padding:0 .3em}
+.frac .d{padding:0 .3em}
+.mix{display:inline-flex;align-items:center;gap:.05em}
+.mix .whole{font-family:'Space Mono',monospace;font-weight:700}
+
+/* layout */
+.app{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow:auto;background:var(--surface);border-right:2px solid var(--line-soft);padding:16px 14px 24px}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:12px;cursor:pointer}
+.brand .m{font-size:2rem}
+.brand b{font-family:'Fraunces',serif;font-size:1.05rem;line-height:1.15;display:block}
+.brand small{color:var(--ink-soft);font-size:.8rem}
+.nav a{display:flex;gap:10px;align-items:center;padding:9px 10px;margin:3px 0;border-radius:12px;color:var(--ink);text-decoration:none;border:2px solid transparent;font-weight:500;font-size:.95rem;line-height:1.25}
+.nav a:hover{background:var(--surface2);border-color:var(--line-soft)}
+.nav a.on{background:var(--accent-soft);border-color:var(--t,var(--accent));font-weight:700}
+.nav .ic{font-size:1.25rem;width:1.6rem;text-align:center;flex:none}
+.nav .st{margin-left:auto;flex:none;font-size:.85rem;color:var(--ink-soft)}
+.nav .st.ok{color:var(--good);font-weight:700}
+.nav .hr{height:2px;background:var(--line-soft);margin:10px 0}
+.main{padding:22px clamp(16px,4vw,48px) 60px;max-width:980px;width:100%}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}
+.top .l{display:flex;gap:10px;align-items:center}
+.burger{display:none}
+.btn{background:var(--btn);color:var(--on-btn);border:2px solid var(--btn);border-radius:12px;padding:10px 16px;font-weight:700;font-size:1rem;box-shadow:0 4px 0 color-mix(in srgb,var(--btn) 55%,#000);transition:transform .08s,box-shadow .08s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(4px);box-shadow:0 0 0 transparent}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:0 4px 0 var(--line-soft)}
+.btn.ghost:active{box-shadow:0 0 0 transparent}
+.btn.sm{padding:6px 12px;font-size:.9rem}
+.btn[disabled]{opacity:.5;cursor:default}
+
+/* tarjetas */
+.card{background:var(--surface);border:2px solid var(--line-soft);border-radius:22px;padding:20px 24px;margin:18px 0;box-shadow:var(--shadow)}
+.card>h2,.card>h3{display:flex;gap:8px;align-items:center}
+.card.t{border-left:10px solid var(--t,var(--accent))}
+.card.ej{border-style:dashed;border-color:var(--line)}
+.card.rec{background:color-mix(in srgb,var(--t,var(--accent)) 7%,var(--surface))}
+.card.reto{background:color-mix(in srgb,var(--t,var(--accent)) 8%,var(--surface));border-color:var(--t,var(--accent));border-top-width:10px}
+.hero{background:var(--surface);border:2px solid var(--line);border-radius:28px;padding:30px clamp(18px,4vw,44px);text-align:center}
+.hero h1{font-size:clamp(2.1rem,5.2vw,3.5rem);margin-top:.3em}
+.hero .big{font-size:4.2rem;line-height:1;display:inline-block;background:var(--surface2);border:3px solid var(--line);border-radius:22px;padding:.12em .28em;box-shadow:5px 5px 0 var(--line-soft);transform:rotate(-6deg);animation:wob .9s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes wob{0%{transform:rotate(-26deg) scale(.55);opacity:0}100%{transform:rotate(-6deg) scale(1);opacity:1}}
+.tema-h{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--t,var(--accent)) 32%,transparent) 58%);padding:0 .2em;margin-left:-.2em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.segs{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;max-width:560px;margin:14px auto 6px}
+.segs i{width:28px;height:16px;border-radius:5px;background:var(--surface2);border:2px solid var(--line)}
+.segs i.on{background:var(--good);border-color:var(--good)}
+.hero p{max-width:60ch;margin-inline:auto;color:var(--ink-soft)}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.pill{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;font-weight:700}
+.pill[aria-pressed="true"]{background:var(--btn);color:var(--on-btn);border-color:var(--btn)}
+.hint{color:var(--ink-soft);font-size:.95rem}
+.bar{height:16px;border-radius:999px;background:var(--line-soft);overflow:hidden;border:2px solid var(--line);max-width:520px;margin:10px auto}
+.bar i{display:block;height:100%;background:var(--good);width:0;transition:width .5s}
+.search{width:100%;max-width:520px;padding:12px 16px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:14px}
+.tc{display:block;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line-soft);border-top:8px solid var(--t);border-radius:16px;padding:14px 16px;text-decoration:none}
+.tc:hover{border-color:var(--t);transform:translateY(-2px)}
+.tc .ic{font-size:2rem}
+.tc b{display:block;font-family:'Fraunces',serif;font-size:1.1rem;margin:2px 0}
+.tc span.s{color:var(--ink-soft);font-size:.9rem;display:block}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.chip{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 10px;border-radius:999px;border:2px solid var(--line);background:var(--surface2);color:var(--ink)}
+.tc.dim{opacity:.55}
+
+/* contenido */
+.idea{background:color-mix(in srgb,var(--t,var(--accent)) 14%,var(--surface));border:2px solid var(--t,var(--accent));border-left-width:10px;border-radius:8px 18px 18px 8px;padding:14px 18px;font-size:1.15rem;font-weight:600;margin-top:12px}
+.box{border:2px solid var(--line);border-radius:8px;padding:10px 16px;margin:12px 0;background:var(--surface2)}
+.box>b:first-child{display:block;margin-bottom:2px}
+.box.key{border-color:var(--t,var(--accent))}
+.box.tip{background:var(--good-soft);border-color:var(--good)}
+.box.warn{background:var(--warn-soft);border-color:var(--warn)}
+.box.ex{background:var(--surface);border-style:dashed}
+table.tbl{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem}
+.tbl th,.tbl td{border:2px solid var(--line-soft);padding:6px 10px;text-align:center}
+.tbl th{background:var(--accent-soft)}
+.tbl td.l,.tbl th.l{text-align:left}
+.scroll{overflow-x:auto}
+.big-eq{font-family:'Space Mono',monospace;font-size:1.25rem;text-align:center;margin:10px 0;padding:10px;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft);overflow-x:auto}
+.steps{list-style:none;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:none;gap:10px;margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft)}
+.steps li.show{display:flex;animation:in .35s}
+.steps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--btn);color:var(--on-btn);font-weight:700;display:grid;place-items:center}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.ans{display:none;margin-top:8px;padding:10px 14px;border-radius:12px;background:var(--good-soft);border:2px solid var(--good);font-weight:700}
+.ans.show{display:block;animation:in .35s}
+.ex-item{border:2px solid var(--line-soft);border-radius:14px;padding:14px 16px;margin:12px 0;background:var(--surface)}
+.ex-item .q{font-weight:600}
+.recipe{counter-reset:r;list-style:none;padding:0}
+.recipe li{counter-increment:r;padding:8px 12px 8px 46px;position:relative;margin:6px 0;border-radius:12px;background:var(--surface2);border:2px solid var(--line-soft)}
+.recipe li::before{content:counter(r);position:absolute;left:10px;top:7px;width:28px;height:28px;border-radius:8px;background:var(--t,var(--accent));color:var(--on-btn);display:grid;place-items:center;font-weight:700;font-family:'Space Mono',monospace}
+
+/* retos */
+.q-card{border:2px solid var(--line-soft);border-radius:16px;padding:14px 16px;margin:12px 0;background:var(--surface)}
+.q-card.done{border-color:var(--good);background:var(--good-soft)}
+.q-card .p{font-weight:600;margin-bottom:8px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;width:100%;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink)}
+.opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;background:var(--surface2);border:2px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.opt.good{background:var(--good-soft);border-color:var(--good);color:var(--ink);font-weight:700}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--ink);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.inp{padding:10px 14px;border:2px solid var(--line);border-radius:12px;font:inherit;font-family:'Space Mono',monospace;background:var(--surface);color:var(--ink);width:min(260px,100%)}
+.fb{margin-top:8px;padding:8px 12px;border-radius:12px;font-weight:600;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--good-soft);border:2px solid var(--good);color:var(--ink)}
+.fb.no{background:var(--bad-soft);border:2px solid var(--bad);color:var(--ink)}
+.badge{display:none;text-align:center;padding:14px;border-radius:16px;border:2px solid var(--good);background:var(--good-soft);margin-top:12px;font-weight:700}
+.badge.show{display:block;animation:pop .5s}
+.badge .b{font-size:2.6rem;display:block}
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:2px solid var(--line-soft);border-radius:12px;margin:8px 0;background:var(--surface);cursor:pointer}
+.check input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--btn)}
+.check.on{background:var(--good-soft);border-color:var(--good)}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.bd{font-size:2rem;padding:4px 10px;border-radius:14px;border:2px solid var(--line-soft);background:var(--surface2)}
+.bd.off{filter:grayscale(1);opacity:.4}
+.foot{margin-top:36px;color:var(--ink-soft);font-size:.85rem;text-align:center}
+.scrim{display:none}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;inset:0 25% 0 0;z-index:30;transform:translateX(-105%);transition:transform .25s;max-width:340px;box-shadow:0 0 0 100vmax rgba(0,0,0,0)}
+  .side.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.5)}
+  .burger{display:inline-block}
+  body{font-size:17px}
+  html.big body{font-size:20px}
+  .card{padding:16px 16px}
+  .tema-h{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.side,.top,.pager,.btn{display:none!important}.app{display:block}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side" aria-label="Menú de temas">
+    <div class="brand" id="brand" role="link" tabindex="0"><span class="m" id="bm"></span><span><b id="bt"></b><small id="bs"></small></span></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="main" id="main">
+    <div class="top">
+      <div class="l"><button class="btn ghost sm burger" id="burger" aria-label="Abrir menú de temas">☰ Temas</button></div>
+      <div class="row">
+        <button class="btn ghost sm" id="big" aria-pressed="false" aria-label="Letra grande para proyectar">A+ Letra grande</button>
+        <button class="btn ghost sm" id="theme" aria-label="Cambiar entre modo claro y oscuro">🌓 Claro / oscuro</button>
+      </div>
+    </div>
+    <div id="view" aria-live="polite"></div>
+    <div class="foot" id="foot"></div>
+  </main>
+</div>
+<script>
+const WIKI = {
+ "key": "nivelfinal8mat2026",
+ "corto": "Nivelación final 8° Matemáticas",
+ "titulo": "Mi wiki de nivelación final · Matemáticas 8°",
+ "mascota": "🦊",
+ "pie": "Matemáticas 8° (802)",
+ "intro": "Aquí está lo que necesitas para entender los temas de tu taller de nivelación final: estadística, números racionales, patrones, lenguaje algebraico, términos semejantes, valor numérico, perímetro y área con álgebra. Cada tema trae una idea simple, ejemplos paso a paso, una receta y un mini-reto con insignia.",
+ "cierre": [
+  "Resuelve tu taller <b>en orden</b>, mostrando todas las operaciones y procedimientos.",
+  "Reduce siempre las expresiones al máximo y <b>simplifica las fracciones</b>.",
+  "En los puntos de «análisis de errores», explica con tus palabras qué se hizo mal y escribe el procedimiento correcto.",
+  "Si un tema se te hace difícil, vuelve a su receta «¿Cómo lo resuelvo?» y repite el mini-reto."
+ ],
+ "temas": [
+  {
+   "id": "tablas-frecuencia",
+   "icono": "📊",
+   "color": 0,
+   "titulo": "Tablas de frecuencia",
+   "idea": "Una tabla de frecuencia cuenta cuántas veces aparece cada dato.",
+   "palabras": "tabla de frecuencia conteo frecuencia absoluta datos total",
+   "insignia": "Organizador de datos",
+   "puedo": "armar una tabla de frecuencia y decir qué fracción del grupo cumple una condición.",
+   "teoria": "\n<p>Imagina que anotas cuántos buses pasan frente al colegio cada minuto.</p>\n<p>Al final tienes muchos números sueltos. Esos números son los <b>datos</b>.</p>\n<p>Una <b>tabla de frecuencia</b> pone orden en esos datos.</p>\n<ul>\n<li><b>Dato:</b> cada valor que anotaste.</li>\n<li><b>Frecuencia absoluta:</b> cuántas veces aparece un dato.</li>\n<li><b>Total:</b> la suma de todas las frecuencias.</li>\n</ul>\n<div class=\"box key\"><b>Regla de oro</b>El total de la tabla debe ser igual a la cantidad de datos que tenías.</div>\n<div class=\"box key\"><b>¿Qué fracción del grupo?</b>Suma las frecuencias que te piden. Ponlas sobre el total. Si se puede, simplifica.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Contar un dato dos veces o saltarse uno.</p><p>✔ Tacha cada dato cuando lo cuentes. Al final suma: el total debe coincidir.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: armar la tabla",
+     "e": "Mascotas que tiene cada uno de 12 estudiantes: 1, 0, 2, 1, 1, 0, 3, 1, 2, 1, 0, 2. Arma la tabla de frecuencia.",
+     "pasos": [
+      "Mira qué datos distintos hay: 0, 1, 2 y 3.",
+      "Cuenta cuántas veces aparece cada uno. Tacha cada dato al contarlo.",
+      "0 aparece 3 veces; 1 aparece 5; 2 aparece 3; 3 aparece 1.",
+      "Suma las frecuencias: 3 + 5 + 3 + 1 = 12. Coincide con los 12 datos. La tabla está bien."
+     ],
+     "r": "<div class=\"scroll\"><table class=\"tbl\"><tr><th>Mascotas</th><th>0</th><th>1</th><th>2</th><th>3</th><th>Total</th></tr><tr><td>Frecuencia</td><td>3</td><td>5</td><td>3</td><td>1</td><td>12</td></tr></table></div>"
+    },
+    {
+     "t": "Ejemplo 2 · medio: una fracción del grupo",
+     "e": "Con la tabla anterior: ¿qué fracción de los estudiantes tiene 2 o más mascotas?",
+     "pasos": [
+      "«2 o más» quiere decir 2 y también 3.",
+      "Suma esas frecuencias: 3 + 1 = 4.",
+      "Escribe la fracción: lo que cumple sobre el total. Es {4/12}.",
+      "Simplifica: 4 y 12 se pueden dividir entre 4. Queda {1/3}."
+     ],
+     "r": "{1/3} de los estudiantes."
+    },
+    {
+     "t": "Ejemplo 3 · completo: datos más largos",
+     "e": "Goles en 16 partidos de microfútbol: 2, 0, 1, 3, 2, 2, 1, 0, 4, 2, 1, 3, 2, 1, 2, 0. ¿En cuántos partidos se hicieron menos de 3 goles? ¿Qué fracción es?",
+     "pasos": [
+      "Cuenta cada dato: 0 goles → 3; 1 gol → 4; 2 goles → 6; 3 goles → 2; 4 goles → 1.",
+      "Comprueba el total: 3 + 4 + 6 + 2 + 1 = 16. Está bien.",
+      "«Menos de 3» es 0, 1 y 2 goles. Suma: 3 + 4 + 6 = 13 partidos.",
+      "La fracción es {13/16}. No se puede simplificar, porque 13 es primo y 16 no es múltiplo de 13."
+     ],
+     "r": "13 partidos, que son {13/16} del total."
+    }
+   ],
+   "receta": [
+    "Lista los datos distintos, en orden.",
+    "Cuenta cada uno y táchalo.",
+    "Suma las frecuencias: debe dar el total de datos.",
+    "Si piden una fracción: suma lo que pide, ponlo sobre el total y simplifica."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "En la lista 6, 3, 6, 5, 3, 6, 4, ¿cuál es la frecuencia absoluta del 6?",
+     "a": [
+      "3"
+     ],
+     "exp": "El 6 aparece 3 veces.",
+     "pista": "Cuenta cuántas veces aparece el 6."
+    },
+    {
+     "tipo": "input",
+     "p": "Si 6 de 15 estudiantes viajan en SITP, ¿qué fracción es? (simplificada, con /)",
+     "a": [
+      "2/5"
+     ],
+     "exp": "{6/15} = {2/5}, porque se divide arriba y abajo entre 3.",
+     "pista": "Divide arriba y abajo entre 3."
+    },
+    {
+     "tipo": "vf",
+     "p": "La suma de las frecuencias debe ser igual al número de datos.",
+     "c": true,
+     "exp": "Así compruebas que no olvidaste ni repetiste ningún dato."
+    },
+    {
+     "tipo": "mc",
+     "p": "Una tabla tiene frecuencias 5, 7, 4 y 3. ¿Cuántos datos hay en total?",
+     "op": [
+      "17",
+      "19",
+      "21",
+      "16"
+     ],
+     "c": 1,
+     "exp": "5 + 7 + 4 + 3 = 19.",
+     "pista": "Suma todas las frecuencias."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "media-mediana-moda",
+   "icono": "🎯",
+   "color": 1,
+   "titulo": "Media, mediana y moda",
+   "idea": "Son tres formas de resumir muchos datos con un solo número.",
+   "palabras": "media promedio mediana moda medidas de tendencia central",
+   "insignia": "Resumen maestro",
+   "puedo": "calcular la media, la mediana y la moda de un grupo de datos.",
+   "teoria": "\n<p>Con muchos datos, a veces necesitas <b>un solo número</b> que los represente.</p>\n<ul>\n<li><b>Media:</b> es el <i>reparto justo</i>. Suma todos los datos y divide entre cuántos son.</li>\n<li><b>Mediana:</b> es el <i>del medio</i>. Ordena los datos de menor a mayor y toma el central.</li>\n<li><b>Moda:</b> es el <i>más popular</i>. Es el dato que más se repite.</li>\n</ul>\n<div class=\"box key\"><b>Si hay dos datos en el centro</b>Cuando la cantidad de datos es par, la mediana es la mitad entre los dos del centro. Súmalos y divide entre 2.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Sacar la mediana sin ordenar los datos.</p><p>✔ Primero ordena de menor a mayor. Después busca el centro.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: la media",
+     "e": "Cuatro estudiantes sacaron 6, 8, 10, 4 en un quiz. ¿Cuál es la media?",
+     "pasos": [
+      "Suma todos los datos: 6 + 8 + 10 + 4 = 28.",
+      "Cuenta cuántos datos son: 4.",
+      "Divide: 28 ÷ 4 = 7. La media es 7."
+     ],
+     "r": "Media = 7."
+    },
+    {
+     "t": "Ejemplo 2 · medio: la mediana con cantidad impar",
+     "e": "Los minutos de espera de 7 buses fueron: 9, 3, 7, 5, 8, 2, 6. ¿Cuál es la mediana?",
+     "pasos": [
+      "Primero ordena de menor a mayor: 2, 3, 5, 6, 7, 8, 9.",
+      "Hay 7 datos. El del medio es el cuarto, porque deja 3 datos a cada lado.",
+      "El cuarto dato es 6."
+     ],
+     "r": "Mediana = 6 minutos."
+    },
+    {
+     "t": "Ejemplo 3 · completo: las tres medidas",
+     "e": "Puntos de 8 partidos: 5, 9, 4, 9, 8, 9, 6, 6. Halla media, mediana y moda.",
+     "pasos": [
+      "Media: suma = 56. Divide entre 8: 56 ÷ 8 = 7.",
+      "Ordena: 4, 5, 6, 6, 8, 9, 9, 9.",
+      "Mediana: son 8 datos, así que hay dos en el centro: 6 y 8. Mitad entre ellos: (6 + 8) ÷ 2 = 7.",
+      "Moda: el 9 aparece 3 veces. Ningún otro se repite tanto. La moda es 9."
+     ],
+     "r": "Media = 7; mediana = 7; moda = 9."
+    }
+   ],
+   "receta": [
+    "Media: suma todo y divide entre cuántos son.",
+    "Mediana: ordena y busca el centro (si son dos, promédialos).",
+    "Moda: busca el dato que más se repite."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Halla la media de 2, 5, 8 y 9.",
+     "a": [
+      "6"
+     ],
+     "exp": "2 + 5 + 8 + 9 = 24 y 24 ÷ 4 = 6.",
+     "pista": "Suma los cuatro y divide entre 4."
+    },
+    {
+     "tipo": "input",
+     "p": "Halla la mediana de 7, 1, 9, 3, 5.",
+     "a": [
+      "5"
+     ],
+     "exp": "Ordenados: 1, 3, 5, 7, 9. El del medio es 5.",
+     "pista": "Primero ordena de menor a mayor."
+    },
+    {
+     "tipo": "mc",
+     "p": "¿Cuál es la moda de 4, 6, 6, 8, 6, 4?",
+     "op": [
+      "4",
+      "8",
+      "6",
+      "5"
+     ],
+     "c": 2,
+     "exp": "El 6 aparece 3 veces, más que los demás.",
+     "pista": "Busca el dato que más se repite."
+    },
+    {
+     "tipo": "vf",
+     "p": "Para hallar la mediana no hace falta ordenar los datos.",
+     "c": false,
+     "exp": "Sí hace falta: se ordenan de menor a mayor y luego se toma el centro."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "datos-agrupados",
+   "icono": "📏",
+   "color": 2,
+   "titulo": "Interpretación de datos agrupados",
+   "idea": "Los datos se juntan en «cajones» llamados intervalos para leerlos mejor.",
+   "palabras": "datos agrupados intervalo clase modal frecuencia tabla",
+   "insignia": "Lector de tablas",
+   "puedo": "leer una tabla de datos agrupados y responder preguntas con ella.",
+   "teoria": "\n<p>A veces hay tantos datos que no sirve listarlos uno por uno.</p>\n<p>Entonces se agrupan en <b>intervalos</b>. Piensa en cajones que guardan datos.</p>\n<ul>\n<li><b>Intervalo:</b> un cajón con un inicio y un final. Por ejemplo, 20 – 40.</li>\n<li><b>Frecuencia:</b> cuántos datos hay dentro de ese cajón.</li>\n<li><b>Clase modal:</b> el cajón que tiene más datos.</li>\n</ul>\n<div class=\"box key\"><b>Para preguntas de «menos de» o «más de»</b>Suma las frecuencias de los cajones que cumplen. No sumes los números del intervalo.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Decir que la clase modal es «15», la frecuencia.</p><p>✔ La clase modal es el intervalo (el cajón), por ejemplo «60 – 90». La frecuencia es cuántos hay dentro.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: la clase modal",
+     "e": "Puntos de 30 estudiantes en un juego. Intervalos y frecuencias: 0 – 20 → 5; 20 – 40 → 12; 40 – 60 → 9; 60 – 80 → 3; 80 – 100 → 1. ¿Cuál es la clase modal?",
+     "pasos": [
+      "Mira solo la columna de frecuencias: 5, 12, 9, 3, 1.",
+      "La frecuencia mayor es 12.",
+      "Ese número pertenece al intervalo 20 – 40."
+     ],
+     "r": "Clase modal: 20 – 40."
+    },
+    {
+     "t": "Ejemplo 2 · medio: «menos de»",
+     "e": "Con la misma tabla: ¿cuántos estudiantes hicieron menos de 40 puntos?",
+     "pasos": [
+      "«Menos de 40» son los cajones que terminan en 40 o antes: 0 – 20 y 20 – 40.",
+      "Suma sus frecuencias: 5 + 12 = 17."
+     ],
+     "r": "17 estudiantes."
+    },
+    {
+     "t": "Ejemplo 3 · completo: fracción y conclusión",
+     "e": "Minutos que dedican 28 estudiantes a leer por semana: 10 – 20 → 6; 20 – 30 → 10; 30 – 40 → 8; 40 – 50 → 4. ¿Qué fracción lee 30 minutos o más?",
+     "pasos": [
+      "«30 minutos o más» son los cajones 30 – 40 y 40 – 50.",
+      "Suma sus frecuencias: 8 + 4 = 12 estudiantes.",
+      "Escribe la fracción sobre el total: {12/28}.",
+      "Simplifica dividiendo entre 4: {3/7}.",
+      "Conclusión: menos de la mitad del grupo lee 30 minutos o más."
+     ],
+     "r": "{3/7} del grupo."
+    }
+   ],
+   "receta": [
+    "Identifica los intervalos y sus frecuencias.",
+    "Clase modal: el intervalo con la frecuencia más alta.",
+    "«Menos de» o «más de»: suma las frecuencias de los cajones que cumplen.",
+    "Para una fracción: ponla sobre el total y simplifica."
+   ],
+   "retos": [
+    {
+     "tipo": "mc",
+     "p": "Intervalos 0–10, 10–20, 20–30 con frecuencias 4, 11 y 6. ¿Cuál es la clase modal?",
+     "op": [
+      "10 – 20",
+      "0 – 10",
+      "20 – 30",
+      "11"
+     ],
+     "c": 0,
+     "exp": "La frecuencia mayor es 11 y está en 10 – 20.",
+     "pista": "Busca la frecuencia más alta y mira su intervalo."
+    },
+    {
+     "tipo": "input",
+     "p": "Frecuencias 3, 8, 6 y 3 (en ese orden). ¿Cuántos datos hay en total?",
+     "a": [
+      "20"
+     ],
+     "exp": "3 + 8 + 6 + 3 = 20.",
+     "pista": "Suma todas las frecuencias."
+    },
+    {
+     "tipo": "input",
+     "p": "Frecuencias 4, 9, 5 y 2. ¿Qué fracción está en el último intervalo? (simplificada, con /)",
+     "a": [
+      "1/10"
+     ],
+     "exp": "{2/20} = {1/10}.",
+     "pista": "El total es 20. Pon 2 sobre 20 y simplifica."
+    },
+    {
+     "tipo": "vf",
+     "p": "La clase modal es el número más grande de la columna de frecuencias.",
+     "c": false,
+     "exp": "La clase modal es el intervalo que tiene esa frecuencia más grande, no el número."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "racionales-orden",
+   "icono": "📐",
+   "color": 3,
+   "titulo": "Números racionales: representación y orden",
+   "idea": "Un número racional se puede escribir como fracción. Se ordena igual que en la recta numérica.",
+   "palabras": "racionales fracciones recta numérica orden comparar negativos denominador común",
+   "insignia": "Guía de la recta",
+   "puedo": "ordenar números racionales, también negativos, y encontrar uno entre otros dos.",
+   "teoria": "\n<p>Un <b>número racional</b> es un número que se escribe como fracción {a/b}.</p>\n<p>El denominador b nunca puede ser 0.</p>\n<p>Los enteros también son racionales. Por ejemplo, 3 = {3/1}.</p>\n<div class=\"box key\"><b>La recta numérica manda</b>Más a la derecha es mayor. Más a la izquierda es menor.</div>\n<div class=\"box key\"><b>Para comparar fracciones</b>Pásalas al mismo denominador (el MCM). Luego compara los numeradores.</div>\n<div class=\"box tip\"><b>Con negativos</b>Entre dos negativos, es mayor el que está más cerca de cero. Por ejemplo, −{1/6} &gt; −{3/4}.</div>\n<div class=\"box key\"><b>Un racional entre otros dos</b>Pasa las dos fracciones a un denominador común más grande (por ejemplo, el doble). Entre ellas habrá espacio para otra.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Pensar que −{1/2} es mayor que −{1/3} «porque 1/2 es mayor».</p><p>✔ En la recta, −{1/2} está más a la izquierda. Entonces −{1/2} &lt; −{1/3}.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: mismo denominador",
+     "e": "Escribe {1/2}, {2/3} y {3/4} con denominador 12 y ordénalas.",
+     "pasos": [
+      "Pregunta: ¿por cuánto multiplico el denominador para llegar a 12?",
+      "{1/2}: 2 × 6 = 12. Multiplico también arriba por 6. Queda {6/12}.",
+      "{2/3}: 3 × 4 = 12. Arriba 2 × 4 = 8. Queda {8/12}.",
+      "{3/4}: 4 × 3 = 12. Arriba 3 × 3 = 9. Queda {9/12}.",
+      "Con el mismo denominador, manda el numerador: 6 &lt; 8 &lt; 9."
+     ],
+     "r": "{1/2} &lt; {2/3} &lt; {3/4}"
+    },
+    {
+     "t": "Ejemplo 2 · medio: con negativos",
+     "e": "Ordena de menor a mayor: −{3/4}, {1/2}, −{1/6} y 0.",
+     "pasos": [
+      "Los negativos están a la izquierda del 0. El positivo, a la derecha.",
+      "Compara los negativos con denominador 12: −{3/4} = −{9/12} y −{1/6} = −{2/12}.",
+      "−{9/12} está más a la izquierda que −{2/12}. Entonces −{3/4} &lt; −{1/6}.",
+      "Orden final, de izquierda a derecha: negativos, luego 0, luego el positivo."
+     ],
+     "r": "−{3/4} &lt; −{1/6} &lt; 0 &lt; {1/2}"
+    },
+    {
+     "t": "Ejemplo 3 · completo: un número entre dos",
+     "e": "Escribe un número racional entre {2/5} y {1/2}.",
+     "pasos": [
+      "Pásalas al denominador 20: {2/5} = {8/20} y {1/2} = {10/20}.",
+      "Entre 8 y 10 está el 9. Entonces {9/20} está en medio.",
+      "Comprueba: 0,4 &lt; 0,45 &lt; 0,5. Está bien."
+     ],
+     "r": "{9/20} (hay muchas respuestas correctas)."
+    }
+   ],
+   "receta": [
+    "Pasa las fracciones al mismo denominador.",
+    "Compara los numeradores.",
+    "Con negativos, piensa en la recta: más a la izquierda es menor.",
+    "Para uno entre dos: duplica el denominador y busca el numerador del medio."
+   ],
+   "retos": [
+    {
+     "tipo": "mc",
+     "p": "¿Cuál es mayor?",
+     "op": [
+      "{2/3}",
+      "{5/8}",
+      "{7/12}",
+      "{3/4}"
+     ],
+     "c": 3,
+     "exp": "Con denominador 24: {18/24}, {16/24}, {15/24}, {14/24}. La mayor es {3/4}.",
+     "pista": "Pásalas al denominador 24 y compara."
+    },
+    {
+     "tipo": "input",
+     "p": "Escribe {5/6} con denominador 24. ¿Cuál es el numerador?",
+     "a": [
+      "20"
+     ],
+     "exp": "{5/6} = {20/24}, porque 6 × 4 = 24 y 5 × 4 = 20.",
+     "pista": "Multiplica arriba y abajo por 4."
+    },
+    {
+     "tipo": "vf",
+     "p": "−{1/2} es mayor que −{1/3}.",
+     "c": false,
+     "exp": "−{1/2} está más a la izquierda en la recta, así que es menor."
+    },
+    {
+     "tipo": "mc",
+     "p": "¿Cuál de estos números está entre {1/3} y {1/2}?",
+     "op": [
+      "{1/4}",
+      "{5/12}",
+      "{7/12}",
+      "{2/3}"
+     ],
+     "c": 1,
+     "exp": "Con denominador 12: {4/12} &lt; {5/12} &lt; {6/12}.",
+     "pista": "Pásalas a denominador 12."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "fraccion-decimal",
+   "icono": "🔢",
+   "color": 4,
+   "titulo": "Fracciones y decimales",
+   "idea": "Una fracción es una división. Su resultado es un decimal exacto o periódico.",
+   "palabras": "fracción decimal exacto periódico convertir racional división",
+   "insignia": "Traductor de números",
+   "puedo": "pasar una fracción a decimal, un decimal a fracción, y decir si es exacto o periódico.",
+   "teoria": "\n<p>La raya de una fracción significa <b>dividir</b>. Entonces {3/4} es 3 ÷ 4 = 0,75.</p>\n<ul>\n<li><b>Decimal exacto:</b> la división termina. Por ejemplo, 0,75.</li>\n<li><b>Decimal periódico:</b> hay cifras que se repiten siempre. Por ejemplo, 0,8333…</li>\n</ul>\n<div class=\"box key\"><b>De decimal a fracción</b>Cuenta las cifras después de la coma. Escribe el número sin coma sobre 10, 100, 1000… Luego simplifica.<br>Ejemplo: 0,15 = {15/100} = {3/20}.</div>\n<div class=\"box key\"><b>Un decimal que se repite</b>Si un solo dígito se repite, la fracción es ese dígito sobre 9. Por ejemplo, 0,777… = {7/9}.</div>\n<div class=\"box tip\"><b>¿Por qué son racionales?</b>Porque todos se pueden escribir como fracción de enteros.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Escribir 0,5 = {1/5}.</p><p>✔ 0,5 = {5/10} = {1/2}. El denominador sale de las cifras decimales, no del 5.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: fracción a decimal",
+     "e": "Escribe {3/4} como decimal y clasifícalo.",
+     "pasos": [
+      "Divide el numerador entre el denominador: 3 ÷ 4.",
+      "3 ÷ 4 = 0,75.",
+      "La división terminó. Es un decimal exacto."
+     ],
+     "r": "0,75 · exacto"
+    },
+    {
+     "t": "Ejemplo 2 · medio: decimal a fracción",
+     "e": "Escribe 0,48 como fracción simplificada.",
+     "pasos": [
+      "Hay 2 cifras después de la coma. Entonces el denominador es 100.",
+      "0,48 = {48/100}.",
+      "Simplifica dividiendo arriba y abajo entre 4: {12/25}."
+     ],
+     "r": "{12/25}"
+    },
+    {
+     "t": "Ejemplo 3 · completo: periódico",
+     "e": "¿Es racional 0,777…? Si lo es, escríbelo como fracción.",
+     "pasos": [
+      "El 7 se repite siempre. Es un decimal periódico.",
+      "Un solo dígito repetido se escribe como ese dígito sobre 9: {7/9}.",
+      "Comprueba: 7 ÷ 9 = 0,7777… Coincide.",
+      "Se puede escribir como fracción de enteros. Entonces sí es racional."
+     ],
+     "r": "Sí. 0,777… = {7/9}."
+    }
+   ],
+   "receta": [
+    "Fracción a decimal: divide arriba entre abajo.",
+    "Si termina, es exacto. Si se repite, es periódico.",
+    "Decimal a fracción: cuenta las cifras decimales, escribe sobre 10, 100… y simplifica.",
+    "Un dígito repetido: dígito sobre 9."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Escribe {3/20} como decimal.",
+     "a": [
+      "0.15"
+     ],
+     "exp": "3 ÷ 20 = 0,15.",
+     "pista": "Divide 3 entre 20."
+    },
+    {
+     "tipo": "input",
+     "p": "Escribe 0,6 como fracción simplificada (con /).",
+     "a": [
+      "3/5"
+     ],
+     "exp": "0,6 = {6/10} = {3/5}.",
+     "pista": "Es 6 sobre 10. Simplifica."
+    },
+    {
+     "tipo": "mc",
+     "p": "¿Cuál de estos decimales es periódico?",
+     "op": [
+      "0,25",
+      "0,875",
+      "0,5",
+      "0,3333…"
+     ],
+     "c": 3,
+     "exp": "El 3 se repite siempre. Los demás terminan.",
+     "pista": "Busca el que no termina nunca."
+    },
+    {
+     "tipo": "vf",
+     "p": "El decimal 0,222… se puede escribir como {2/9}.",
+     "c": true,
+     "exp": "Un solo dígito repetido es ese dígito sobre 9."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "suma-resta-racionales",
+   "icono": "➕",
+   "color": 5,
+   "titulo": "Suma y resta de fracciones",
+   "idea": "Para sumar o restar fracciones, primero deben tener el mismo denominador.",
+   "palabras": "suma resta fracciones heterogéneas mcm denominador común problemas",
+   "insignia": "Maestro de las fracciones",
+   "puedo": "sumar y restar fracciones con distinto denominador y resolver problemas con ellas.",
+   "teoria": "\n<p>Imagina una pizza cortada en 4 pedazos y otra cortada en 6.</p>\n<p>No puedes juntar los pedazos tal cual, porque son de tamaños distintos.</p>\n<p>Primero debes cortar todo en pedazos del <b>mismo tamaño</b>. Ese tamaño es el denominador común.</p>\n<div class=\"box key\"><b>Los 4 pasos</b>\n<ol><li>Halla el MCM de los denominadores.</li><li>Convierte cada fracción a ese denominador.</li><li>Suma o resta solo los numeradores. El denominador no cambia.</li><li>Simplifica si se puede.</li></ol></div>\n<div class=\"box warn\"><b>Error común</b><p>✘ {1/2} + {1/3} = {2/5}. Se sumó arriba con arriba y abajo con abajo.</p><p>✔ {1/2} + {1/3} = {3/6} + {2/6} = {5/6}. El denominador se queda igual.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: dos fracciones",
+     "e": "{1/2} + {1/3}",
+     "pasos": [
+      "Denominadores: 2 y 3. El MCM es 6.",
+      "{1/2} = {3/6}, porque multiplico arriba y abajo por 3.",
+      "{1/3} = {2/6}, porque multiplico arriba y abajo por 2.",
+      "Suma los numeradores: 3 + 2 = 5. El denominador sigue siendo 6."
+     ],
+     "r": "{5/6}"
+    },
+    {
+     "t": "Ejemplo 2 · medio: tres fracciones",
+     "e": "{7/10} + {1/4} − {2/5}",
+     "pasos": [
+      "Denominadores: 10, 4 y 5. El MCM es 20.",
+      "{7/10} = {14/20}; {1/4} = {5/20}; {2/5} = {8/20}.",
+      "Opera los numeradores de izquierda a derecha: 14 + 5 − 8 = 11.",
+      "Queda {11/20}. No se simplifica, porque 11 es primo."
+     ],
+     "r": "{11/20}"
+    },
+    {
+     "t": "Ejemplo 3 · completo: problema",
+     "e": "Camilo gastó {1/3} de su dinero en pasajes y {1/4} en el almuerzo. ¿Qué fracción gastó? ¿Qué fracción le queda?",
+     "pasos": [
+      "Lo que gastó es una suma: {1/3} + {1/4}. El MCM es 12.",
+      "{4/12} + {3/12} = {7/12}. Gastó {7/12}.",
+      "Lo que queda es el todo menos lo gastado. El todo es {12/12}.",
+      "{12/12} − {7/12} = {5/12}. Le queda {5/12}."
+     ],
+     "r": "Gastó {7/12} y le quedan {5/12}."
+    }
+   ],
+   "receta": [
+    "Halla el MCM.",
+    "Convierte cada fracción.",
+    "Opera solo los numeradores.",
+    "Simplifica. En problemas, «lo que queda» es el todo ({n/n}) menos lo usado."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "{1/4} + {1/6} = ? (con /)",
+     "a": [
+      "5/12"
+     ],
+     "exp": "{3/12} + {2/12} = {5/12}.",
+     "pista": "El MCM de 4 y 6 es 12."
+    },
+    {
+     "tipo": "input",
+     "p": "{5/6} − {1/3} = ? (simplificada, con /)",
+     "a": [
+      "1/2"
+     ],
+     "exp": "{5/6} − {2/6} = {3/6} = {1/2}.",
+     "pista": "Pasa {1/3} a sextos y simplifica."
+    },
+    {
+     "tipo": "mc",
+     "p": "Marta usó {1/2} de una tela y Lina usó {1/5}. ¿Qué fracción usaron entre las dos?",
+     "op": [
+      "{2/7}",
+      "{3/10}",
+      "{7/10}",
+      "{2/5}"
+     ],
+     "c": 2,
+     "exp": "{5/10} + {2/10} = {7/10}.",
+     "pista": "El MCM de 2 y 5 es 10."
+    },
+    {
+     "tipo": "vf",
+     "p": "{1/2} + {1/3} = {2/5}.",
+     "c": false,
+     "exp": "No se suman los denominadores. Lo correcto es {5/6}."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "mult-div-potencia-raiz",
+   "icono": "✖️",
+   "color": 0,
+   "titulo": "Multiplicar, dividir, potenciar y radicar racionales",
+   "idea": "Multiplicar es arriba con arriba y abajo con abajo. Dividir es multiplicar por la fracción volteada.",
+   "palabras": "multiplicar dividir fracciones potencia raíz racionales recíproco",
+   "insignia": "Domador de fracciones",
+   "puedo": "multiplicar, dividir, elevar y sacar raíz con fracciones.",
+   "teoria": "\n<p>Multiplicar fracciones es <b>más fácil</b> que sumarlas. No necesitas denominador común.</p>\n<ul>\n<li><b>Multiplicar:</b> numerador por numerador, denominador por denominador.</li>\n<li><b>Dividir:</b> «voltea la segunda y multiplica».</li>\n<li><b>Potencia:</b> se eleva el numerador y también el denominador.</li>\n<li><b>Raíz:</b> se saca la raíz del numerador y también del denominador.</li>\n</ul>\n<div class=\"box tip\"><b>Truco para ahorrar trabajo</b>Simplifica antes de multiplicar. Si un número de arriba y otro de abajo tienen un factor común, divídelos.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Al dividir, voltear la primera fracción, o no voltear ninguna.</p><p>✔ Se voltea solo la segunda: {a/b} ÷ {c/d} = {a/b} × {d/c}.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: multiplicar",
+     "e": "{2/3} × {3/8}",
+     "pasos": [
+      "Simplifica antes: el 3 de arriba y el 3 de abajo se cancelan.",
+      "El 2 de arriba y el 8 de abajo se dividen entre 2. Quedan 1 y 4.",
+      "Multiplica lo que quedó: {1/1} × {1/4} = {1/4}."
+     ],
+     "r": "{1/4}"
+    },
+    {
+     "t": "Ejemplo 2 · medio: dividir",
+     "e": "{4/9} ÷ {8/15}",
+     "pasos": [
+      "Voltea la segunda fracción: {8/15} pasa a {15/8}.",
+      "Cambia la división por multiplicación: {4/9} × {15/8}.",
+      "Simplifica: 4 con 8 queda 1 y 2; 15 con 9 queda 5 y 3.",
+      "Multiplica: {1×5/3×2} = {5/6}."
+     ],
+     "r": "{5/6}"
+    },
+    {
+     "t": "Ejemplo 3 · completo: potencia y raíz",
+     "e": "Calcula ({3/4})<sup>2</sup> y √({16/25}).",
+     "pasos": [
+      "Potencia: eleva arriba y abajo. 3<sup>2</sup> = 9 y 4<sup>2</sup> = 16. Queda {9/16}.",
+      "Raíz: saca la raíz arriba y abajo. √16 = 4 y √25 = 5. Queda {4/5}.",
+      "Comprueba: {4/5} × {4/5} = {16/25}. Está bien."
+     ],
+     "r": "({3/4})<sup>2</sup> = {9/16} y √({16/25}) = {4/5}."
+    }
+   ],
+   "receta": [
+    "Multiplicar: simplifica y luego arriba × arriba, abajo × abajo.",
+    "Dividir: voltea la segunda y multiplica.",
+    "Potencia: eleva numerador y denominador.",
+    "Raíz: raíz del numerador y del denominador."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "{3/5} × {10/9} = ? (simplificada, con /)",
+     "a": [
+      "2/3"
+     ],
+     "exp": "{30/45} = {2/3}. Simplificando antes: 3 con 9 y 5 con 10.",
+     "pista": "Simplifica antes de multiplicar."
+    },
+    {
+     "tipo": "input",
+     "p": "{2/3} ÷ {4/9} = ? (simplificada, con /)",
+     "a": [
+      "3/2"
+     ],
+     "exp": "{2/3} × {9/4} = {18/12} = {3/2}.",
+     "pista": "Voltea la segunda y multiplica."
+    },
+    {
+     "tipo": "mc",
+     "p": "({2/5})<sup>3</sup> es igual a:",
+     "op": [
+      "{8/125}",
+      "{6/15}",
+      "{8/15}",
+      "{2/125}"
+     ],
+     "c": 0,
+     "exp": "2<sup>3</sup> = 8 y 5<sup>3</sup> = 125.",
+     "pista": "Eleva el numerador y también el denominador."
+    },
+    {
+     "tipo": "vf",
+     "p": "√({9/49}) = {3/7}.",
+     "c": true,
+     "exp": "√9 = 3 y √49 = 7."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "patrones",
+   "icono": "🧩",
+   "color": 1,
+   "titulo": "Patrones y sucesiones",
+   "idea": "Una sucesión sigue una regla. La ley de formación nos da cualquier término.",
+   "palabras": "patrones sucesiones ley de formación término posición regla",
+   "insignia": "Detective de patrones",
+   "puedo": "continuar una sucesión, escribir su ley de formación y usarla.",
+   "teoria": "\n<p>Una <b>sucesión</b> es una lista de números que sigue una regla.</p>\n<p>Ejemplo: 3, 7, 11, 15… Cada número sube 4.</p>\n<ul>\n<li><b>Posición (n):</b> el lugar en la lista. Puede ser 1.°, 2.°, 3.°…</li>\n<li><b>Término:</b> el número que está en esa posición.</li>\n<li><b>Ley de formación:</b> una fórmula que da el término a partir de n.</li>\n</ul>\n<div class=\"box key\"><b>Receta para la ley</b>Cuando la sucesión sube (o baja) siempre lo mismo, llamado d:<br>ley = d · n + (primer término − d)<br>Ejemplo: 3, 7, 11… tiene d = 4. La ley es 4n + (3 − 4) = 4n − 1.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Confundir la posición con el término. La posición 3 no es el número 3.</p><p>✔ La posición es el lugar (n). El término es lo que vale ese lugar.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: continuar",
+     "e": "Continúa con tres términos más: 2, 5, 8, 11, …",
+     "pasos": [
+      "Mira cuánto sube de uno al siguiente: 5 − 2 = 3. Luego 8 − 5 = 3. Siempre sube 3.",
+      "Suma 3 al último término: 11 + 3 = 14.",
+      "Sigue igual: 14 + 3 = 17 y 17 + 3 = 20."
+     ],
+     "r": "14, 17, 20"
+    },
+    {
+     "t": "Ejemplo 2 · medio: la ley de formación",
+     "e": "Halla la ley de formación de 6, 10, 14, 18, …",
+     "pasos": [
+      "Mira cuánto sube: 10 − 6 = 4. Entonces d = 4.",
+      "La ley empieza con 4n.",
+      "Falta el ajuste: primer término − d = 6 − 4 = 2.",
+      "La ley es 4n + 2.",
+      "Comprueba con n = 3: 4(3) + 2 = 14. Es el tercer término."
+     ],
+     "r": "Ley: 4n + 2"
+    },
+    {
+     "t": "Ejemplo 3 · completo: usar la ley",
+     "e": "En la sucesión de ley 4n + 2, ¿qué posición ocupa el número 62?",
+     "pasos": [
+      "Escribe la ecuación: 4n + 2 = 62.",
+      "Quita el 2 de los dos lados: 4n = 60.",
+      "Divide entre 4: n = 15.",
+      "Comprueba: 4(15) + 2 = 62. Está bien."
+     ],
+     "r": "El 62 ocupa la posición 15."
+    }
+   ],
+   "receta": [
+    "Resta dos términos seguidos: eso es d.",
+    "Escribe d · n.",
+    "Suma el ajuste: primer término − d.",
+    "Comprueba con n = 1, n = 2 y n = 3."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Continúa: 5, 9, 13, 17, … ¿cuál es el siguiente número?",
+     "a": [
+      "21"
+     ],
+     "exp": "La sucesión sube 4 cada vez: 17 + 4 = 21.",
+     "pista": "Resta dos términos seguidos para ver cuánto sube."
+    },
+    {
+     "tipo": "mc",
+     "p": "La ley de formación de 4, 7, 10, 13, … es:",
+     "op": [
+      "3n",
+      "3n + 1",
+      "4n",
+      "n + 3"
+     ],
+     "c": 1,
+     "exp": "d = 3 y el ajuste es 4 − 3 = 1. Ley: 3n + 1. Con n = 1: 4 ✔.",
+     "pista": "Comprueba cada opción con n = 1 y n = 2."
+    },
+    {
+     "tipo": "input",
+     "p": "Con la ley 3n + 1, ¿cuánto vale el término de la posición 10?",
+     "a": [
+      "31"
+     ],
+     "exp": "3(10) + 1 = 31.",
+     "pista": "Reemplaza n por 10."
+    },
+    {
+     "tipo": "vf",
+     "p": "En la sucesión 2, 4, 6, 8, …, el 8 está en la posición 8.",
+     "c": false,
+     "exp": "El 8 está en la posición 4. La ley es 2n, y 2(4) = 8."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "lenguaje-algebraico",
+   "icono": "🗣️",
+   "color": 2,
+   "titulo": "Del lenguaje natural al lenguaje algebraico",
+   "idea": "Una letra puede representar un número que no conocemos. Así traducimos frases a matemáticas.",
+   "palabras": "lenguaje algebraico variable expresión doble triple mitad aumentado disminuido",
+   "insignia": "Traductor algebraico",
+   "puedo": "escribir con letras una frase, y escribir con palabras una expresión.",
+   "teoria": "\n<p>En álgebra usamos una <b>letra</b> (variable) para un número que no conocemos.</p>\n<p>Por ejemplo, «un número» puede llamarse n.</p>\n<table class=\"tbl\"><tr><th class=\"l\">Palabras</th><th>Álgebra</th></tr>\n<tr><td class=\"l\">el doble de n</td><td>2n</td></tr>\n<tr><td class=\"l\">el triple de n</td><td>3n</td></tr>\n<tr><td class=\"l\">la mitad de n</td><td>{n/2}</td></tr>\n<tr><td class=\"l\">n aumentado en 5</td><td>n + 5</td></tr>\n<tr><td class=\"l\">n disminuido en 5</td><td>n − 5</td></tr>\n<tr><td class=\"l\">el cuadrado de n</td><td>n<sup>2</sup></td></tr></table>\n<div class=\"box key\"><b>«La suma de…» o «la diferencia de…»</b>Esas palabras piden paréntesis. Primero se suma o se resta, y después se multiplica.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ «El doble de un número aumentado en 3» escrito como 2(n + 3).</p><p>✔ «El doble de la suma de n y 3» es 2(n + 3). «El doble de n, aumentado en 3» es 2n + 3. Fíjate en qué se hace primero.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: frases cortas",
+     "e": "Escribe con letras: (a) el triple de un número; (b) un número aumentado en 6.",
+     "pasos": [
+      "Llama n al número.",
+      "(a) «El triple» es multiplicar por 3. Queda 3n.",
+      "(b) «Aumentado en 6» es sumar 6. Queda n + 6."
+     ],
+     "r": "(a) 3n · (b) n + 6"
+    },
+    {
+     "t": "Ejemplo 2 · medio: dos operaciones",
+     "e": "Escribe: la mitad de un número, disminuida en 5.",
+     "pasos": [
+      "Primero la mitad del número: {n/2}.",
+      "«Disminuida en 5» es restar 5 a ese resultado.",
+      "Queda {n/2} − 5."
+     ],
+     "r": "{n/2} − 5"
+    },
+    {
+     "t": "Ejemplo 3 · completo: con paréntesis",
+     "e": "Escribe: el cuádruple de la suma de x y 2. Luego escribe con palabras 2(n − 1).",
+     "pasos": [
+      "«La suma de x y 2» es x + 2. Va entre paréntesis.",
+      "«El cuádruple» es multiplicar por 4. Queda 4(x + 2).",
+      "Ahora al revés: n − 1 es «un número disminuido en 1».",
+      "El 2 que multiplica significa «el doble de». La frase es: el doble de la diferencia entre un número y 1."
+     ],
+     "r": "4(x + 2) · «el doble de un número disminuido en 1»"
+    }
+   ],
+   "receta": [
+    "Elige una letra para el número.",
+    "Traduce palabra por palabra: doble = 2·, triple = 3·, mitad = ÷2.",
+    "Si dice «la suma de» o «la diferencia de», usa paréntesis.",
+    "Lee tu expresión en voz alta y comprueba que dice lo mismo."
+   ],
+   "retos": [
+    {
+     "tipo": "mc",
+     "p": "«El doble de un número, aumentado en 7» es:",
+     "op": [
+      "2n + 7",
+      "2(n + 7)",
+      "n + 14",
+      "2 + 7n"
+     ],
+     "c": 0,
+     "exp": "Se duplica n y luego se suma 7.",
+     "pista": "Duplica el número y luego suma."
+    },
+    {
+     "tipo": "input",
+     "p": "Escribe: el triple de un número, disminuido en 4. (usa n)",
+     "a": [
+      "3n-4",
+      "3*n-4"
+     ],
+     "exp": "3n − 4.",
+     "pista": "Triple es 3n. Disminuido en 4 es − 4."
+    },
+    {
+     "tipo": "mc",
+     "p": "La expresión n<sup>2</sup> + 1 se lee:",
+     "op": [
+      "el doble de un número, aumentado en 1",
+      "el número aumentado en 2",
+      "el cuadrado de la suma de n y 1",
+      "el cuadrado de un número, aumentado en 1"
+     ],
+     "c": 3,
+     "exp": "n<sup>2</sup> es el cuadrado de n. Luego se suma 1.",
+     "pista": "El exponente 2 significa «al cuadrado»."
+    },
+    {
+     "tipo": "vf",
+     "p": "«La mitad de la suma de n y 6» se escribe {n+6/2}.",
+     "c": true,
+     "exp": "Primero se suma n + 6 y luego se divide entre 2."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "terminos-semejantes",
+   "icono": "🔤",
+   "color": 3,
+   "titulo": "Términos algebraicos y términos semejantes",
+   "idea": "Los términos semejantes tienen las mismas letras con los mismos exponentes.",
+   "palabras": "término coeficiente parte literal grado semejantes algebraico",
+   "insignia": "Clasificador de términos",
+   "puedo": "identificar las partes de un término y reconocer cuándo dos términos son semejantes.",
+   "teoria": "\n<p>Un <b>término</b> es una pieza de una expresión. Por ejemplo, −7a<sup>2</sup>b.</p>\n<ul>\n<li><b>Signo:</b> − (negativo).</li>\n<li><b>Coeficiente:</b> el número que multiplica. Aquí es 7 (con signo, −7).</li>\n<li><b>Parte literal:</b> las letras con sus exponentes. Aquí es a<sup>2</sup>b.</li>\n<li><b>Grado:</b> la suma de los exponentes. Aquí es 2 + 1 = 3.</li>\n</ul>\n<p>Piensa en frutas. 3 manzanas y 2 manzanas se pueden juntar: son 5 manzanas.</p>\n<p>3 manzanas y 2 peras no se juntan en una sola fruta. Esos serían términos <b>no semejantes</b>.</p>\n<div class=\"box key\"><b>Son semejantes si…</b>tienen <b>las mismas letras</b> y cada letra tiene <b>el mismo exponente</b>. El coeficiente puede ser distinto.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Creer que 3x y 3x<sup>2</sup> son semejantes porque «las dos tienen x».</p><p>✔ No lo son: la x tiene exponente distinto (1 y 2).</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: las partes de un término",
+     "e": "Para el término −7a<sup>2</sup>b di el signo, el coeficiente, la parte literal y el grado.",
+     "pasos": [
+      "Signo: el término empieza con −. Es negativo.",
+      "Coeficiente: el número que acompaña a las letras es 7. Con signo es −7.",
+      "Parte literal: las letras con sus exponentes, a<sup>2</sup>b.",
+      "Grado: suma los exponentes. a tiene 2 y b tiene 1. Entonces 2 + 1 = 3."
+     ],
+     "r": "Signo −; coeficiente −7; parte literal a<sup>2</sup>b; grado 3."
+    },
+    {
+     "t": "Ejemplo 2 · medio: ¿semejantes?",
+     "e": "¿Son semejantes 4xy y −9xy? ¿Y 5x<sup>2</sup> y 5x?",
+     "pasos": [
+      "4xy y −9xy: las dos tienen la parte literal xy. Los exponentes son iguales.",
+      "Sí son semejantes. Que los coeficientes sean distintos no importa.",
+      "5x<sup>2</sup> y 5x: la letra es la misma, pero los exponentes son 2 y 1.",
+      "No son semejantes."
+     ],
+     "r": "4xy y −9xy: SÍ. 5x<sup>2</sup> y 5x: NO."
+    },
+    {
+     "t": "Ejemplo 3 · completo: agrupar",
+     "e": "Agrupa los semejantes: 3x, 2y, −x, 5y, 4x<sup>2</sup>.",
+     "pasos": [
+      "Mira la parte literal de cada uno: x, y, x, y, x<sup>2</sup>.",
+      "Los de x: 3x y −x.",
+      "Los de y: 2y y 5y.",
+      "El 4x<sup>2</sup> queda solo, porque ningún otro tiene x<sup>2</sup>."
+     ],
+     "r": "{3x, −x} · {2y, 5y} · {4x<sup>2</sup>}"
+    }
+   ],
+   "receta": [
+    "Mira la parte literal de cada término.",
+    "¿Mismas letras y mismos exponentes? Entonces son semejantes.",
+    "El coeficiente puede ser distinto.",
+    "El grado es la suma de los exponentes."
+   ],
+   "retos": [
+    {
+     "tipo": "mc",
+     "p": "¿Cuál de estos es semejante a 5ab?",
+     "op": [
+      "5a",
+      "5a<sup>2</sup>b",
+      "−2ab",
+      "ab<sup>2</sup>"
+     ],
+     "c": 2,
+     "exp": "Tiene la misma parte literal ab.",
+     "pista": "Busca el que tiene exactamente las letras a y b con exponente 1."
+    },
+    {
+     "tipo": "input",
+     "p": "¿Cuál es el grado del término 6x<sup>2</sup>y<sup>3</sup>? (escribe el número)",
+     "a": [
+      "5"
+     ],
+     "exp": "2 + 3 = 5.",
+     "pista": "Suma los exponentes."
+    },
+    {
+     "tipo": "vf",
+     "p": "Los términos 3m y 3n son semejantes porque tienen el mismo coeficiente.",
+     "c": false,
+     "exp": "Para ser semejantes deben tener la misma parte literal. m y n son letras distintas."
+    },
+    {
+     "tipo": "input",
+     "p": "¿Cuál es el coeficiente de −9pq? (con signo)",
+     "a": [
+      "-9"
+     ],
+     "exp": "El coeficiente es −9.",
+     "pista": "Es el número que acompaña a las letras, con su signo."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "reduccion",
+   "icono": "🧹",
+   "color": 4,
+   "titulo": "Reducción de expresiones algebraicas",
+   "idea": "Reducir es juntar los términos semejantes para dejar la expresión más corta.",
+   "palabras": "reducir reducción términos semejantes paréntesis signo menos",
+   "insignia": "Experto en reducir",
+   "puedo": "reducir expresiones con paréntesis juntando los términos semejantes.",
+   "teoria": "\n<p>Reducir es como ordenar tu mochila. Juntas lo que va con lo mismo.</p>\n<div class=\"box key\"><b>Los 3 pasos</b>\n<ol><li>Quita los paréntesis.</li><li>Subraya, con un mismo color, los términos semejantes.</li><li>Suma o resta sus coeficientes.</li></ol></div>\n<div class=\"box key\"><b>Quitar paréntesis</b>Con un <b>+</b> delante, los signos de adentro se quedan igual.<br>Con un <b>−</b> delante, <b>todos</b> los signos de adentro cambian.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ 8x − (3x − 4) = 8x − 3x − 4. Solo cambió el primer signo.</p><p>✔ 8x − (3x − 4) = 8x − 3x + 4. El − cambia los dos signos de adentro.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: sin paréntesis",
+     "e": "4a + 3b + 2a − 5b",
+     "pasos": [
+      "Busca los de a: 4a y 2a. Suma: 4 + 2 = 6. Queda 6a.",
+      "Busca los de b: 3b y −5b. Suma: 3 − 5 = −2. Queda −2b.",
+      "Junta los resultados."
+     ],
+     "r": "6a − 2b"
+    },
+    {
+     "t": "Ejemplo 2 · medio: un paréntesis",
+     "e": "8x − (3x − 4) + 2",
+     "pasos": [
+      "Quita el paréntesis. Delante hay un −, así que cambian los signos: −3x y +4.",
+      "Queda 8x − 3x + 4 + 2.",
+      "Términos con x: 8x − 3x = 5x.",
+      "Números sueltos: 4 + 2 = 6."
+     ],
+     "r": "5x + 6"
+    },
+    {
+     "t": "Ejemplo 3 · completo: paréntesis dentro de paréntesis",
+     "e": "9p − (2q − (p − 4q))",
+     "pasos": [
+      "Empieza por el paréntesis de adentro: −(p − 4q) = −p + 4q.",
+      "La expresión queda 9p − (2q − p + 4q).",
+      "Reduce dentro del paréntesis: 2q + 4q = 6q. Queda 9p − (6q − p).",
+      "Quita el paréntesis. El − cambia los signos: 9p − 6q + p.",
+      "Junta los de p: 9p + p = 10p."
+     ],
+     "r": "10p − 6q"
+    }
+   ],
+   "receta": [
+    "Quita los paréntesis (con − delante, cambia todos los signos).",
+    "Junta los términos semejantes.",
+    "Suma o resta los coeficientes.",
+    "Revisa que no queden semejantes sin juntar."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Reduce: 7m + 2m − 4m",
+     "a": [
+      "5m"
+     ],
+     "exp": "7 + 2 − 4 = 5. Resultado: 5m.",
+     "pista": "Suma y resta los coeficientes."
+    },
+    {
+     "tipo": "input",
+     "p": "Reduce: 5x + 3y − 2x + y",
+     "a": [
+      "3x+4y",
+      "4y+3x"
+     ],
+     "exp": "5x − 2x = 3x y 3y + y = 4y.",
+     "pista": "Junta primero las x y luego las y."
+    },
+    {
+     "tipo": "input",
+     "p": "Reduce: 6a − (2a − 5)",
+     "a": [
+      "4a+5",
+      "5+4a"
+     ],
+     "exp": "6a − 2a + 5 = 4a + 5. El − cambió los dos signos.",
+     "pista": "El − delante del paréntesis cambia todos los signos de adentro."
+    },
+    {
+     "tipo": "mc",
+     "p": "3n − (n − 8) es igual a:",
+     "op": [
+      "2n − 8",
+      "2n + 8",
+      "4n + 8",
+      "2n"
+     ],
+     "c": 1,
+     "exp": "3n − n + 8 = 2n + 8.",
+     "pista": "Cambia los dos signos del paréntesis."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "coef-fraccion-decimal-operaciones",
+   "icono": "🧪",
+   "color": 5,
+   "titulo": "Coeficientes fraccionarios y decimales, y operaciones entre expresiones",
+   "idea": "Los coeficientes se suman como cualquier fracción o decimal. Con P y Q, se reemplaza y se reduce.",
+   "palabras": "coeficientes fraccionarios decimales operaciones entre expresiones polinomios P Q",
+   "insignia": "Mago de los coeficientes",
+   "puedo": "reducir con coeficientes fraccionarios o decimales y hacer operaciones entre dos expresiones.",
+   "teoria": "\n<p>Los términos semejantes se reducen igual, aunque el coeficiente sea fracción o decimal.</p>\n<div class=\"box key\"><b>Coeficientes fraccionarios</b>Suma los coeficientes como fracciones: con denominador común.<br>Ejemplo: {1/2}x + {1/3}x = {3/6}x + {2/6}x = {5/6}x.</div>\n<div class=\"box key\"><b>Coeficientes decimales</b>Suma los decimales alineando la coma.<br>Ejemplo: 2,5a − 0,7a = 1,8a.</div>\n<div class=\"box key\"><b>Operaciones entre expresiones</b>Si te dan P = 3x + 2 y Q = x − 5 y piden 2P + 3Q:<ol><li>Reemplaza cada letra por su expresión, <b>entre paréntesis</b>.</li><li>Reparte el número que multiplica.</li><li>Reduce.</li></ol></div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Sumar los coeficientes decimales sin alinear la coma. Por ejemplo, 2,5 + 0,7 = 2,12.</p><p>✔ 2,5 + 0,7 = 3,2. Alinea la coma: 2,5 + 0,7.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: fracciones",
+     "e": "{1/2}x + {1/3}x",
+     "pasos": [
+      "Los dos términos son semejantes. Solo suma los coeficientes.",
+      "El MCM de 2 y 3 es 6.",
+      "{1/2} = {3/6} y {1/3} = {2/6}. Suma: {5/6}."
+     ],
+     "r": "{5/6}x"
+    },
+    {
+     "t": "Ejemplo 2 · medio: decimales",
+     "e": "2,5a − 0,7a + 1,2b",
+     "pasos": [
+      "Los de a: 2,5 − 0,7 = 1,8. Queda 1,8a.",
+      "El de b está solo: 1,2b.",
+      "Junta: 1,8a + 1,2b."
+     ],
+     "r": "1,8a + 1,2b"
+    },
+    {
+     "t": "Ejemplo 3 · completo: entre expresiones",
+     "e": "Si P = 3x + 2 y Q = x − 5, halla 2P + 3Q.",
+     "pasos": [
+      "Reemplaza con paréntesis: 2(3x + 2) + 3(x − 5).",
+      "Reparte el 2: 6x + 4. Reparte el 3: 3x − 15.",
+      "Junta: 6x + 4 + 3x − 15.",
+      "Las x: 6x + 3x = 9x. Los números: 4 − 15 = −11."
+     ],
+     "r": "9x − 11"
+    }
+   ],
+   "receta": [
+    "Si hay fracciones: denominador común. Si hay decimales: alinea la coma.",
+    "Junta solo términos semejantes.",
+    "Con P y Q: reemplaza con paréntesis, reparte y reduce."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "{1/4}x + {1/4}x = ? (escribe el coeficiente con /)",
+     "a": [
+      "1/2"
+     ],
+     "exp": "{1/4} + {1/4} = {2/4} = {1/2}.",
+     "pista": "Suma los numeradores y simplifica."
+    },
+    {
+     "tipo": "input",
+     "p": "Reduce: 1,5m + 0,5m",
+     "a": [
+      "2m"
+     ],
+     "exp": "1,5 + 0,5 = 2. Resultado: 2m.",
+     "pista": "Suma 1,5 + 0,5."
+    },
+    {
+     "tipo": "input",
+     "p": "Si P = 2x + 1 y Q = x + 3, halla P + Q.",
+     "a": [
+      "3x+4",
+      "4+3x"
+     ],
+     "exp": "2x + 1 + x + 3 = 3x + 4.",
+     "pista": "Escribe (2x + 1) + (x + 3) y junta semejantes."
+    },
+    {
+     "tipo": "mc",
+     "p": "Si P = x + 4 y Q = 2x − 1, ¿cuánto es 2P − Q?",
+     "op": [
+      "3x − 9",
+      "3x + 7",
+      "x + 7",
+      "9"
+     ],
+     "c": 3,
+     "exp": "2(x + 4) − (2x − 1) = 2x + 8 − 2x + 1 = 9.",
+     "pista": "Cuidado: el − delante de Q cambia todos sus signos."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "distributiva-errores",
+   "icono": "🔍",
+   "color": 0,
+   "titulo": "Propiedad distributiva y análisis de errores",
+   "idea": "El número de afuera se reparte a todos los términos del paréntesis.",
+   "palabras": "propiedad distributiva paréntesis error análisis repartir signo",
+   "insignia": "Cazador de errores",
+   "puedo": "aplicar la propiedad distributiva y encontrar errores en un procedimiento.",
+   "teoria": "\n<p>La <b>propiedad distributiva</b> es como repartir regalos.</p>\n<p>Si el número de afuera trae un regalo para cada uno, <b>todos</b> los de adentro reciben.</p>\n<div class=\"box key\"><b>La regla</b>a(b + c) = ab + ac<br>Ejemplo: 3(x + 4) = 3x + 12.</div>\n<div class=\"box key\"><b>Con signo menos</b>−(x − 7) es como −1 · (x − 7). Reparte el −1: −x + 7.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ 3(x + 4) = 3x + 4. El 3 se quedó sin repartir al 4.</p><p>✔ 3(x + 4) = 3x + 12. El 3 multiplica a los dos.</p></div>\n<div class=\"box tip\"><b>Cómo cazar un error</b>Paso 1: reparte tú mismo el paréntesis. Paso 2: compara con lo que hizo la otra persona. Paso 3: explica dónde cambia.</div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: repartir",
+     "e": "5(2x + 3)",
+     "pasos": [
+      "El 5 multiplica al primer término: 5 · 2x = 10x.",
+      "El 5 multiplica al segundo término: 5 · 3 = 15.",
+      "Junta con el signo que corresponde."
+     ],
+     "r": "10x + 15"
+    },
+    {
+     "t": "Ejemplo 2 · medio: dos repartos",
+     "e": "2(3x − 4) − (x − 7)",
+     "pasos": [
+      "Primer reparto: 2(3x − 4) = 6x − 8.",
+      "Segundo reparto: −(x − 7) = −x + 7. Cambian los dos signos.",
+      "Junta: 6x − 8 − x + 7.",
+      "Las x: 6x − x = 5x. Los números: −8 + 7 = −1."
+     ],
+     "r": "5x − 1"
+    },
+    {
+     "t": "Ejemplo 3 · completo: encontrar el error",
+     "e": "Ana reduce 9x − 2(x − 3) y escribe 7x − 3. ¿Dónde está el error? ¿Cuál es el resultado correcto?",
+     "pasos": [
+      "Reparte tú: −2(x − 3) = −2x + 6.",
+      "Ana escribió −3. Ella no multiplicó el 3 por el −2.",
+      "El −2 también debe multiplicar al −3. Y (−2)(−3) = +6.",
+      "Resultado correcto: 9x − 2x + 6 = 7x + 6."
+     ],
+     "r": "Error: no repartió el −2 al segundo término. Correcto: 7x + 6"
+    }
+   ],
+   "receta": [
+    "Reparte el número de afuera a TODOS los términos del paréntesis.",
+    "Cuida los signos: (−)(−) = +.",
+    "Junta los semejantes.",
+    "Para un error: reparte tú y compara paso a paso."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Reduce: 4(x + 3)",
+     "a": [
+      "4x+12",
+      "12+4x"
+     ],
+     "exp": "4x + 12.",
+     "pista": "El 4 multiplica a x y también al 3."
+    },
+    {
+     "tipo": "input",
+     "p": "Reduce: 3(2y − 1) + y",
+     "a": [
+      "7y-3",
+      "-3+7y"
+     ],
+     "exp": "6y − 3 + y = 7y − 3.",
+     "pista": "Reparte el 3 y luego junta las y."
+    },
+    {
+     "tipo": "mc",
+     "p": "Mario escribió −(a − 5) = −a − 5. ¿Cuál es el error?",
+     "op": [
+      "No cambió el signo del 5",
+      "Sumó mal las letras",
+      "No hay error",
+      "Multiplicó por 5"
+     ],
+     "c": 0,
+     "exp": "Debió ser −a + 5: el − cambia los dos signos.",
+     "pista": "Reparte el −1 a los dos términos."
+    },
+    {
+     "tipo": "input",
+     "p": "Reduce: 6 − 2(x − 4)",
+     "a": [
+      "-2x+14",
+      "14-2x"
+     ],
+     "exp": "6 − 2x + 8 = −2x + 14.",
+     "pista": "Reparte el −2: da −2x y +8."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "valor-numerico",
+   "icono": "🔁",
+   "color": 1,
+   "titulo": "Valor numérico",
+   "idea": "Valor numérico es lo que vale una expresión cuando cambias las letras por números.",
+   "palabras": "valor numérico sustituir reemplazar jerarquía potencia negativos",
+   "insignia": "Calculador exacto",
+   "puedo": "reemplazar letras por números y calcular, incluso con negativos y potencias.",
+   "teoria": "\n<p>Una expresión como 4x + 7 es una «máquina». Metes un valor de x y sale un resultado.</p>\n<div class=\"box key\"><b>Los pasos</b>\n<ol><li>Cambia cada letra por su número, <b>entre paréntesis</b>.</li><li>Haz las potencias.</li><li>Haz las multiplicaciones.</li><li>Haz las sumas y restas.</li></ol></div>\n<div class=\"box tip\"><b>¿Por qué paréntesis?</b>Si x = −4, escribe (−4). Así el signo no se pierde.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Con x = −4, calcular x<sup>2</sup> como −4<sup>2</sup> = −16.</p><p>✔ (−4)<sup>2</sup> = (−4)(−4) = +16. El paréntesis incluye el signo.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil",
+     "e": "4x + 7 cuando x = 5",
+     "pasos": [
+      "Cambia x por 5, con paréntesis: 4(5) + 7.",
+      "Multiplica: 4 · 5 = 20.",
+      "Suma: 20 + 7 = 27."
+     ],
+     "r": "27"
+    },
+    {
+     "t": "Ejemplo 2 · medio: con negativo y potencia",
+     "e": "x<sup>2</sup> − 3x cuando x = −4",
+     "pasos": [
+      "Cambia x por (−4): (−4)<sup>2</sup> − 3(−4).",
+      "Potencia: (−4)<sup>2</sup> = 16.",
+      "Multiplicación: 3 · (−4) = −12.",
+      "Queda 16 − (−12). Restar un negativo es sumar: 16 + 12 = 28."
+     ],
+     "r": "28"
+    },
+    {
+     "t": "Ejemplo 3 · completo: dos letras",
+     "e": "2a<sup>2</sup> − ab + b<sup>2</sup> cuando a = 3 y b = −1",
+     "pasos": [
+      "Reemplaza: 2(3)<sup>2</sup> − (3)(−1) + (−1)<sup>2</sup>.",
+      "Potencias: (3)<sup>2</sup> = 9 y (−1)<sup>2</sup> = 1.",
+      "Queda 2 · 9 − (3)(−1) + 1.",
+      "Multiplica: 18 − (−3) + 1. Restar un negativo es sumar: 18 + 3 + 1.",
+      "Suma: 22."
+     ],
+     "r": "22"
+    }
+   ],
+   "receta": [
+    "Escribe cada número entre paréntesis.",
+    "Potencias primero.",
+    "Luego multiplicaciones.",
+    "Al final sumas y restas, con cuidado con los signos."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Calcula 3x + 2 cuando x = 4.",
+     "a": [
+      "14"
+     ],
+     "exp": "3(4) + 2 = 14.",
+     "pista": "Cambia x por 4 y multiplica primero."
+    },
+    {
+     "tipo": "input",
+     "p": "Calcula x<sup>2</sup> + 5 cuando x = −3.",
+     "a": [
+      "14"
+     ],
+     "exp": "(−3)<sup>2</sup> + 5 = 9 + 5 = 14.",
+     "pista": "El cuadrado de un negativo es positivo."
+    },
+    {
+     "tipo": "input",
+     "p": "Calcula 2a − b cuando a = 5 y b = −2.",
+     "a": [
+      "12"
+     ],
+     "exp": "2(5) − (−2) = 10 + 2 = 12.",
+     "pista": "Restar un negativo es sumar."
+    },
+    {
+     "tipo": "vf",
+     "p": "(−5)<sup>2</sup> y −5<sup>2</sup> valen lo mismo.",
+     "c": false,
+     "exp": "(−5)<sup>2</sup> = 25, pero −5<sup>2</sup> = −25."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "perimetro-area-algebraico",
+   "icono": "📐",
+   "color": 2,
+   "titulo": "Perímetro y área con expresiones algebraicas",
+   "idea": "Perímetro es rodear la figura. Área es cubrir su superficie. Con letras, se reduce igual.",
+   "palabras": "perímetro área lados rectángulo triángulo trapecio álgebra",
+   "insignia": "Arquitecto algebraico",
+   "puedo": "escribir y reducir el perímetro y el área de figuras con lados algebraicos.",
+   "teoria": "\n<p>Piensa en una cancha del barrio.</p>\n<ul>\n<li><b>Perímetro:</b> es la malla que la rodea. Se suman <b>todos los lados</b>. Se mide en metros (m).</li>\n<li><b>Área:</b> es el piso que se cubre. Se mide en metros cuadrados (m<sup>2</sup>).</li>\n</ul>\n<table class=\"tbl\"><tr><th class=\"l\">Figura</th><th>Área</th></tr>\n<tr><td class=\"l\">Rectángulo</td><td>base × altura</td></tr>\n<tr><td class=\"l\">Triángulo</td><td>{base × altura/2}</td></tr>\n<tr><td class=\"l\">Trapecio</td><td>{(B + b) × h/2}</td></tr></table>\n<div class=\"box key\"><b>Con lados algebraicos</b>Escribe la suma (perímetro) o el producto (área), usa paréntesis y reduce.</div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Sumar los lados para calcular el área, o multiplicarlos para el perímetro.</p><p>✔ Perímetro: se suman todos los lados. Área: base × altura.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: perímetro de un triángulo",
+     "e": "Un triángulo tiene lados x + 4, 2x + 1 y x + 6 metros. Halla su perímetro y su valor si x = 3.",
+     "pasos": [
+      "El perímetro suma los tres lados: (x + 4) + (2x + 1) + (x + 6).",
+      "Las x: x + 2x + x = 4x.",
+      "Los números: 4 + 1 + 6 = 11.",
+      "Perímetro: 4x + 11. Con x = 3: 4(3) + 11 = 23 m."
+     ],
+     "r": "P = 4x + 11; si x = 3, P = 23 m."
+    },
+    {
+     "t": "Ejemplo 2 · medio: rectángulo",
+     "e": "Una huerta rectangular mide 2x + 1 de largo y 3 de ancho. Halla su área y su perímetro.",
+     "pasos": [
+      "Área: largo × ancho = (2x + 1) · 3.",
+      "Reparte el 3: 6x + 3. Área = 6x + 3 m<sup>2</sup>.",
+      "Perímetro: 2 · (largo + ancho) = 2(2x + 1 + 3).",
+      "Dentro: 2x + 1 + 3 = 2x + 4. Reparte el 2: 4x + 8 m."
+     ],
+     "r": "A = 6x + 3 m<sup>2</sup>; P = 4x + 8 m."
+    },
+    {
+     "t": "Ejemplo 3 · completo: trapecio",
+     "e": "Un trapecio tiene B = 5x + 3, b = 3x + 1 y h = 4. Halla su área y su valor si x = 2.",
+     "pasos": [
+      "Fórmula: A = {(B + b) × h/2}.",
+      "Suma las bases: (5x + 3) + (3x + 1) = 8x + 4.",
+      "Multiplica por la altura: (8x + 4) · 4 = 32x + 16.",
+      "Divide entre 2: 16x + 8.",
+      "Con x = 2: 16(2) + 8 = 40. Comprobación: B = 13, b = 7; (13 + 7) · 4 ÷ 2 = 40."
+     ],
+     "r": "A = 16x + 8; si x = 2, A = 40."
+    }
+   ],
+   "receta": [
+    "Perímetro: suma todos los lados.",
+    "Área: usa la fórmula de la figura.",
+    "Usa paréntesis y reduce.",
+    "Si dan el valor de x, reemplaza al final."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Un cuadrado tiene lado x + 2. ¿Cuál es su perímetro? (usa x)",
+     "a": [
+      "4x+8",
+      "8+4x"
+     ],
+     "exp": "Perímetro = 4 lados: 4(x + 2) = 4x + 8.",
+     "pista": "Un cuadrado tiene 4 lados iguales."
+    },
+    {
+     "tipo": "input",
+     "p": "Un rectángulo mide 5 de largo y x + 1 de ancho. ¿Cuál es su área?",
+     "a": [
+      "5x+5",
+      "5+5x"
+     ],
+     "exp": "5(x + 1) = 5x + 5.",
+     "pista": "Largo × ancho. Reparte el 5."
+    },
+    {
+     "tipo": "mc",
+     "p": "Un triángulo tiene base 6 y altura x + 2. Su área es:",
+     "op": [
+      "3x + 6",
+      "6x + 12",
+      "x + 8",
+      "3x + 2"
+     ],
+     "c": 0,
+     "exp": "A = {6(x + 2)/2} = 3(x + 2) = 3x + 6.",
+     "pista": "Base × altura, dividido entre 2."
+    },
+    {
+     "tipo": "vf",
+     "p": "El perímetro de una figura se mide en metros cuadrados.",
+     "c": false,
+     "exp": "El perímetro se mide en metros. Los metros cuadrados son para el área."
+    }
+   ],
+   "taller": ""
+  },
+  {
+   "id": "situaciones-bosa",
+   "icono": "🛒",
+   "color": 3,
+   "titulo": "Situaciones de Bosa con álgebra",
+   "idea": "En un problema, las letras son los precios o las cantidades que no sabemos todavía.",
+   "palabras": "problemas situaciones Bosa álgebra tienda mercado expresión total",
+   "insignia": "Resolvedor de Bosa",
+   "puedo": "escribir una expresión para un problema del barrio, reducirla y calcular un valor.",
+   "teoria": "\n<p>En la tienda del barrio, los precios cambian. Por eso usamos letras.</p>\n<p>Si <b>x</b> es el precio de un pan y <b>y</b> es el precio de un café, entonces:</p>\n<ul><li>3 panes cuestan 3x.</li><li>2 cafés cuestan 2y.</li><li>Los dos juntos cuestan 3x + 2y.</li></ul>\n<div class=\"box key\"><b>Los 4 pasos</b>\n<ol><li>Elige una letra para cada cosa que no sabes.</li><li>Escribe lo que pasa en cada día, grupo o compra.</li><li>Junta los términos semejantes.</li><li>Si te dan los valores, reemplaza al final.</li></ol></div>\n<div class=\"box warn\"><b>Error común</b><p>✘ Escribir 3x + 2y = 5xy. Se juntaron panes con cafés.</p><p>✔ 3x + 2y se queda así. Pan y café no son semejantes.</p></div>",
+   "ejemplos": [
+    {
+     "t": "Ejemplo 1 · fácil: una compra",
+     "e": "En la panadería, x es el precio de un pan y y el de un café. Compro 3 panes y 2 cafés. Escribe el total y calcúlalo si x = $1.200 y y = $1.500.",
+     "pasos": [
+      "3 panes cuestan 3x. 2 cafés cuestan 2y.",
+      "El total es 3x + 2y.",
+      "Reemplaza: 3(1.200) + 2(1.500).",
+      "Multiplica: 3.600 + 3.000 = 6.600."
+     ],
+     "r": "Total: 3x + 2y = $6.600."
+    },
+    {
+     "t": "Ejemplo 2 · medio: dos compras",
+     "e": "El lunes compro 5 panes y 3 cafés. El martes compro 2 panes y 4 cafés. Escribe el total de los dos días, reducido.",
+     "pasos": [
+      "Lunes: 5x + 3y. Martes: 2x + 4y.",
+      "Total: (5x + 3y) + (2x + 4y).",
+      "Panes: 5x + 2x = 7x.",
+      "Cafés: 3y + 4y = 7y."
+     ],
+     "r": "7x + 7y"
+    },
+    {
+     "t": "Ejemplo 3 · completo: grupos",
+     "e": "En una jornada de reciclaje, cada grupo de octavo reúne 2x + 3 botellas y cada grupo de séptimo reúne x + 1. Participan 4 grupos de octavo y 3 de séptimo. Escribe el total y calcúlalo si x = 4.",
+     "pasos": [
+      "Octavo: 4 grupos de (2x + 3). Es 4(2x + 3) = 8x + 12.",
+      "Séptimo: 3 grupos de (x + 1). Es 3(x + 1) = 3x + 3.",
+      "Total: 8x + 12 + 3x + 3 = 11x + 15.",
+      "Con x = 4: 11(4) + 15 = 44 + 15 = 59.",
+      "Comprobación: octavo 4 · 11 = 44 y séptimo 3 · 5 = 15. Suman 59."
+     ],
+     "r": "Total: 11x + 15; con x = 4 son 59 botellas."
+    }
+   ],
+   "receta": [
+    "Dale una letra a cada cosa desconocida.",
+    "Escribe cada día, grupo o compra.",
+    "Junta solo los semejantes.",
+    "Reemplaza los valores al final y revisa con un cálculo rápido."
+   ],
+   "retos": [
+    {
+     "tipo": "input",
+     "p": "Un jugo cuesta y y una empanada cuesta x. ¿Cuánto cuestan 2 empanadas y 3 jugos? (usa x y y)",
+     "a": [
+      "2x+3y",
+      "3y+2x"
+     ],
+     "exp": "2x + 3y.",
+     "pista": "Cada cantidad multiplica a su precio."
+    },
+    {
+     "tipo": "input",
+     "p": "Reduce el total de (4x + y) + (x + 2y).",
+     "a": [
+      "5x+3y",
+      "3y+5x"
+     ],
+     "exp": "4x + x = 5x y y + 2y = 3y.",
+     "pista": "Junta las x y junta las y."
+    },
+    {
+     "tipo": "input",
+     "p": "Si x = 1.000 y y = 500, ¿cuánto vale 2x + 3y?",
+     "a": [
+      "3500",
+      "3.500"
+     ],
+     "exp": "2(1.000) + 3(500) = 2.000 + 1.500 = 3.500.",
+     "pista": "Reemplaza y calcula."
+    },
+    {
+     "tipo": "vf",
+     "p": "3x + 2y se puede escribir como 5xy.",
+     "c": false,
+     "exp": "x y y son términos distintos y no se pueden juntar. 3x + 2y ya está reducido."
+    }
+   ],
+   "taller": ""
+  }
+ ]
+};
+
+</script>
+<script>
+(function(){
+'use strict';
+var W = WIKI;
+function $(s,el){return (el||document).querySelector(s)}
+function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))}
+var store = {
+  get:function(k){try{var v=localStorage.getItem(W.key+':'+k);return v?JSON.parse(v):null}catch(e){return null}},
+  set:function(k,v){try{localStorage.setItem(W.key+':'+k,JSON.stringify(v))}catch(e){}}
+};
+var S = {
+  done: store.get('done')||{},
+  visited: store.get('visited')||{},
+  check: store.get('check')||{}
+};
+function save(){store.set('done',S.done);store.set('visited',S.visited);store.set('check',S.check)}
+
+/* fracciones {3/4} y {2 1/4} */
+function fmt(h){
+  return String(h).replace(/\{(?:(-?\d+)\s)?([^\s{}\/<>]+)\/([^\s{}\/<>]+)\}/g,function(m,w,n,d){
+    var f='<span class="frac"><span class="n">'+n+'</span><span class="d">'+d+'</span></span>';
+    return w?'<span class="mix"><span class="whole">'+w+'</span>'+f+'</span>':f;
+  });
+}
+function strip(h){return String(h).replace(/<[^>]+>/g,' ').replace(/\{[^}]*\}/g,' ').toLowerCase()}
+W.temas.forEach(function(t,i){
+  t.i=i; t.idx=strip(t.titulo+' '+t.idea+' '+(t.palabras||'')+' '+t.teoria);
+  t.insignia=t.insignia||('Experto en '+t.titulo.toLowerCase());
+});
+function visible(t){return true}
+function vis(){return W.temas.filter(visible)}
+function isDone(t){return (S.done[t.id]||[]).length>=t.retos.length}
+function chips(t){return ''}
+
+/* navegación */
+function buildNav(){
+  var h='<a href="#inicio" data-r="inicio"><span class="ic">🏠</span>Inicio</a><div class="hr"></div>';
+  vis().forEach(function(t,n){
+    var st=isDone(t)?'<span class="st ok" title="Insignia ganada">✔ 🏅</span>':(S.visited[t.id]?'<span class="st" title="Ya lo visitaste">•</span>':'');
+    h+='<a href="#'+t.id+'" data-r="'+t.id+'" style="--t:var(--c'+(t.color%6)+')"><span class="ic">'+t.icono+'</span><span>'+(n+1)+'. '+t.titulo+'</span>'+st+'</a>';
+  });
+  h+='<div class="hr"></div><a href="#cierre" data-r="cierre"><span class="ic">🏁</span>Cierre y autoevaluación</a>';
+  $('#nav').innerHTML=h;
+}
+function markNav(r){
+  $$('#nav a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-r')===r)});
+}
+
+/* retos */
+function norm(s){return String(s).toLowerCase().replace(/[−–—]/g,'-').replace(/,/g,'.').replace(/\s+/g,'').replace(/[×·]/g,'*').replace(/÷/g,'/')}
+function renderReto(t){
+  var out='';
+  t.retos.forEach(function(q,k){
+    var dn=(S.done[t.id]||[]).indexOf(k)>=0;
+    out+='<div class="q-card'+(dn?' done':'')+'" data-k="'+k+'"><div class="p">'+(k+1)+'. '+fmt(q.p)+'</div>';
+    if(q.tipo==='input'){
+      out+='<div class="row"><input class="inp" type="text" inputmode="text" autocomplete="off" aria-label="Tu respuesta a la pregunta '+(k+1)+'" placeholder="Escribe tu respuesta"><button class="btn sm chk">Revisar</button></div>';
+    }else{
+      var ops=q.tipo==='vf'?['Verdadero','Falso']:q.op;
+      out+='<div class="opts">';
+      ops.forEach(function(o,j){out+='<button class="opt" data-j="'+j+'"><span class="k">'+'ABCD'[j]+'</span><span>'+fmt(o)+'</span></button>'});
+      out+='</div>';
+    }
+    out+='<div class="fb" role="status"></div></div>';
+  });
+  out+='<div class="badge" id="badge"><span class="b">🏅</span>¡Insignia ganada! '+t.insignia+'</div>';
+  return out;
+}
+function setFb(card,ok,msg){
+  var fb=$('.fb',card); fb.className='fb show '+(ok?'ok':'no'); fb.innerHTML=(ok?'✔ ':'✘ ')+fmt(msg);
+}
+function solved(t,card,k,q){
+  var d=S.done[t.id]||(S.done[t.id]=[]);
+  if(d.indexOf(k)<0)d.push(k);
+  card.classList.add('done'); save(); checkBadge(t,false); buildNav(); markNav(t.id); updateBar();
+}
+function checkBadge(t,quiet){
+  var b=$('#badge'); if(!b)return;
+  if(isDone(t)){b.classList.add('show')}
+}
+function wireReto(t){
+  $$('.q-card').forEach(function(card){
+    var k=+card.getAttribute('data-k'), q=t.retos[k];
+    if(q.tipo==='input'){
+      var go=function(){
+        var v=norm($('.inp',card).value); if(!v)return;
+        var ok=q.a.some(function(a){return norm(a)===v});
+        if(ok){setFb(card,true,'¡Correcto! '+(q.exp||''));solved(t,card,k,q)}
+        else setFb(card,false,'Todavía no. '+(q.pista||'Revisa el procedimiento y vuelve a intentarlo.'));
+      };
+      $('.chk',card).addEventListener('click',go);
+      $('.inp',card).addEventListener('keydown',function(e){if(e.key==='Enter')go()});
+    }else{
+      $$('.opt',card).forEach(function(btn){btn.addEventListener('click',function(){
+        var j=+btn.getAttribute('data-j');
+        var ok=q.tipo==='vf'?((j===0)===q.c):(j===q.c);
+        if(ok){btn.classList.add('good');$$('.opt',card).forEach(function(b){b.disabled=true});setFb(card,true,'¡Correcto! '+(q.exp||''));solved(t,card,k,q)}
+        else{btn.classList.add('bad');setFb(card,false,q.pista||'No es esa. Vuelve a la teoría o a los ejemplos y prueba otra opción.');setTimeout(function(){btn.classList.remove('bad')},600)}
+      })});
+    }
+    if((S.done[t.id]||[]).indexOf(k)>=0){
+      var fb=$('.fb',card); fb.className='fb show ok'; fb.innerHTML='✔ Ya resuelta. '+fmt(q.exp||'');
+      if(q.tipo==='input')$('.inp',card).value=q.a[0];
+      else{var j=q.tipo==='vf'?(q.c?0:1):q.c; var ob=$$('.opt',card)[j]; if(ob)ob.classList.add('good'); $$('.opt',card).forEach(function(b){b.disabled=true})}
+    }
+  });
+  checkBadge(t,true);
+}
+
+/* ejemplos con pasos */
+function renderEj(t){
+  var o='';
+  t.ejemplos.forEach(function(e,i){
+    o+='<div class="ex-item" data-e="'+i+'"><h3>'+fmt(e.t)+'</h3><div class="q">'+fmt(e.e)+'</div><ol class="steps">';
+    e.pasos.forEach(function(p){o+='<li><div>'+fmt(p)+'</div></li>'});
+    o+='</ol><div class="ans">➜ '+fmt(e.r)+'</div><div class="row" style="margin-top:8px"><button class="btn sm nx">Ver el primer paso</button><button class="btn ghost sm all">Ver todo</button></div></div>';
+  });
+  return o;
+}
+function wireEj(){
+  $$('.ex-item').forEach(function(it){
+    var li=$$('.steps li',it), n=0, ans=$('.ans',it), nx=$('.nx',it), all=$('.all',it);
+    function upd(){
+      if(n>=li.length){ans.classList.add('show');nx.disabled=true;nx.textContent='Listo ✔';all.style.display='none'}
+      else nx.textContent=n===0?'Ver el primer paso':'Ver el siguiente paso ('+(n+1)+' de '+li.length+')';
+    }
+    nx.addEventListener('click',function(){if(n<li.length){li[n].classList.add('show');n++}upd()});
+    all.addEventListener('click',function(){li.forEach(function(l){l.classList.add('show')});n=li.length;upd()});
+    upd();
+  });
+}
+
+/* vistas */
+function progress(){var v=vis();return {d:v.filter(isDone).length,n:v.length}}
+function updateBar(){
+  var p=progress(), sg=$('#segs'), tx=$('#ptxt');
+  if(sg){
+    var s='';vis().forEach(function(t){s+='<i'+(isDone(t)?' class="on"':'')+' title="'+t.titulo.replace(/"/g,'')+'"></i>'});
+    sg.innerHTML=s;
+  }
+  if(tx)tx.textContent=p.d+' de '+p.n+' insignias ganadas';
+}
+function viewHome(q){
+  var v=vis(), ql=(q||'').toLowerCase().trim();
+  var h='<section class="hero"><span class="big" aria-hidden="true">'+W.mascota+'</span><h1>'+W.titulo+'</h1><p>'+fmt(W.intro)+'</p>';
+  h+='<div class="segs" id="segs" aria-hidden="true"></div><div class="hint" id="ptxt"></div>';
+  h+='<p style="margin-top:14px"><input class="search" id="q" type="search" placeholder="🔍 Busca un tema o una palabra…" aria-label="Buscar tema" value="'+(q||'').replace(/"/g,'')+'"></p>';
+  h+='<p><a class="btn" href="#'+(v[0]?v[0].id:'cierre')+'" style="text-decoration:none;display:inline-block">¡Empezar el recorrido!</a></p></section>';
+  h+='<div class="card"><h2>🧭 Cómo usar este wiki</h2><ol><li>Empieza por el <b>primer tema</b> o busca el que necesitas.</li><li>En cada tema lee la <b>idea</b>, la <b>teoría</b> y abre los <b>ejemplos paso a paso</b>.</li><li>Usa el recuadro <b>«¿Cómo lo resuelvo?»</b> como receta y practica en el <b>mini-reto</b> para ganar la insignia.</li><li>Al final haz la <b>autoevaluación</b> y resuelve tu taller con tus propias manos.</li></ol><p class="hint">Aquí aprendes <i>cómo</i> se hace; los ejercicios de tu taller los resuelves tú, en tu cuaderno, con procedimiento.</p></div>';
+  h+='<h2 style="margin-top:22px">Temas del wiki</h2><div class="grid" id="grid">';
+  W.temas.forEach(function(t,n){
+    var show=visible(t), match=!ql||t.idx.indexOf(ql)>=0;
+    if(!show||!match)return;
+    h+='<a class="tc" href="#'+t.id+'" style="--t:var(--c'+(t.color%6)+')"><span class="ic">'+t.icono+'</span><b>'+t.titulo+'</b><span class="s">'+fmt(t.idea)+'</span>'+chips(t)+(isDone(t)?'<span class="chip" style="border-color:var(--good)">🏅 Insignia ganada</span>':'')+'</a>';
+  });
+  h+='</div>';
+  return h;
+}
+function viewTema(t){
+  var v=vis(), pos=v.indexOf(t);
+  var h='<article style="--t:var(--c'+(t.color%6)+')"><div class="card t"><div class="hint">Tema '+(pos>=0?(pos+1)+' de '+v.length:'')+'</div><h1><span class="tema-h">'+t.icono+' '+t.titulo+'</span></h1>'+chips(t)+'<div class="idea">💡 '+fmt(t.idea)+'</div></div>';
+  h+='<section class="card t"><h2>📖 Teoría</h2>'+fmt(t.teoria)+'</section>';
+  h+='<section class="card ej"><h2>🔎 Ejemplos resueltos</h2><p class="hint">Estos ejemplos son distintos de los de tu taller, pero se resuelven con la misma lógica. Ábrelos paso a paso.</p>'+renderEj(t)+'</section>';
+  h+='<section class="card t rec"><h2>🧭 ¿Cómo lo resuelvo?</h2><ol class="recipe">'+t.receta.map(function(r){return '<li>'+fmt(r)+'</li>'}).join('')+'</ol></section>';
+  h+='<section class="card reto"><h2>🎮 Mini-reto</h2><p class="hint">Contesta todas bien para ganar la insignia «'+t.insignia+'». Si fallas, puedes intentarlo otra vez.</p>'+renderReto(t)+'</section>';
+  var prev=v[pos-1], next=v[pos+1];
+  h+='<div class="pager"><a class="btn ghost" style="text-decoration:none" href="#'+(prev?prev.id:'inicio')+'">← '+(prev?prev.titulo:'Inicio')+'</a><a class="btn" style="text-decoration:none" href="#'+(next?next.id:'cierre')+'">'+(next?next.titulo:'Ir al cierre')+' →</a></div></article>';
+  return h;
+}
+function viewCierre(){
+  var v=vis();
+  var h='<section class="card"><h1>🏁 Cierre y autoevaluación</h1><p>Marca lo que ya puedes hacer. Si algo te falta, vuelve a ese tema con el botón.</p>';
+  h+='<div class="badges" aria-label="Insignias">'+v.map(function(t){return '<span class="bd'+(isDone(t)?'':' off')+'" title="'+t.insignia+'">'+t.icono+'</span>'}).join('')+'</div></section>';
+  h+='<section class="card"><h2>✅ Lo que ya sé hacer</h2>';
+  v.forEach(function(t){
+    var on=!!S.check[t.id];
+    h+='<label class="check'+(on?' on':'')+'"><input type="checkbox" data-c="'+t.id+'"'+(on?' checked':'')+'><span>Puedo '+fmt(t.puedo)+' <a href="#'+t.id+'">(ver tema)</a></span></label>';
+  });
+  h+='</section><section class="card"><h2>📝 Ahora, a tu taller de nivelación</h2><ul>'+W.cierre.map(function(c){return '<li>'+fmt(c)+'</li>'}).join('')+'</ul></section>';
+  h+='<p><button class="btn ghost sm" id="reset">Borrar mi progreso en este dispositivo</button></p>';
+  return h;
+}
+
+/* router */
+function route(){
+  var r=(location.hash||'#inicio').slice(1)||'inicio';
+  var t=W.temas.filter(function(x){return x.id===r})[0], html;
+  if(t){
+    html=viewTema(t);S.visited[t.id]=1;save();
+  }else if(r==='cierre')html=viewCierre();
+  else{html=viewHome('');r='inicio'}
+  $('#view').innerHTML=html;
+  buildNav();markNav(r);
+  $('#side').classList.remove('open');
+  window.scrollTo(0,0);
+  if(t){wireEj();wireReto(t)}
+  if(r==='inicio')wireHome();
+  if(r==='cierre')wireCierre();
+  updateBar();
+  document.title=(t?t.titulo+' · ':'')+W.titulo;
+}
+function wireHome(){
+  var q=$('#q');
+  q.addEventListener('input',function(){
+    var pos=q.value;
+    $('#view').innerHTML=viewHome(pos);wireHome();updateBar();
+    var nq=$('#q');nq.focus();nq.setSelectionRange(pos.length,pos.length);
+  });
+}
+function wireCierre(){
+  $$('input[data-c]').forEach(function(c){c.addEventListener('change',function(){
+    S.check[c.getAttribute('data-c')]=c.checked;save();c.parentNode.classList.toggle('on',c.checked);
+  })});
+  $('#reset').addEventListener('click',function(){
+    S.done={};S.visited={};S.check={};save();route();
+  });
+}
+$('#bm').textContent=W.mascota;$('#bt').textContent=W.corto;$('#bs').textContent='Wiki de nivelación 2026';
+$('#foot').innerHTML='Colegio Carlos Albán Holguín I.E.D. · '+W.pie+' · Material de estudio para la nivelación final 2026. Tu progreso se guarda solo en este dispositivo.';
+$('#brand').addEventListener('click',function(){location.hash='#inicio'});
+$('#brand').addEventListener('keydown',function(e){if(e.key==='Enter')location.hash='#inicio'});
+$('#burger').addEventListener('click',function(){$('#side').classList.toggle('open')});
+$('#theme').addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+});
+function setBig(on){
+  document.documentElement.classList.toggle('big',on);
+  $('#big').setAttribute('aria-pressed',String(on));
+  store.set('big',on);
+}
+setBig(!!store.get('big'));
+$('#big').addEventListener('click',function(){setBig(!document.documentElement.classList.contains('big'))});
+document.addEventListener('click',function(e){
+  var s=$('#side'); if(s.classList.contains('open')&&!s.contains(e.target)&&e.target.id!=='burger')s.classList.remove('open');
+});
+window.addEventListener('hashchange',route);
+route();
+})();
+</script>
+</body>
+</html>
